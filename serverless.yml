@@ -11,3 +11,4 @@ BF-frontend:
       imageLambda: BFImageLambda # Image Lambda의 이름 설정
     cloudfront:
       comment: 'next deploy' # CloudFront 설명 설정
+      distributionId: 'E15PUFCF52YFK6'

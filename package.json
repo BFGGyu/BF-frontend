@@ -23,6 +23,6 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.0",
-    "serverless": "^3.33.0"
+    "serverless": "^2.72.2"
   }
 }

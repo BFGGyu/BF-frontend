@@ -15,5 +15,14 @@
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint"],
-  "rules": {}
+  "rules": {},
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts", ".tsx", ".native.js"]
+      }
+    }
+  },
+  // 검사무시 추가
+  "ignorePatterns": ["node_modules/*"]
 }

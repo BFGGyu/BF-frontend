@@ -1,0 +1,13 @@
+BF-frontend:
+  component: '@sls-next/serverless-component@latest'
+  inputs:
+    deploy: true
+    bucketName: 'bf-gyu'
+    bucketRegion: 'ap-northeast-2' # S3 Bucket 지역 설정
+    timeout: 30
+    memory: 1024
+    name:
+      defaultLambda: BFLambda #Default Lambda의 이름 설정
+      imageLambda: BFImageLambda # Image Lambda의 이름 설정
+    cloudfront:
+      comment: 'next deploy' # CloudFront 설명 설정

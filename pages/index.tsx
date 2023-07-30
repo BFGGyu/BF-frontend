@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import Loading from './Loading';
 
 declare global {
   interface Window {
@@ -51,12 +52,19 @@ const Index: NextPage = () => {
   }, [currentCoords]);
 
   return (
-    <>
+    <MainContainer>
       <h1>지도 페이지</h1>
-      {isLoading && <div>로딩중...</div>}
-      <div ref={mapRef} id='map' style={{ display: 'none', width: '400px', height: '400px' }}></div>
-    </>
+      {isLoading && <Loading />}
+      <div ref={mapRef} id='map' style={{ display: 'none', width: '100%', height: '400px' }}></div>
+    </MainContainer>
   );
 };
+
+const MainContainer = styled.div`
+  width: 399px;
+  height: 844px;
+  border: 2px solid black;
+  margin: 0 auto;
+`;
 
 export default Index;

@@ -45,7 +45,7 @@ const Index: NextPage = () => {
   useEffect(() => {
     const newMap = new window.google.maps.Map(mapRef.current, {
       center: { lat: currentCoords.lat, lng: currentCoords.lng },
-      zoom: 14
+      zoom: 16
     });
     setMap(newMap);
     console.log('무한렌더링 방지: ', currentCoords.lat);
@@ -61,7 +61,7 @@ const Index: NextPage = () => {
 };
 
 const MainContainer = styled.div`
-  width: 399px;
+  width: 390px;
   height: 844px;
   border: 2px solid black;
   margin: 0 auto;

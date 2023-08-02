@@ -14,11 +14,9 @@ const Reactproject: NextPage<AppProps> = ({ Component, pageProps }: AppProps) =>
         <title>BFGGyu</title>
       </Head>
       <GlobalStyle />
-      <Wrapper apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY!}>
-        <MainLayout>
-          <Component {...pageProps} />
-        </MainLayout>
-      </Wrapper>
+      <MainLayout>
+        <Component {...pageProps} />
+      </MainLayout>
     </>
   );
 };

@@ -34,7 +34,7 @@ const HeaderSection = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  flex-basis: 25%;
+  flex-basis: 30%;
   border: 3px solid black;
   background-color: ${COLOR.BLUE1};
   color: ${COLOR.WHITE};
@@ -67,7 +67,7 @@ const SearchWrapper = styled.div`
   display: flex;
   flex-basis: 25%;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   align-items: center;
   justify-content: center;
   background-color: ${COLOR.BLUE2};

@@ -1,16 +1,22 @@
 import type { NextPage } from 'next';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import HeaderSection from '../src/components/main/HeaderSection';
+import MapSection from '../src/components/main/MapSection';
 
 const Index: NextPage = () => {
   return (
-    <>
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-        <div style={{ flexBasis: '30%', border: '3px solid black' }}>header</div>
-        <div style={{ flexBasis: '70%', border: '3px solid black' }}>body</div>
-      </div>
-    </>
+    <SectionWrapper>
+      <HeaderSection />
+      <MapSection />
+    </SectionWrapper>
   );
 };
+
+const SectionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
 
 export default Index;

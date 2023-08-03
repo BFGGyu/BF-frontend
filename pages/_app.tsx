@@ -27,7 +27,6 @@ const Reactproject: NextPage<AppProps> = ({ Component, pageProps }: AppProps) =>
 const MainLayout = styled.div`
   width: 390px;
   height: 844px;
-  border: 2px solid black;
   margin: 0 auto;
 `;
 

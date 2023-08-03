@@ -35,7 +35,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-basis: 30%;
-  border: 3px solid black;
   background-color: ${COLOR.BLUE1};
   color: ${COLOR.WHITE};
   padding-left: 1rem;

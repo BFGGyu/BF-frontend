@@ -5,6 +5,7 @@ import GlobalStyle from '../src/styles/globalStyle';
 import React from 'react';
 import { Wrapper } from '@googlemaps/react-wrapper';
 import styled from 'styled-components';
+import { RecoilRoot } from 'recoil';
 
 const Reactproject: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
@@ -13,10 +14,12 @@ const Reactproject: NextPage<AppProps> = ({ Component, pageProps }: AppProps) =>
         <meta charSet='utf-8' />
         <title>BFGGyu</title>
       </Head>
-      <GlobalStyle />
-      <MainLayout>
-        <Component {...pageProps} />
-      </MainLayout>
+      <RecoilRoot>
+        <GlobalStyle />
+        <MainLayout>
+          <Component {...pageProps} />
+        </MainLayout>
+      </RecoilRoot>
     </>
   );
 };

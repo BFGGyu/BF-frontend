@@ -79,14 +79,14 @@ const MapSection = () => {
     setIsLoading(false);
   };
 
-  // useEffect(() => {
-  //   initTmap();
-  // }, []);
+  useEffect(() => {
+    initTmap();
+  }, []);
 
   return (
     <MapWrapper>
       {/* {isLoading && <Loading />} */}
-      <div style={{ display: 'flex', gap: 5, zIndex: 1 }}>
+      <TagWrapper>
         {tags.map((tag) => (
           <TagButton
             key={tag.id}
@@ -98,8 +98,8 @@ const MapSection = () => {
             {tag.type}
           </TagButton>
         ))}
-      </div>
-      <MapDiv style={{ width: '390px', height: '591px', border: '3px solid black' }}></MapDiv>
+      </TagWrapper>
+      {/* <MapDiv style={{ width: '390px', height: '591px', border: '3px solid black' }}></MapDiv> */}
       <MapDiv ref={mapRef} id='map_div'></MapDiv>
     </MapWrapper>
   );
@@ -113,6 +113,14 @@ const MapWrapper = styled.div`
 
 const MapDiv = styled.div`
   position: absolute;
+`;
+
+const TagWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  z-index: 1;
+  padding: 10px;
 `;
 
 interface PlaceTypeProps {
@@ -133,7 +141,8 @@ const TYPE_TO_COLOR: ObjType = {
 const TagButton = styled.div<PlaceTypeProps>`
   background-color: ${(props) => (props.clicked ? TYPE_TO_COLOR[props.type] : 'white')};
   color: ${(props) => (props.clicked ? 'white' : COLOR.GREY)};
-  padding: 5px;
+  padding: 10px;
   border-radius: 50px;
   cursor: pointer;
+  box-shadow: 2px 2px 16px 0px rgba(0, 0, 0, 0.16);
 `;

@@ -1,9 +1,16 @@
 import COLOR from '@/constants/colors';
+import FONT from '@/constants/fonts';
+import { useState } from 'react';
 import { AiOutlineClose, AiOutlineSearch } from 'react-icons/ai';
 import { BsArrowLeft } from 'react-icons/bs';
 import styled from 'styled-components';
 
 const Search = () => {
+  const [searchList, setSearchList] = useState([
+    { id: '0', name: '국립 고궁 박물관' },
+    { id: '1', name: '국립 현대 미술관' },
+    { id: '2', name: '진격의 거인전' }
+  ]);
   return (
     <SearchWrapper>
       <SearchInputWrapper>
@@ -11,15 +18,15 @@ const Search = () => {
           <BsArrowLeft color={COLOR.GREY} size={25} />
           <SearchInput placeholder='검색어를 입력하세요.' />
         </div>
-        <AiOutlineSearch size={30} />
+        <AiOutlineSearch size={30} color={COLOR.GREY} />
       </SearchInputWrapper>
       <div>
-        <SearchResult>
-          최근 검색어 내역
-          <AiOutlineClose size={20} />
-        </SearchResult>
-        <SearchResult>최근 검색어 내역</SearchResult>
-        <SearchResult>최근 검색어 내역</SearchResult>
+        {searchList.map((result) => (
+          <SearchResult style={FONT.BODY1}>
+            {result.name}
+            <AiOutlineClose size={20} color={COLOR.GREY} />
+          </SearchResult>
+        ))}
       </div>
     </SearchWrapper>
   );
@@ -28,7 +35,6 @@ const Search = () => {
 const SearchWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  // height: 100%;
   border: 1px solid black;
 `;
 
@@ -38,12 +44,14 @@ const SearchInputWrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 10vh;
-  border: 3px solid black;
   padding: 10px;
+  border-bottom: 1px solid black;
+  border-color: ${COLOR.LINE};
 `;
 
 const SearchInput = styled.input`
   border: 0;
+  padding-right: 65%;
   font-size: 16px;
   &::placeholder {
     color: ${COLOR.GREY};
@@ -54,7 +62,6 @@ const SearchResult = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 20px 15px;
-  // border: 1px solid black;
 `;
 
 export default Search;

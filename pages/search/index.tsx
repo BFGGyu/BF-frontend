@@ -38,7 +38,7 @@ const Search = () => {
                 pathname: '/search/[result]',
                 query: { result: inputText }
               },
-              '/search/result'
+              '/result'
             )
           }
         >

@@ -1,3 +1,5 @@
+import COLOR from '@/constants/colors';
+import FONT from '@/constants/fonts';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Loading from '../../../pages/Loading';
@@ -5,6 +7,24 @@ import Loading from '../../../pages/Loading';
 const MapSection = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const [tags, setTags] = useState([
+    {
+      id: 0,
+      type: '박물관',
+      clicked: false
+    },
+    {
+      id: 1,
+      type: '미술관',
+      clicked: false
+    },
+    {
+      id: 2,
+      type: '전시회',
+      clicked: false
+    }
+  ]);
 
   const initTmap = () => {
     // map 생성
@@ -53,14 +73,21 @@ const MapSection = () => {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    initTmap();
-  }, []);
+  // useEffect(() => {
+  //   initTmap();
+  // }, []);
 
   return (
     <MapWrapper>
       {/* {isLoading && <Loading />} */}
-      {/* <MapDiv style={{ backgroundColor: 'red' }}></MapDiv> */}
+      <div style={{ display: 'flex', gap: 5, zIndex: 1 }}>
+        {tags.map((tag) => (
+          <TagButton key={tag.id} style={FONT.HEADLINE2} type={tag.type}>
+            {tag.type}
+          </TagButton>
+        ))}
+      </div>
+      <MapDiv style={{ width: '390px', height: '591px', border: '3px solid black' }}></MapDiv>
       <MapDiv ref={mapRef} id='map_div'></MapDiv>
     </MapWrapper>
   );
@@ -74,4 +101,26 @@ const MapWrapper = styled.div`
 
 const MapDiv = styled.div`
   position: absolute;
+`;
+
+interface PlaceTypeProps {
+  type: string;
+}
+
+type ObjType = {
+  [index: string]: string;
+};
+
+const TYPE_TO_COLOR: ObjType = {
+  박물관: COLOR.ORANGE,
+  미술관: COLOR.GREEN,
+  전시회: COLOR.RED
+};
+
+const TagButton = styled.div<PlaceTypeProps>`
+  background-color: ${(props) => TYPE_TO_COLOR[props.type]};
+  color: white;
+  padding: 5px;
+  border-radius: 50px;
+  cursor: pointer;
 `;

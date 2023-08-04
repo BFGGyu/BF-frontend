@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import COLOR from '../../constants/colors';
 import FONT from '../../constants/fonts';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 
 const HeaderSection = () => {
+  const router = useRouter();
   return (
     <Wrapper>
       <HeaderWrapper>
@@ -21,8 +23,8 @@ const HeaderSection = () => {
         </MainTextWrapper>
         <div>아이콘</div>
       </BodyWrapper>
-      <SearchWrapper>
-        <SearchInput placeholder='검색어를 입력하세요.'></SearchInput>
+      <SearchWrapper onClick={() => router.push('/search')}>
+        <SearchDiv>검색어를 입력하세요.</SearchDiv>
         <SearchButton>
           <AiOutlineSearch />
         </SearchButton>
@@ -71,18 +73,16 @@ const SearchWrapper = styled.div`
   justify-content: center;
   background-color: ${COLOR.BLUE2};
   border-radius: 20px;
+  cursor: pointer;
 `;
 
-const SearchInput = styled.input`
+const SearchDiv = styled.div`
   width: 90%;
   border: 0;
   padding-left: 10px;
   margin-left: 5px;
   background-color: ${COLOR.BLUE2};
   color: ${COLOR.WHITE};
-  &::placeholder {
-    color: ${COLOR.WHITE};
-  }
 `;
 
 const SearchButton = styled.div`
@@ -90,7 +90,6 @@ const SearchButton = styled.div`
   flex-basis: 15%;
   font-size: 20px;
   justify-content: center;
-  cursor: pointer;
 `;
 
 export default HeaderSection;

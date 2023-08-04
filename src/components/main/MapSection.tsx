@@ -11,8 +11,8 @@ const MapSection = () => {
     // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
     const map = new window.Tmapv2.Map('map_div', {
       center: new window.Tmapv2.LatLng(37.53084364186228, 127.078908811749), // 지도 초기 좌표
-      width: '100%',
-      height: '70vh',
+      width: '390px',
+      height: '591px',
       zoom: 12
     });
 
@@ -53,15 +53,15 @@ const MapSection = () => {
     setIsLoading(false);
   };
 
-  // useEffect(() => {
-  //   initTmap();
-  // }, []);
+  useEffect(() => {
+    initTmap();
+  }, []);
 
   return (
     <MapWrapper>
       {/* {isLoading && <Loading />} */}
-      <div style={{ height: '100%', backgroundColor: 'red' }}></div>
-      <div ref={mapRef} id='map_div'></div>
+      {/* <MapDiv style={{ backgroundColor: 'red' }}></MapDiv> */}
+      <MapDiv ref={mapRef} id='map_div'></MapDiv>
     </MapWrapper>
   );
 };
@@ -69,5 +69,9 @@ const MapSection = () => {
 export default MapSection;
 
 const MapWrapper = styled.div`
-  flex-basis: 70%;
+  flex-basis: 50%;
+`;
+
+const MapDiv = styled.div`
+  position: absolute;
 `;

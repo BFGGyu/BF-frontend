@@ -46,19 +46,20 @@ const FooterSection = () => {
 };
 
 const FooterWrapper = styled.div`
-  background-color: green;
-  height: 40vh;
+  height: 30vh;
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-bottom: 5vh;
+  z-index: 1;
 `;
 
 const PlaceWrapper = styled.div`
-  background-color: blue;
+  // background-color: blue;
   height: 100%;
   width: 90%;
   display: flex;
-  gap: 10px;
+  gap: 20px;
   justify-content: center;
   align-items: center;
 `;

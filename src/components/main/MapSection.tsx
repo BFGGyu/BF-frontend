@@ -26,6 +26,12 @@ const MapSection = () => {
     }
   ]);
 
+  const handleClickTag = (id: number) => {
+    setTags(
+      tags.map((tag) => (tag.id === id ? { ...tag, clicked: true } : { ...tag, clicked: false }))
+    );
+  };
+
   const initTmap = () => {
     // map 생성
     // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
@@ -82,7 +88,13 @@ const MapSection = () => {
       {/* {isLoading && <Loading />} */}
       <div style={{ display: 'flex', gap: 5, zIndex: 1 }}>
         {tags.map((tag) => (
-          <TagButton key={tag.id} style={FONT.HEADLINE2} type={tag.type}>
+          <TagButton
+            key={tag.id}
+            style={FONT.HEADLINE2}
+            type={tag.type}
+            clicked={tag.clicked}
+            onClick={() => handleClickTag(tag.id)}
+          >
             {tag.type}
           </TagButton>
         ))}
@@ -105,6 +117,7 @@ const MapDiv = styled.div`
 
 interface PlaceTypeProps {
   type: string;
+  clicked: boolean;
 }
 
 type ObjType = {
@@ -118,8 +131,8 @@ const TYPE_TO_COLOR: ObjType = {
 };
 
 const TagButton = styled.div<PlaceTypeProps>`
-  background-color: ${(props) => TYPE_TO_COLOR[props.type]};
-  color: white;
+  background-color: ${(props) => (props.clicked ? TYPE_TO_COLOR[props.type] : 'white')};
+  color: ${(props) => (props.clicked ? 'white' : COLOR.GREY)};
   padding: 5px;
   border-radius: 50px;
   cursor: pointer;

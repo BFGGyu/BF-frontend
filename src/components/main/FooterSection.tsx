@@ -1,26 +1,45 @@
 import COLOR from '@/constants/colors';
 import FONT from '@/constants/fonts';
 import Image from 'next/image';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const FooterSection = () => {
+  const [recommendPlaces, setRecommendPlaces] = useState([
+    {
+      id: '0',
+      name: '국립 고궁 박물관',
+      type: '박물관',
+      location: '서울 종로구 세종로'
+    },
+    {
+      id: 1,
+      name: '국립 현대 미술관',
+      type: '미술관',
+      location: '서울 종로구 소격동'
+    }
+  ]);
+
   return (
     <FooterWrapper>
       <PlaceWrapper>
-        <PlaceItem>
-          <IconWrapper>
-            <Image src='/images/wheelChair.svg' width={30} height={30} />
-            <Image src='/images/elevator.svg' width={30} height={30} />
-            <Image src='/images/slope.svg' width={30} height={30} />
-          </IconWrapper>
-          <TextWrapper>
-            <PlaceName style={FONT.HEADLINE2}>국립고궁 박물관</PlaceName>
-            <PlaceType style={FONT.BODY2}>박물관</PlaceType>
-            <PlaceLocation style={FONT.BODY2}>서울 종로구 세종로</PlaceLocation>
-          </TextWrapper>
-
-          <RouteButton style={FONT.HEADLINE2}>길찾기</RouteButton>
-        </PlaceItem>
+        {recommendPlaces.map((place, idx) => (
+          <PlaceItem key={idx}>
+            <IconWrapper>
+              <Image src='/images/wheelChair.svg' width={30} height={30} />
+              <Image src='/images/elevator.svg' width={30} height={30} />
+              <Image src='/images/slope.svg' width={30} height={30} />
+            </IconWrapper>
+            <TextWrapper>
+              <PlaceName style={FONT.HEADLINE2}>{place.name}</PlaceName>
+              <PlaceType style={FONT.BODY2} type={place.type}>
+                {place.type}
+              </PlaceType>
+              <PlaceLocation style={FONT.BODY2}>{place.location}</PlaceLocation>
+            </TextWrapper>
+            <RouteButton style={FONT.HEADLINE2}>길찾기</RouteButton>
+          </PlaceItem>
+        ))}
       </PlaceWrapper>
     </FooterWrapper>
   );
@@ -71,8 +90,22 @@ const TextWrapper = styled.div`
 
 const PlaceName = styled.div``;
 
-const PlaceType = styled.div`
-  color: ${COLOR.ORANGE};
+interface PlaceTypeProps {
+  type: string;
+}
+
+type ObjType = {
+  [index: string]: string;
+};
+
+const TYPE_TO_COLOR: ObjType = {
+  박물관: COLOR.ORANGE,
+  미술관: COLOR.GREEN,
+  전시회: COLOR.RED
+};
+
+const PlaceType = styled.div<PlaceTypeProps>`
+  color: ${(props) => TYPE_TO_COLOR[props.type]};
 `;
 
 const PlaceLocation = styled.div``;

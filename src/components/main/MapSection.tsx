@@ -53,13 +53,14 @@ const MapSection = () => {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    initTmap();
-  }, []);
+  // useEffect(() => {
+  //   initTmap();
+  // }, []);
 
   return (
     <MapWrapper>
-      {isLoading && <Loading />}
+      {/* {isLoading && <Loading />} */}
+      <div style={{ height: '100%', backgroundColor: 'red' }}></div>
       <div ref={mapRef} id='map_div'></div>
     </MapWrapper>
   );

@@ -1,3 +1,4 @@
+import FooterSection from '@/components/main/FooterSection';
 import type { NextPage } from 'next';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
@@ -9,6 +10,7 @@ const Index: NextPage = () => {
     <SectionWrapper>
       <HeaderSection />
       <MapSection />
+      <FooterSection />
     </SectionWrapper>
   );
 };

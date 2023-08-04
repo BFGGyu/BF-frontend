@@ -1,24 +1,49 @@
 import COLOR from '@/constants/colors';
 import FONT from '@/constants/fonts';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { AiOutlineClose, AiOutlineSearch } from 'react-icons/ai';
 import { BsArrowLeft } from 'react-icons/bs';
 import styled from 'styled-components';
 
 const Search = () => {
+  const router = useRouter();
+
+  const [inputText, setInputText] = useState<string>('');
+
   const [searchList, setSearchList] = useState([
     { id: '0', name: '국립 고궁 박물관' },
     { id: '1', name: '국립 현대 미술관' },
     { id: '2', name: '진격의 거인전' }
   ]);
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputText(e.target.value);
+  };
   return (
     <SearchWrapper>
       <SearchInputWrapper>
         <div style={{ display: 'flex', gap: 10 }}>
           <BsArrowLeft color={COLOR.GREY} size={25} />
-          <SearchInput placeholder='검색어를 입력하세요.' />
+          <SearchInput
+            placeholder='검색어를 입력하세요.'
+            value={inputText}
+            onChange={handleChangeInput}
+          />
         </div>
-        <AiOutlineSearch size={30} color={COLOR.GREY} />
+        <SearchButton
+          onClick={() =>
+            router.push(
+              {
+                pathname: '/search/[result]',
+                query: { result: inputText }
+              },
+              '/search/result'
+            )
+          }
+        >
+          <AiOutlineSearch size={30} color={COLOR.GREY} />
+        </SearchButton>
       </SearchInputWrapper>
       <div>
         {searchList.map((result) => (
@@ -56,6 +81,11 @@ const SearchInput = styled.input`
   &::placeholder {
     color: ${COLOR.GREY};
   }
+`;
+
+const SearchButton = styled.div`
+  display: flex;
+  cursor: pointer;
 `;
 
 const SearchResult = styled.div`

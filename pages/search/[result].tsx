@@ -1,13 +1,20 @@
+import SearchBar from '@/components/common/SearchBar';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const SearchResultIndex = () => {
   const router = useRouter();
 
+  const [searchResult, setSearchResult] = useState<string>('');
+
   useEffect(() => {
-    console.log(router.query.result);
+    if (typeof router.query.result === 'string') setSearchResult(router.query.result);
   });
-  return <div>{'' || router.query.result}</div>;
+  return (
+    <>
+      <SearchBar text={router.query.result} />
+    </>
+  );
 };
 
 export default SearchResultIndex;

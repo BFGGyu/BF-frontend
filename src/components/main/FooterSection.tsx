@@ -3,6 +3,7 @@ import FONT from '@/constants/fonts';
 import Image from 'next/image';
 import { useState } from 'react';
 import styled from 'styled-components';
+import Button from '../common/Button';
 
 const FooterSection = () => {
   const [recommendPlaces, setRecommendPlaces] = useState([
@@ -37,7 +38,9 @@ const FooterSection = () => {
               </PlaceType>
               <PlaceLocation style={FONT.BODY2}>{place.location}</PlaceLocation>
             </TextWrapper>
-            <RouteButton style={FONT.HEADLINE2}>길찾기</RouteButton>
+            <Button width='60%' bgColor={COLOR.BLUE1} color={COLOR.WHITE}>
+              길찾기
+            </Button>
           </PlaceItem>
         ))}
       </PlaceWrapper>
@@ -46,7 +49,7 @@ const FooterSection = () => {
 };
 
 const FooterWrapper = styled.div`
-  height: 30vh;
+  height: 35vh;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -55,7 +58,6 @@ const FooterWrapper = styled.div`
 `;
 
 const PlaceWrapper = styled.div`
-  // background-color: blue;
   height: 100%;
   width: 90%;
   display: flex;
@@ -111,14 +113,4 @@ const PlaceType = styled.div<PlaceTypeProps>`
 
 const PlaceLocation = styled.div``;
 
-const RouteButton = styled.div`
-  background-color: ${COLOR.BLUE1};
-  color: white;
-  padding: 10px;
-  width: 60%;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 export default FooterSection;

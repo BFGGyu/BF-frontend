@@ -1,3 +1,4 @@
+import Button from '@/components/common/Button';
 import SearchBar from '@/components/common/SearchBar';
 import COLOR from '@/constants/colors';
 import FONT from '@/constants/fonts';
@@ -64,7 +65,9 @@ const SearchResultIndex = ({ result }: { result: string }) => {
               </IconWrapper>
             </LeftWrapper>
             <RightWrapper>
-              <RouteButton>길찾기</RouteButton>
+              <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE}>
+                길찾기
+              </Button>
             </RightWrapper>
           </SearchListWrapper>
         ))}
@@ -133,19 +136,6 @@ const PlaceTimeWrapper = styled.div`
 const RightWrapper = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const RouteButton = styled.div`
-  background-color: ${COLOR.BLUE1};
-  color: white;
-  padding: 10px;
-  width: 20%
-  height: 10px;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
 `;
 
 const SearchListWrapper = styled.div`

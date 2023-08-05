@@ -45,7 +45,7 @@ const SearchBar = ({ text }: ISearchBar) => {
                 pathname: '/search/[result]',
                 query: { result: inputText }
               },
-              '/result'
+              `/search?result=${inputText}`
             )
           }
         >

@@ -1,10 +1,5 @@
-import Button from '@/components/common/Button';
 import SearchBar from '@/components/common/SearchBar';
-import PlaceItem from '@/components/placeList/PlaceItem';
-import COLOR from '@/constants/colors';
-import FONT from '@/constants/fonts';
-import { GetServerSideProps } from 'next';
-import Image from 'next/image';
+import PlaceItem from '@/components/PlaceItem';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';

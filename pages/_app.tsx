@@ -6,6 +6,7 @@ import React from 'react';
 import { Wrapper } from '@googlemaps/react-wrapper';
 import styled from 'styled-components';
 import { RecoilRoot } from 'recoil';
+import SCREEN_SIZE from '@/constants/sizes';
 
 const Reactproject: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
@@ -25,8 +26,8 @@ const Reactproject: NextPage<AppProps> = ({ Component, pageProps }: AppProps) =>
 };
 
 const MainLayout = styled.div`
-  width: 390px;
-  height: 844px;
+  width: ${SCREEN_SIZE.WIDTH};
+  height: ${SCREEN_SIZE.HEIGHT};
   margin: 0 auto;
 `;
 

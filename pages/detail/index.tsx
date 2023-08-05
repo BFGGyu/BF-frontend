@@ -47,7 +47,7 @@ const DetailPage = () => {
       <ReviewSection>
         <ReviewHeader style={FONT.HEADLINE2}>방문자 리뷰 49 명</ReviewHeader>
         {reviewList.map((review) => (
-          <ReviewBody>
+          <ReviewBody key={review.id}>
             <ReviewScore style={FONT.BODY2}>
               <StarRating>
                 {'⭐️'.repeat(review.starRate)}
@@ -67,7 +67,6 @@ const DetailWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  border: 1px solid black;
 `;
 
 const HeaderWrapper = styled.div`

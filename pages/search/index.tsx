@@ -17,7 +17,7 @@ const Search = () => {
       <SearchBar />
       <div>
         {searchList.map((result) => (
-          <SearchResult style={FONT.BODY1}>
+          <SearchResult style={FONT.BODY1} key={result.id}>
             {result.name}
             <AiOutlineClose size={20} color={COLOR.GREY} />
           </SearchResult>

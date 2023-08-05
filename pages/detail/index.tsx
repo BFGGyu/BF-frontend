@@ -1,9 +1,7 @@
-import SearchBar from '@/components/common/SearchBar';
+import Button from '@/components/common/Button';
 import InfoSection from '@/components/placeList/InfoSection';
-import PlaceItem from '@/components/placeList/PlaceItem';
 import COLOR from '@/constants/colors';
 import FONT from '@/constants/fonts';
-import Image from 'next/image';
 import React, { useState } from 'react';
 import { BsArrowLeft } from 'react-icons/bs';
 import { styled } from 'styled-components';
@@ -23,8 +21,17 @@ const DetailPage = () => {
         <BsArrowLeft color={COLOR.GREY} size={25} />
         <div style={FONT.BODY1}>고궁 박물관</div>
       </HeaderWrapper>
-      <div style={{ height: '20vh', backgroundColor: COLOR.GREY }}></div>
-      <InfoSection place={selectedPlace} />
+      <ImageSection></ImageSection>
+      <div style={{ display: 'flex' }}>
+        <LeftWrapper>
+          <InfoSection place={selectedPlace} />
+        </LeftWrapper>
+        <RightWrapper>
+          <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE}>
+            길찾기
+          </Button>
+        </RightWrapper>
+      </div>
     </DetailWrapper>
   );
 };
@@ -33,9 +40,6 @@ const DetailWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 10px;
-  border-bottom: 1px solid black;
-  border-color: ${COLOR.LINE};
   border: 1px solid black;
 `;
 
@@ -43,11 +47,28 @@ const HeaderWrapper = styled.div`
   display: flex;
   width: 100%;
   padding: 10px;
-  border-bottom: 1px solid black;
-  border-color: ${COLOR.LINE};
   align-items: center;
   gap: 10px;
   height: 10vh;
+`;
+
+const ImageSection = styled.div`
+  height: 20vh;
+  background-color: ${COLOR.GREY};
+`;
+
+const LeftWrapper = styled.div`
+  display: flex;
+  flex-basis: 80%;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+`;
+
+const RightWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+  margin-top: 20px;
 `;
 
 export default DetailPage;

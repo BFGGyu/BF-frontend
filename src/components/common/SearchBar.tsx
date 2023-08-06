@@ -6,16 +6,26 @@ import { AiOutlineClose, AiOutlineSearch } from 'react-icons/ai';
 import { BsArrowLeft } from 'react-icons/bs';
 import Link from 'next/link';
 
-interface ISearchBar {
+interface ISearchBarProps {
   keyword?: string | string[];
+  isSearched: boolean;
+  setIsSearched: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SearchBar = ({ keyword }: ISearchBar) => {
+const SearchBar = ({ keyword, isSearched, setIsSearched }: ISearchBarProps) => {
   const router = useRouter();
   const [inputText, setInputText] = useState<string>('');
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
+  };
+
+  const goBackSearch = () => {
+    router.push({
+      pathname: '/search'
+    });
+    setInputText('');
+    setIsSearched(false);
   };
 
   useEffect(() => {
@@ -32,9 +42,9 @@ const SearchBar = ({ keyword }: ISearchBar) => {
           onChange={handleChangeInput}
         />
       </div>
-      {keyword ? (
+      {isSearched ? (
         <Link href='/search'>
-          <AiOutlineClose size={30} color={COLOR.GREY} />
+          <AiOutlineClose size={30} color={COLOR.GREY} onClick={goBackSearch} />
         </Link>
       ) : (
         <SearchButton

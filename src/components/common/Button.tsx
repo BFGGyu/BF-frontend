@@ -1,6 +1,4 @@
-import COLOR from '@/constants/colors';
-import FONT from '@/constants/fonts';
-import React from 'react';
+import FONT from '@constants/fonts';
 import { styled } from 'styled-components';
 
 interface IButton {

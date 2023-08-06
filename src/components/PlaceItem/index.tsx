@@ -1,7 +1,4 @@
-import COLOR from '@/constants/colors';
-import FONT from '@/constants/fonts';
-import Image from 'next/image';
-import React from 'react';
+import COLOR from '@constants/colors';
 import { styled } from 'styled-components';
 import Button from '../common/Button';
 import InfoSection from './InfoSection';
@@ -33,53 +30,12 @@ const PlaceItem = ({ place }: IPlaceItemProps) => {
   );
 };
 
-const IconWrapper = styled.div`
-  display: flex;
-  flexbasis: 20%;
-  gap: 5px;
-`;
-
 const LeftWrapper = styled.div`
   display: flex;
   flex-basis: 80%;
   flex-direction: column;
   gap: 10px;
   padding: 20px;
-`;
-
-interface PlaceTypeProps {
-  type: string;
-}
-
-type ObjType = {
-  [index: string]: string;
-};
-
-const TYPE_TO_COLOR: ObjType = {
-  박물관: COLOR.ORANGE,
-  미술관: COLOR.GREEN,
-  전시회: COLOR.RED
-};
-
-const PlaceType = styled.div<PlaceTypeProps>`
-  color: ${(props) => TYPE_TO_COLOR[props.type]};
-`;
-
-const PlaceHeadWrapper = styled.div`
-  display: flex;
-  gap: 10px;
-`;
-
-const PlaceName = styled.div``;
-
-const PlaceLocation = styled.div`
-  color: ${COLOR.GREY};
-`;
-
-const PlaceTimeWrapper = styled.div`
-  display: flex;
-  gap: 10px;
-  color: ${COLOR.GREY};
 `;
 
 const RightWrapper = styled.div`

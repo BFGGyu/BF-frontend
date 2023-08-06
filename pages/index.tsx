@@ -1,6 +1,6 @@
-import FooterSection from '@/components/main/FooterSection';
-import HeaderSection from '@/components/main/HeaderSection';
-import MapSection from '@/components/main/MapSection';
+import FooterSection from '@main/FooterSection';
+import HeaderSection from '@main/HeaderSection';
+import MapSection from '@main/MapSection';
 import type { NextPage } from 'next';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';

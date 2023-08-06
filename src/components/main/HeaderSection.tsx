@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
-import COLOR from '../../constants/colors';
-import FONT from '../../constants/fonts';
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 

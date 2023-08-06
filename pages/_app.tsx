@@ -2,11 +2,9 @@ import { AppProps } from 'next/app';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import GlobalStyle from '../src/styles/globalStyle';
-import React from 'react';
-import { Wrapper } from '@googlemaps/react-wrapper';
 import styled from 'styled-components';
 import { RecoilRoot } from 'recoil';
-import SCREEN_SIZE from '@/constants/sizes';
+import SCREEN_SIZE from '@constants/sizes';
 
 const Reactproject: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (

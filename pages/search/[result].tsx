@@ -1,8 +1,7 @@
-import SearchBar from '@/components/common/SearchBar';
-import PlaceItem from '@/components/PlaceItem';
+import SearchBar from '@common/SearchBar';
+import PlaceItem from '@PlaceItem/index';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 
 const SearchResultIndex = ({ result }: { result: string }) => {
   const router = useRouter();

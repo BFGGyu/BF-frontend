@@ -1,9 +1,9 @@
-import COLOR from '@/constants/colors';
-import FONT from '@/constants/fonts';
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
 import Image from 'next/image';
 import { useState } from 'react';
 import styled from 'styled-components';
-import Button from '../common/Button';
+import Button from '@common/Button';
 
 const FooterSection = () => {
   const [recommendPlaces, setRecommendPlaces] = useState([

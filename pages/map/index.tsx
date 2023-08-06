@@ -12,14 +12,14 @@ declare global {
 
 // 5. 경로탐색 결과 Line 그리기
 // 교통정보에 따라 달라지는 색깔
-// const trafficColors = {
-//   extractStyles: true,
-//   /* 실제 교통정보가 표출되면 아래와 같은 Color로 Line이 생성됩니다. */
-//   trafficDefaultColor: COLOR.BLUE1, //Default
-//   trafficType1Color: COLOR.GREEN, //원할
-//   trafficType2Color: COLOR.ORANGE, //지체
-//   trafficType3Color: COLOR.RED //정체
-// };
+const trafficColors = {
+  extractStyles: true,
+  /* 실제 교통정보가 표출되면 아래와 같은 Color로 Line이 생성됩니다. */
+  trafficDefaultColor: COLOR.BLUE1, //Default
+  trafficType1Color: COLOR.GREEN, //원할
+  trafficType2Color: COLOR.ORANGE, //지체
+  trafficType3Color: COLOR.RED //정체
+};
 
 // // 선 스타일
 // const styleRed = {
@@ -121,14 +121,14 @@ const Index: NextPage = () => {
 
         const drawInfoArr = [];
 
-        for (var i in resultData) {
-          //for문 [S]
-          var geometry = resultData[i].geometry;
-          var properties = resultData[i].properties;
-          var polyline_;
+        // for문 시작
+        for (let i in resultData) {
+          const geometry = resultData[i].geometry;
+          const properties = resultData[i].properties;
+
           // geometry.type == 'LineString' | 'Point'
           if (geometry.type == 'LineString') {
-            for (const j in geometry.coordinates) {
+            for (let j in geometry.coordinates) {
               // 경로들의 결과값(구간)들을 포인트 객체로 변환
               const latlng = new window.Tmapv2.Point(
                 geometry.coordinates[j][0],
@@ -142,9 +142,9 @@ const Index: NextPage = () => {
               drawInfoArr.push(convertChange);
             }
           } else {
-            var markerImg = '';
-            var pType = '';
-            var size;
+            let markerImg = '';
+            let pType = '';
+            let size;
 
             if (properties.pointType == 'S') {
               //출발지 마커
@@ -164,10 +164,13 @@ const Index: NextPage = () => {
             }
 
             // 경로들의 결과값들을 포인트 객체로 변환
-            var latlon = new window.Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]); // 포인트 객체를 받아 좌표값으로 다시 변환
-            var convertPoint = new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlon);
+            const latlon = new window.Tmapv2.Point(
+              geometry.coordinates[0],
+              geometry.coordinates[1]
+            ); // 포인트 객체를 받아 좌표값으로 다시 변환
+            const convertPoint = new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlon);
 
-            var routeInfoObj = {
+            const routeInfoObj = {
               markerImage: markerImg,
               lng: convertPoint._lng,
               lat: convertPoint._lat,
@@ -183,23 +186,35 @@ const Index: NextPage = () => {
             });
           }
         }
+
+        //for문 종료
         drawLine(drawInfoArr);
 
         function drawLine(arrPoint: any[]) {
           new window.Tmapv2.Polyline({
             path: arrPoint,
             strokeColor: COLOR.BLUE1,
-            strokeWeight: 10,
+            strokeWeight: 6,
             map: CURRENT_MAP
           });
         }
+
+        new window.Tmapv2.InfoWindow({
+          position: new window.Tmapv2.LatLng(END.LAT, END.LNG),
+          type: 2,
+          content: 'BFGGyu',
+          border: '3px dashed black',
+          background: COLOR.BLUE3,
+          zIndex: 1,
+          visible: true,
+          map: CURRENT_MAP
+        });
       })
       .catch((e) => console.log(e));
   };
 
   useEffect(() => {
     initTmap();
-    // getRoutingResult();
   }, []);
 
   return (

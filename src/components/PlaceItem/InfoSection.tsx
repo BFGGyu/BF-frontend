@@ -20,7 +20,7 @@ const InfoSection = ({ place }: IPlaceItemProps) => {
     <>
       <PlaceHeadWrapper>
         <PlaceName style={FONT.HEADLINE2}>{place.name}</PlaceName>
-        <PlaceType style={FONT.BODY2} type={place.type}>
+        <PlaceType style={FONT.BODY2} $type={place.type}>
           {place.type}
         </PlaceType>
       </PlaceHeadWrapper>
@@ -39,7 +39,7 @@ const InfoSection = ({ place }: IPlaceItemProps) => {
 };
 
 interface PlaceTypeProps {
-  type: string;
+  $type: string;
 }
 
 type ObjType = {
@@ -53,7 +53,7 @@ const TYPE_TO_COLOR: ObjType = {
 };
 
 const PlaceType = styled.div<PlaceTypeProps>`
-  color: ${(props) => TYPE_TO_COLOR[props.type]};
+  color: ${(props) => TYPE_TO_COLOR[props.$type]};
 `;
 
 const PlaceHeadWrapper = styled.div`

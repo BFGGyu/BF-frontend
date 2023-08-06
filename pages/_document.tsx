@@ -1,13 +1,5 @@
-import Document, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-  DocumentContext,
-  DocumentInitialProps
-} from 'next/document';
+import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
-import Script from 'next/script';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -44,7 +36,10 @@ class MyDocument extends Document {
             href='https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css'
             rel='stylesheet'
           />
+
+          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
           <script src='https://code.jquery.com/jquery-3.2.1.min.js' />
+          {/* eslint-disable-next-line @next/next/no-sync-scripts */}
           <script
             src={`https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=${process.env.NEXT_PUBLIC_TMAP_KEY}`}
           />

@@ -1,8 +1,8 @@
-import Button from '@/components/common/Button';
-import InfoSection from '@/components/PlaceItem/InfoSection';
-import COLOR from '@/constants/colors';
-import FONT from '@/constants/fonts';
-import React, { useState } from 'react';
+import Button from '@common/Button';
+import InfoSection from '@PlaceItem/InfoSection';
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
+import { useState } from 'react';
 import { BsArrowLeft } from 'react-icons/bs';
 import { styled } from 'styled-components';
 

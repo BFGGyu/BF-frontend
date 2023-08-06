@@ -1,4 +1,4 @@
-import COLOR from '@/constants/colors';
+import COLOR from '@constants/colors';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
@@ -21,7 +21,7 @@ const SearchBar = ({ text }: ISearchBar) => {
 
   useEffect(() => {
     if (typeof text === 'string') setInputText(text);
-  }, []);
+  }, [text]);
 
   return (
     <SearchInputWrapper>

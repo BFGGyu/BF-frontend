@@ -1,8 +1,8 @@
-import COLOR from '@/constants/colors';
-import FONT from '@/constants/fonts';
-import React, { useEffect, useRef, useState } from 'react';
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import Loading from '../../../pages/Loading';
+import Loading from '@pages/Loading';
 
 const MapSection = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -85,7 +85,7 @@ const MapSection = () => {
 
   return (
     <MapWrapper>
-      {/* {isLoading && <Loading />} */}
+      {isLoading && <Loading />}
       <TagWrapper>
         {tags.map((tag) => (
           <TagButton

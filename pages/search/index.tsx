@@ -1,6 +1,6 @@
-import SearchBar from '@/components/common/SearchBar';
-import COLOR from '@/constants/colors';
-import FONT from '@/constants/fonts';
+import SearchBar from '@common/SearchBar';
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
 import { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import styled from 'styled-components';

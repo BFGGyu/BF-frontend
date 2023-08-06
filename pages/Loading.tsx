@@ -1,4 +1,3 @@
-import React from 'react';
 import { BounceLoader } from 'react-spinners';
 import styled from 'styled-components';
 

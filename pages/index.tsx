@@ -1,9 +1,9 @@
 import FooterSection from '@/components/main/FooterSection';
+import HeaderSection from '@/components/main/HeaderSection';
+import MapSection from '@/components/main/MapSection';
 import type { NextPage } from 'next';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import HeaderSection from '../src/components/main/HeaderSection';
-import MapSection from '../src/components/main/MapSection';
 
 const Index: NextPage = () => {
   return (

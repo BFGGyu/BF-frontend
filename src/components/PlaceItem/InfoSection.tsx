@@ -31,9 +31,9 @@ const InfoSection = ({ place }: IPlaceItemProps) => {
         <div>{place.startTimeAt} 에 운영시작</div>
       </PlaceTimeWrapper>
       <IconWrapper>
-        <Image src='/images/wheelChair.svg' width={30} height={30} />
-        <Image src='/images/elevator.svg' width={30} height={30} />
-        <Image src='/images/slope.svg' width={30} height={30} />
+        <Image src='/images/wheelChair.svg' alt='wheelChair' width={30} height={30} />
+        <Image src='/images/elevator.svg' alt='elevator' width={30} height={30} />
+        <Image src='/images/slope.svg' alt='slope' width={30} height={30} />
       </IconWrapper>
     </>
   );

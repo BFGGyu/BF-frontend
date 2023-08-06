@@ -27,9 +27,9 @@ const FooterSection = () => {
         {recommendPlaces.map((place, idx) => (
           <PlaceItem key={idx}>
             <IconWrapper>
-              <Image src='/images/wheelChair.svg' width={30} height={30} />
-              <Image src='/images/elevator.svg' width={30} height={30} />
-              <Image src='/images/slope.svg' width={30} height={30} />
+              <Image src='/images/wheelChair.svg' alt='wheelChair' width={30} height={30} />
+              <Image src='/images/elevator.svg' alt='elevator' width={30} height={30} />
+              <Image src='/images/slope.svg' alt='slope' width={30} height={30} />
             </IconWrapper>
             <TextWrapper>
               <PlaceName style={FONT.HEADLINE2}>{place.name}</PlaceName>

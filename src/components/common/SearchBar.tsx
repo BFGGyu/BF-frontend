@@ -21,7 +21,7 @@ const SearchBar = ({ text }: ISearchBar) => {
 
   useEffect(() => {
     if (typeof text === 'string') setInputText(text);
-  }, []);
+  }, [text]);
 
   return (
     <SearchInputWrapper>

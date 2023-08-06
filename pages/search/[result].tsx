@@ -41,7 +41,7 @@ const SearchResultIndex = ({ result }: { result: string }) => {
       <SearchBar text={result} />
       <div>
         {searchList.map((place) => (
-          <PlaceItem place={place} />
+          <PlaceItem key={place.id} place={place} />
         ))}
       </div>
     </>

@@ -2,22 +2,28 @@ import COLOR from '@constants/colors';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import { AiOutlineClose, AiOutlineSearch } from 'react-icons/ai';
+import { AiFillCloseCircle, AiOutlineClose, AiOutlineSearch } from 'react-icons/ai';
 import { BsArrowLeft } from 'react-icons/bs';
 import Link from 'next/link';
 
 interface ISearchBarProps {
   keyword?: string | string[];
-  isSearched: boolean;
   setIsSearched: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SearchBar = ({ keyword, isSearched, setIsSearched }: ISearchBarProps) => {
+const SearchBar = ({ keyword, setIsSearched }: ISearchBarProps) => {
   const router = useRouter();
   const [inputText, setInputText] = useState<string>('');
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
+  };
+
+  const handleClickSearchBtn = () => {
+    router.push({
+      pathname: '/search',
+      query: { result: inputText }
+    });
   };
 
   const goBackSearch = () => {
@@ -34,30 +40,28 @@ const SearchBar = ({ keyword, isSearched, setIsSearched }: ISearchBarProps) => {
 
   return (
     <SearchInputWrapper>
-      <div style={{ display: 'flex', gap: 10 }}>
-        <BsArrowLeft color={COLOR.GREY} size={25} />
+      <LeftSection>
+        <CursorWrapper>
+          <BsArrowLeft color={COLOR.GREY} size={25} onClick={goBackSearch} />
+        </CursorWrapper>
         <SearchInput
           placeholder='검색어를 입력하세요.'
           value={inputText}
           onChange={handleChangeInput}
         />
-      </div>
-      {isSearched ? (
-        <Link href='/search'>
-          <AiOutlineClose size={30} color={COLOR.GREY} onClick={goBackSearch} />
-        </Link>
-      ) : (
-        <SearchButton
-          onClick={() =>
-            router.push({
-              pathname: '/search',
-              query: { result: inputText }
-            })
-          }
-        >
+      </LeftSection>
+      <RightSection>
+        {inputText ? (
+          <CursorWrapper>
+            <AiFillCloseCircle size={20} color={COLOR.GREY} onClick={() => setInputText('')} />
+          </CursorWrapper>
+        ) : (
+          <AiFillCloseCircle size={20} color={COLOR.WHITE} />
+        )}
+        <SearchButtonWrapper onClick={handleClickSearchBtn}>
           <AiOutlineSearch size={30} color={COLOR.GREY} />
-        </SearchButton>
-      )}
+        </SearchButtonWrapper>
+      </RightSection>
     </SearchInputWrapper>
   );
 };
@@ -73,16 +77,36 @@ const SearchInputWrapper = styled.div`
   border-color: ${COLOR.LINE};
 `;
 
+const LeftSection = styled.div`
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-basis: 70%;
+`;
+
 const SearchInput = styled.input`
   border: 0;
-  padding-right: 65%;
   font-size: 16px;
+  width: 100%;
   &::placeholder {
     color: ${COLOR.GREY};
   }
 `;
 
-const SearchButton = styled.div`
+const RightSection = styled.div`
+  display: flex;
+  flex-basis: 30%;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+`;
+
+const CursorWrapper = styled.div`
+  cursor: pointer;
+`;
+
+const SearchButtonWrapper = styled.div`
   display: flex;
   cursor: pointer;
 `;

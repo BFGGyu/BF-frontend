@@ -54,7 +54,7 @@ const Search = () => {
 
   return (
     <SearchWrapper>
-      <SearchBar keyword={keyword} isSearched={isSearched} setIsSearched={setIsSearched} />
+      <SearchBar keyword={keyword} setIsSearched={setIsSearched} />
       {isSearched ? (
         <>
           {searchList.map((place) => (

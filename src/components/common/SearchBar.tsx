@@ -7,12 +7,11 @@ import { BsArrowLeft } from 'react-icons/bs';
 import Link from 'next/link';
 
 interface ISearchBar {
-  text?: string | string[];
+  keyword?: string | string[];
 }
 
-const SearchBar = ({ text }: ISearchBar) => {
+const SearchBar = ({ keyword }: ISearchBar) => {
   const router = useRouter();
-
   const [inputText, setInputText] = useState<string>('');
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,8 +19,8 @@ const SearchBar = ({ text }: ISearchBar) => {
   };
 
   useEffect(() => {
-    if (typeof text === 'string') setInputText(text);
-  }, [text]);
+    if (typeof keyword === 'string') setInputText(keyword);
+  }, [keyword]);
 
   return (
     <SearchInputWrapper>
@@ -33,20 +32,17 @@ const SearchBar = ({ text }: ISearchBar) => {
           onChange={handleChangeInput}
         />
       </div>
-      {text ? (
+      {keyword ? (
         <Link href='/search'>
           <AiOutlineClose size={30} color={COLOR.GREY} />
         </Link>
       ) : (
         <SearchButton
           onClick={() =>
-            router.push(
-              {
-                pathname: '/search/[result]',
-                query: { result: inputText }
-              },
-              `/search?result=${inputText}`
-            )
+            router.push({
+              pathname: '/search',
+              query: { result: inputText }
+            })
           }
         >
           <AiOutlineSearch size={30} color={COLOR.GREY} />

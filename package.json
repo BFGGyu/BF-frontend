@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@googlemaps/react-wrapper": "^1.1.35",
+    "axios": "^1.4.0",
     "eslint-config-next": "^13.4.12",
     "next": "12.3.0",
     "next-compose-plugins": "^2.2.1",

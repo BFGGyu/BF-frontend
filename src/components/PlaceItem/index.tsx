@@ -1,4 +1,5 @@
 import COLOR from '@constants/colors';
+import { useRouter } from 'next/router';
 import { styled } from 'styled-components';
 import Button from '../common/Button';
 import InfoSection from './InfoSection';
@@ -16,13 +17,18 @@ interface IPlaceItemProps {
 }
 
 const PlaceItem = ({ place }: IPlaceItemProps) => {
+  const router = useRouter();
+
+  const routeMap = () => {
+    router.push('/map');
+  };
   return (
     <SearchListWrapper key={place.id}>
       <LeftWrapper>
         <InfoSection place={place} />
       </LeftWrapper>
       <RightWrapper>
-        <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE}>
+        <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} onClick={routeMap}>
           길찾기
         </Button>
       </RightWrapper>

@@ -1,10 +1,9 @@
 import COLOR from '@constants/colors';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import { AiFillCloseCircle, AiOutlineClose, AiOutlineSearch } from 'react-icons/ai';
+import { AiFillCloseCircle, AiOutlineSearch } from 'react-icons/ai';
 import { BsArrowLeft } from 'react-icons/bs';
-import Link from 'next/link';
 
 interface ISearchBarProps {
   keyword?: string | string[];
@@ -20,23 +19,32 @@ const SearchBar = ({ keyword, setIsSearched }: ISearchBarProps) => {
   };
 
   const handleClickSearchBtn = () => {
+    const spaceReg = inputText.replaceAll(' ', '-');
     router.push({
       pathname: '/search',
-      query: { result: inputText }
+      query: { result: spaceReg }
     });
   };
 
-  const goBackSearch = () => {
+  const goBackSearch = useCallback(() => {
     router.push({
       pathname: '/search'
     });
     setInputText('');
     setIsSearched(false);
-  };
+  }, [router, setInputText, setIsSearched]);
 
   useEffect(() => {
-    if (typeof keyword === 'string') setInputText(keyword);
+    if (typeof keyword === 'string') {
+      const keywords = keyword.split('-').join(' ');
+      setInputText(keywords);
+    }
   }, [keyword]);
+
+  useEffect(() => {
+    window.addEventListener('popstate', goBackSearch);
+    return () => window.removeEventListener('popstate', goBackSearch);
+  }, [goBackSearch]);
 
   return (
     <SearchInputWrapper>

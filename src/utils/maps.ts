@@ -7,7 +7,13 @@ declare global {
   }
 }
 
-// 5. 경로탐색 결과 Line 그리기
+const APP_KEY = process.env.NEXT_PUBLIC_TMAP_KEY;
+const CENTER = { LAT: '37.53084364186228', LNG: '127.081908811749' };
+const START = { LAT: '37.519892712436906', LNG: '127.02810900563199' };
+const END = { LAT: '37.49288934463672', LNG: '127.11971717230388' };
+const PATH_MARKER_1 = { LAT: '37.5591696189164', LNG: '127.07389565460413' };
+const PATH_MARKER_2 = { LAT: '37.52127761904626', LNG: '127.13346617572014' };
+
 // 교통정보에 따라 달라지는 색깔
 const trafficColors = {
   extractStyles: true,
@@ -29,14 +35,52 @@ const styleRed = {
   title: 'this is a red line'
 };
 
-export const initRouteMap = async (CURRENT_MAP: any) => {
-  const APP_KEY = process.env.NEXT_PUBLIC_TMAP_KEY;
-  const CENTER = { LAT: '37.53084364186228', LNG: '127.081908811749' };
-  const START = { LAT: '37.519892712436906', LNG: '127.02810900563199' };
-  const END = { LAT: '37.49288934463672', LNG: '127.11971717230388' };
-  const PATH_MARKER_1 = { LAT: '37.5591696189164', LNG: '127.07389565460413' };
-  const PATH_MARKER_2 = { LAT: '37.52127761904626', LNG: '127.13346617572014' };
+export const initTmap = () => {
+  // map 생성
+  // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
+  const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
+    center: new window.Tmapv2.LatLng(CENTER.LAT, CENTER.LNG), // 지도 초기 좌표
+    width: '390px',
+    height: '588px',
+    zoom: 12
+  });
 
+  // 출발
+  const startMarker = new window.Tmapv2.Marker({
+    position: new window.Tmapv2.LatLng(START.LAT, START.LNG),
+
+    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png',
+    iconSize: new window.Tmapv2.Size(24, 38),
+    map: CURRENT_MAP
+  });
+
+  // 도착
+  const endMarker = new window.Tmapv2.Marker({
+    position: new window.Tmapv2.LatLng(END.LAT, END.LNG),
+
+    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png',
+    iconSize: new window.Tmapv2.Size(24, 38),
+    map: CURRENT_MAP
+  });
+
+  // 경로1
+  const pathMarker1 = new window.Tmapv2.Marker({
+    position: new window.Tmapv2.LatLng(PATH_MARKER_1.LAT, PATH_MARKER_1.LNG),
+    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
+    iconSize: new window.Tmapv2.Size(24, 38),
+    map: CURRENT_MAP
+  });
+
+  // 경로2
+  const pathMarker2 = new window.Tmapv2.Marker({
+    position: new window.Tmapv2.LatLng(PATH_MARKER_2.LAT, PATH_MARKER_2.LNG),
+    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
+    iconSize: new window.Tmapv2.Size(24, 38),
+    map: CURRENT_MAP
+  });
+};
+
+export const initRouteMap = async (CURRENT_MAP: any) => {
   // map 생성
   // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
   CURRENT_MAP = new window.Tmapv2.Map('map_div', {

@@ -3,24 +3,22 @@ import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { useRouter } from 'next/router';
+import Header from '@common/Header';
 
 const HeaderSection = () => {
   const router = useRouter();
   return (
     <Wrapper>
-      <HeaderWrapper>
-        <div style={{ width: 25, height: 25, background: COLOR.WHITE }}></div>
-        <div>서비스명</div>
-      </HeaderWrapper>
+      <Header />
       <BodyWrapper>
         <MainTextWrapper>
-          <div style={FONT.HEADLINE1}>
+          <MainText style={FONT.HEADLINE1}>
             원하는 문화시설을 <br />
             검색해보세요!
-          </div>
-          <div style={FONT.BODY1}>휠체어 이용자를 위한 안전한 경로 안내</div>
+          </MainText>
+          <SubText style={FONT.BODY1}>휠체어 이용자를 위한 안전한 경로 안내</SubText>
         </MainTextWrapper>
-        <div>아이콘</div>
+        <GuideButton>아이콘</GuideButton>
       </BodyWrapper>
       <SearchWrapper onClick={() => router.push('/search')}>
         <SearchDiv>검색어를 입력하세요.</SearchDiv>
@@ -38,21 +36,14 @@ const Wrapper = styled.div`
   flex-basis: 40%;
   background-color: ${COLOR.BLUE1};
   color: ${COLOR.WHITE};
-  padding-left: 1rem;
-  padding-right: 1rem;
-`;
-
-const HeaderWrapper = styled.div`
-  display: flex;
-  flex-basis: 20%;
-  gap: 5px;
-  align-items: center;
 `;
 
 const BodyWrapper = styled.div`
   display: flex;
   flex-basis: 60%;
   justify-content: space-between;
+  padding-left: 1rem;
+  padding-right: 1rem;
 `;
 
 const MainTextWrapper = styled.div`
@@ -63,7 +54,15 @@ const MainTextWrapper = styled.div`
   gap: 0px;
 `;
 
+const MainText = styled.div``;
+
+const SubText = styled.div``;
+
+const GuideButton = styled.div``;
+
 const SearchWrapper = styled.div`
+  width: 95%;
+  margin: 0 auto;
   display: flex;
   flex-basis: 25%;
   margin-top: 10px;
@@ -71,15 +70,14 @@ const SearchWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background-color: ${COLOR.BLUE2};
-  border-radius: 20px;
+  border-radius: 100px;
   cursor: pointer;
 `;
 
 const SearchDiv = styled.div`
   width: 90%;
   border: 0;
-  padding-left: 10px;
-  margin-left: 5px;
+  padding-left: 20px;
   background-color: ${COLOR.BLUE2};
   color: ${COLOR.WHITE};
 `;

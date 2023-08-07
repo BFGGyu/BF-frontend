@@ -86,7 +86,7 @@ export const initRouteMap = async (CURRENT_MAP: any) => {
   CURRENT_MAP = new window.Tmapv2.Map('map_div', {
     center: new window.Tmapv2.LatLng(CENTER.LAT, CENTER.LNG), // 지도 초기 좌표
     width: '100%',
-    height: '400px',
+    height: '600px',
     zoom: 12
   });
 

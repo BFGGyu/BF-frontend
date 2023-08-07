@@ -6,7 +6,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { styled } from 'styled-components';
 import { AiFillStar } from 'react-icons/ai';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const ReviewPage: NextPage = () => {
   const router = useRouter();
@@ -16,13 +16,15 @@ const ReviewPage: NextPage = () => {
     router.push('/');
   };
 
-  const [starRatingList, setStarRatingList] = useState([true, true, true, true, false]);
+  const starCount = useRef(5);
+  const [starRatingList, setStarRatingList] = useState([true, true, true, true, true]);
 
   const handleClickStar = (rating: number) => {
     const result = [false, false, false, false, false].map((data, idx) =>
       idx <= rating ? true : false
     );
     setStarRatingList(result);
+    starCount.current = result.filter((data) => data === true).length;
   };
 
   return (

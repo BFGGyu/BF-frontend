@@ -4,11 +4,13 @@ import FONT from '@constants/fonts';
 import InfoSection from '@PlaceItem/InfoSection';
 import { initRouteMap } from '@utils/maps';
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 
 let CURRENT_MAP: any;
 const MapPage: NextPage = () => {
+  const router = useRouter();
   const mapRef = useRef<HTMLDivElement | null>(null);
   const [selectedPlace, setSelectedPlace] = useState({
     id: '0',
@@ -27,11 +29,13 @@ const MapPage: NextPage = () => {
       <PlaceSelectBarWrapper>
         <PlaceSelectBar>
           <PlaceLabel style={FONT.BODY2}>출발지</PlaceLabel>
-          <StartPlace style={FONT.BODY1}>현위치</StartPlace>
+          <StartPlace style={FONT.BODY1}>경복궁역 3호선</StartPlace>
         </PlaceSelectBar>
         <PlaceSelectBar>
           <PlaceLabel style={FONT.BODY2}>도착지</PlaceLabel>
-          <EndPlace style={FONT.BODY1}>국립 고궁 박물관</EndPlace>
+          <EndPlace style={FONT.BODY1} onClick={() => router.push('/search')}>
+            {selectedPlace.name}
+          </EndPlace>
         </PlaceSelectBar>
       </PlaceSelectBarWrapper>
       <MapWrapper>
@@ -44,7 +48,11 @@ const MapPage: NextPage = () => {
             <InfoSection place={selectedPlace} />
           </LeftWrapper>
           <RightWrapper>
-            <Button bgColor={COLOR.WHITE} color={COLOR.BLUE2}>
+            <Button
+              bgColor={COLOR.WHITE}
+              color={COLOR.BLUE2}
+              onClick={() => router.push('/detail')}
+            >
               상세보기
             </Button>
           </RightWrapper>
@@ -79,6 +87,7 @@ const PlaceSelectBar = styled.div`
   padding: 16px;
   border-radius: 12px;
   box-shadow: 4px 4px 16px 0px rgba(0, 0, 0, 0.16);
+  cursor: pointer;
   @supports (backdrop-filter: blur(10px)) {
     backdrop-filter: blur(10px);
   }

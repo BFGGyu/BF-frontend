@@ -9,41 +9,50 @@ const ReviewPage: NextPage = () => {
   return (
     <ReviewMainWrapper>
       <Header />
-      <div
-        style={{
-          height: '85vh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: 20
-        }}
-      >
+      <TextWrapper>
         <ReviewTitle style={FONT.HEADLINE1}>이용한 경로에 대한 평가를 부탁드립니다.</ReviewTitle>
-        <div style={FONT.HEADLINE1}>{'⭐️'.repeat(5)}</div>
-        <textarea
-          style={{
-            width: '90%',
-            height: '15%',
-            fontSize: 16,
-            padding: 10,
-            outline: 'none',
-            resize: 'none'
-          }}
-          placeholder='자유롭게 의견을 적어주세요.'
-        />
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', padding: 10, gap: 10, height: '10vh' }}>
+        <StarRating style={FONT.HEADLINE1}>{'⭐️'.repeat(5)}</StarRating>
+        <ReviewText placeholder='자유롭게 의견을 적어주세요.' />
+      </TextWrapper>
+      <FooterButtonWrapper>
         <Button bgColor={COLOR.BLUE3} color={COLOR.BLUE1} height='80%'>
           건너뛰기
         </Button>
         <Button bgColor={COLOR.BLUE1} color={COLOR.BLUE3} height='80%'>
           제출하기
         </Button>
-      </div>
+      </FooterButtonWrapper>
     </ReviewMainWrapper>
   );
 };
+
+const FooterButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  height: 10vh;
+`;
+
+const ReviewText = styled.textarea`
+  width: 90%;
+  height: 15%;
+  font-size: 16px;
+  padding: 10px;
+  outline: none;
+  resize: none;
+`;
+
+const TextWrapper = styled.div`
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+`;
+
+const StarRating = styled.div``;
 
 const ReviewMainWrapper = styled.div`
   border: 1px solid black;

@@ -42,7 +42,8 @@ export const initTmap = () => {
     center: new window.Tmapv2.LatLng(CENTER.LAT, CENTER.LNG), // 지도 초기 좌표
     width: '390px',
     height: '588px',
-    zoom: 12
+    zoom: 12,
+    pinchZoom: true
   });
 
   // 출발
@@ -85,9 +86,11 @@ export const initRouteMap = async (CURRENT_MAP: any) => {
   // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
   CURRENT_MAP = new window.Tmapv2.Map('map_div', {
     center: new window.Tmapv2.LatLng(CENTER.LAT, CENTER.LNG), // 지도 초기 좌표
-    width: '100%',
-    height: '600px',
-    zoom: 12
+    width: '390px',
+    height: '570px',
+    zoom: 12,
+    pinchZoom: true,
+    zoomControl: false
   });
 
   // 출발

@@ -1,5 +1,6 @@
 import Button from '@common/Button';
 import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
 import InfoSection from '@PlaceItem/InfoSection';
 import { initRouteMap } from '@utils/maps';
 import type { NextPage } from 'next';
@@ -25,21 +26,30 @@ const MapPage: NextPage = () => {
     <>
       <PlaceSelectBarWrapper>
         <PlaceSelectBar>
-          <div>출발지</div>
-          <div>현위치</div>
+          <PlaceLabel style={FONT.BODY2}>출발지</PlaceLabel>
+          <div style={FONT.BODY1}>현위치</div>
         </PlaceSelectBar>
         <PlaceSelectBar>
-          <div>도착지</div>
-          <div>국립 고궁 박물관</div>
+          <PlaceLabel style={FONT.BODY2}>도착지</PlaceLabel>
+          <div style={FONT.BODY1}>국립 고궁 박물관</div>
         </PlaceSelectBar>
       </PlaceSelectBarWrapper>
-      <div style={{ width: 390, height: 400, backgroundColor: 'grey' }}>
-        {/* <div style={{ position: 'absolute' }}> */}
-        {/* <div ref={mapRef} id='map_div'></div> */}
-        {/* </div> */}
+      <div style={{ height: 570 }}>
+        <div ref={mapRef} id='map_div' style={{ position: 'absolute' }}></div>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', height: '30vh' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '30vh'
+          // zIndex: 1,
+          // position: 'absolute',
+          // backgroundColor: 'white',
+          // width: '390px',
+          // bottom: 0
+        }}
+      >
         <div
           style={{
             display: 'flex',
@@ -75,7 +85,8 @@ const PlaceSelectBarWrapper = styled.div`
   gap: 10px;
   width: 390px;
   padding: 10px;
-  border: 1px solid black;
+  position: absolute;
+  z-index: 1;
 `;
 
 const PlaceSelectBar = styled.div`
@@ -86,6 +97,13 @@ const PlaceSelectBar = styled.div`
   padding: 16px;
   border-radius: 12px;
   box-shadow: 4px 4px 16px 0px rgba(0, 0, 0, 0.16);
+  @supports (backdrop-filter: blur(10px)) {
+    backdrop-filter: blur(10px);
+  }
+`;
+
+const PlaceLabel = styled.div`
+  color: ${COLOR.BLUE1};
 `;
 
 const LeftWrapper = styled.div`

@@ -27,37 +27,19 @@ const MapPage: NextPage = () => {
       <PlaceSelectBarWrapper>
         <PlaceSelectBar>
           <PlaceLabel style={FONT.BODY2}>출발지</PlaceLabel>
-          <div style={FONT.BODY1}>현위치</div>
+          <StartPlace style={FONT.BODY1}>현위치</StartPlace>
         </PlaceSelectBar>
         <PlaceSelectBar>
           <PlaceLabel style={FONT.BODY2}>도착지</PlaceLabel>
-          <div style={FONT.BODY1}>국립 고궁 박물관</div>
+          <EndPlace style={FONT.BODY1}>국립 고궁 박물관</EndPlace>
         </PlaceSelectBar>
       </PlaceSelectBarWrapper>
-      <div style={{ height: 570 }}>
-        <div ref={mapRef} id='map_div' style={{ position: 'absolute' }}></div>
-      </div>
+      <MapWrapper>
+        <MapDiv ref={mapRef} id='map_div'></MapDiv>
+      </MapWrapper>
 
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: '30vh'
-          // zIndex: 1,
-          // position: 'absolute',
-          // backgroundColor: 'white',
-          // width: '390px',
-          // bottom: 0
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            padding: 10,
-            borderTop: '1px solid black',
-            borderColor: COLOR.BLUE1
-          }}
-        >
+      <FooterInfoSection>
+        <InfoWrapper>
           <LeftWrapper>
             <InfoSection place={selectedPlace} />
           </LeftWrapper>
@@ -66,13 +48,13 @@ const MapPage: NextPage = () => {
               상세보기
             </Button>
           </RightWrapper>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        </InfoWrapper>
+        <ButtonWrapper>
           <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} width='90%' height='50px'>
             안내시작
           </Button>
-        </div>
-      </div>
+        </ButtonWrapper>
+      </FooterInfoSection>
     </>
   );
 };
@@ -102,8 +84,26 @@ const PlaceSelectBar = styled.div`
   }
 `;
 
+const StartPlace = styled.div``;
+
+const EndPlace = styled.div``;
+
 const PlaceLabel = styled.div`
   color: ${COLOR.BLUE1};
+`;
+
+const MapWrapper = styled.div`
+  height: 570px;
+`;
+
+const MapDiv = styled.div`
+  position: absolute;
+`;
+
+const FooterInfoSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 30vh;
 `;
 
 const LeftWrapper = styled.div`
@@ -117,6 +117,18 @@ const LeftWrapper = styled.div`
 const RightWrapper = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const InfoWrapper = styled.div`
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid black;
+  border-color: COLOR.BLUE1;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 export default MapPage;

@@ -3,15 +3,13 @@ import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { useRouter } from 'next/router';
+import Header from '@common/Header';
 
 const HeaderSection = () => {
   const router = useRouter();
   return (
     <Wrapper>
-      <HeaderWrapper>
-        <div style={{ width: 25, height: 25, background: COLOR.WHITE }}></div>
-        <div>서비스명</div>
-      </HeaderWrapper>
+      <Header />
       <BodyWrapper>
         <MainTextWrapper>
           <div style={FONT.HEADLINE1}>
@@ -38,21 +36,14 @@ const Wrapper = styled.div`
   flex-basis: 40%;
   background-color: ${COLOR.BLUE1};
   color: ${COLOR.WHITE};
-  padding-left: 1rem;
-  padding-right: 1rem;
-`;
-
-const HeaderWrapper = styled.div`
-  display: flex;
-  flex-basis: 20%;
-  gap: 5px;
-  align-items: center;
 `;
 
 const BodyWrapper = styled.div`
   display: flex;
   flex-basis: 60%;
   justify-content: space-between;
+  padding-left: 1rem;
+  padding-right: 1rem;
 `;
 
 const MainTextWrapper = styled.div`
@@ -64,6 +55,8 @@ const MainTextWrapper = styled.div`
 `;
 
 const SearchWrapper = styled.div`
+  width: 95%;
+  margin: 0 auto;
   display: flex;
   flex-basis: 25%;
   margin-top: 10px;
@@ -71,15 +64,14 @@ const SearchWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background-color: ${COLOR.BLUE2};
-  border-radius: 20px;
+  border-radius: 100px;
   cursor: pointer;
 `;
 
 const SearchDiv = styled.div`
   width: 90%;
   border: 0;
-  padding-left: 10px;
-  margin-left: 5px;
+  padding-left: 20px;
   background-color: ${COLOR.BLUE2};
   color: ${COLOR.WHITE};
 `;

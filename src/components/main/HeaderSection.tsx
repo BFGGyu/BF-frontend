@@ -35,7 +35,7 @@ const HeaderSection = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  flex-basis: 30%;
+  flex-basis: 40%;
   background-color: ${COLOR.BLUE1};
   color: ${COLOR.WHITE};
   padding-left: 1rem;

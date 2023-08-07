@@ -38,7 +38,9 @@ const ButtonWrapper = styled.div<ButtonProps>`
   background-color: ${(props) => props.$bgColor};
   color: ${(props) => props.$color};
   padding: 10px;
-  border-radius: 20px;
+  border: 1px solid black;
+  border-color: ${(props) => props.$color};
+  border-radius: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -12,13 +12,13 @@ const HeaderSection = () => {
       <Header />
       <BodyWrapper>
         <MainTextWrapper>
-          <div style={FONT.HEADLINE1}>
+          <MainText style={FONT.HEADLINE1}>
             원하는 문화시설을 <br />
             검색해보세요!
-          </div>
-          <div style={FONT.BODY1}>휠체어 이용자를 위한 안전한 경로 안내</div>
+          </MainText>
+          <SubText style={FONT.BODY1}>휠체어 이용자를 위한 안전한 경로 안내</SubText>
         </MainTextWrapper>
-        <div>아이콘</div>
+        <GuideButton>아이콘</GuideButton>
       </BodyWrapper>
       <SearchWrapper onClick={() => router.push('/search')}>
         <SearchDiv>검색어를 입력하세요.</SearchDiv>
@@ -53,6 +53,12 @@ const MainTextWrapper = styled.div`
   align-items: center;
   gap: 0px;
 `;
+
+const MainText = styled.div``;
+
+const SubText = styled.div``;
+
+const GuideButton = styled.div``;
 
 const SearchWrapper = styled.div`
   width: 95%;

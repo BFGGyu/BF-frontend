@@ -23,8 +23,22 @@ const MapPage: NextPage = () => {
 
   return (
     <>
-      <div ref={mapRef} id='map_div'></div>
-      {/* <div style={{ width: 390, height: '70vh', backgroundColor: 'white' }} /> */}
+      <PlaceSelectBarWrapper>
+        <PlaceSelectBar>
+          <div>출발지</div>
+          <div>현위치</div>
+        </PlaceSelectBar>
+        <PlaceSelectBar>
+          <div>도착지</div>
+          <div>국립 고궁 박물관</div>
+        </PlaceSelectBar>
+      </PlaceSelectBarWrapper>
+      <div style={{ width: 390, height: 400, backgroundColor: 'grey' }}>
+        {/* <div style={{ position: 'absolute' }}> */}
+        {/* <div ref={mapRef} id='map_div'></div> */}
+        {/* </div> */}
+      </div>
+
       <div style={{ display: 'flex', flexDirection: 'column', height: '30vh' }}>
         <div
           style={{
@@ -52,6 +66,27 @@ const MapPage: NextPage = () => {
     </>
   );
 };
+
+const PlaceSelectBarWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 390px;
+  padding: 10px;
+  border: 1px solid black;
+`;
+
+const PlaceSelectBar = styled.div`
+  display: flex;
+  gap: 20px;
+  width: 95%;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 4px 4px 16px 0px rgba(0, 0, 0, 0.16);
+`;
 
 const LeftWrapper = styled.div`
   display: flex;

@@ -19,6 +19,10 @@ const SearchBar = ({ keyword, setIsSearched }: ISearchBarProps) => {
   };
 
   const handleClickSearchBtn = () => {
+    // 공백만 입력한 경우
+    const blank_pattern = /^\s+|\s+$/g;
+    if (inputText.replace(blank_pattern, '') == '') return;
+
     const spaceReg = inputText.replaceAll(' ', '-');
     router.push({
       pathname: '/search',

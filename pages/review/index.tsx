@@ -1,3 +1,4 @@
+import Button from '@common/Button';
 import Header from '@common/Header';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
@@ -11,7 +12,6 @@ const ReviewPage: NextPage = () => {
       <div
         style={{
           height: '85vh',
-          backgroundColor: 'red',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -32,6 +32,14 @@ const ReviewPage: NextPage = () => {
           }}
           placeholder='자유롭게 의견을 적어주세요.'
         />
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', padding: 10, gap: 10, height: '10vh' }}>
+        <Button bgColor={COLOR.BLUE3} color={COLOR.BLUE1} height='80%'>
+          건너뛰기
+        </Button>
+        <Button bgColor={COLOR.BLUE1} color={COLOR.BLUE3} height='80%'>
+          제출하기
+        </Button>
       </div>
     </ReviewMainWrapper>
   );

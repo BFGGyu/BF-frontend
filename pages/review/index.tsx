@@ -3,22 +3,55 @@ import Header from '@common/Header';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { styled } from 'styled-components';
+import { AiFillStar } from 'react-icons/ai';
+import { useState } from 'react';
 
 const ReviewPage: NextPage = () => {
+  const router = useRouter();
+
+  const handleSubmitReview = () => {
+    // 제출하기 버튼 클릭 시 API 호출 후 라우팅. 제출 완료 토스트 메세지?
+    router.push('/');
+  };
+
+  const [starRatingList, setStarRatingList] = useState([true, true, true, true, false]);
+
+  const handleClickStar = (rating: number) => {
+    const result = [false, false, false, false, false].map((data, idx) =>
+      idx <= rating ? true : false
+    );
+    setStarRatingList(result);
+  };
+
   return (
     <ReviewMainWrapper>
       <Header />
       <TextWrapper>
         <ReviewTitle style={FONT.HEADLINE1}>이용한 경로에 대한 평가를 부탁드립니다.</ReviewTitle>
-        <StarRating style={FONT.HEADLINE1}>{'⭐️'.repeat(5)}</StarRating>
+        <StarRating style={FONT.HEADLINE1}>
+          {starRatingList.map((star, idx) => (
+            <AiFillStar
+              key={idx}
+              size={50}
+              style={starRatingList[idx] ? { color: COLOR.BLUE1 } : { color: COLOR.BLUE3 }}
+              onClick={() => handleClickStar(idx)}
+            />
+          ))}
+        </StarRating>
         <ReviewText placeholder='자유롭게 의견을 적어주세요.' />
       </TextWrapper>
       <FooterButtonWrapper>
-        <Button bgColor={COLOR.BLUE3} color={COLOR.BLUE1} height='80%'>
+        <Button
+          bgColor={COLOR.BLUE3}
+          color={COLOR.BLUE1}
+          height='80%'
+          onClick={() => router.push('/')}
+        >
           건너뛰기
         </Button>
-        <Button bgColor={COLOR.BLUE1} color={COLOR.BLUE3} height='80%'>
+        <Button bgColor={COLOR.BLUE1} color={COLOR.BLUE3} height='80%' onClick={handleSubmitReview}>
           제출하기
         </Button>
       </FooterButtonWrapper>

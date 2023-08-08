@@ -55,3 +55,6 @@ next-env.d.ts
 !src/states/.gitkeep
 !src/types/.gitkeep
 !src/utils/.gitkeep
+
+# swc
+.swc/

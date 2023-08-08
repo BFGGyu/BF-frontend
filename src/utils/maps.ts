@@ -14,6 +14,8 @@ const END = { LAT: '37.49288934463672', LNG: '127.11971717230388' };
 const PATH_MARKER_1 = { LAT: '37.5591696189164', LNG: '127.07389565460413' };
 const PATH_MARKER_2 = { LAT: '37.52127761904626', LNG: '127.13346617572014' };
 
+let markers: any[] = [];
+
 // 교통정보에 따라 달라지는 색깔
 const trafficColors = {
   extractStyles: true,
@@ -43,7 +45,8 @@ export const initTmap = () => {
     width: '390px',
     height: '588px',
     zoom: 12,
-    pinchZoom: true
+    pinchZoom: true,
+    scrollwheel: false
   });
 
   // 출발
@@ -78,47 +81,54 @@ export const initTmap = () => {
     position: new window.Tmapv2.LatLng(PATH_MARKER_2.LAT, PATH_MARKER_2.LNG),
     icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
     iconSize: new window.Tmapv2.Size(24, 38),
+    title: '국립현대미술관',
     map: CURRENT_MAP
   });
 
-  pathMarker1.addListener('click', () => {
-    console.log('pathMarker1 event: ', pathMarker1);
-    const lat = pathMarker1._marker_data.options.position._lat;
-    const lng = pathMarker1._marker_data.options.position._lng;
-    CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
+  markers.push(pathMarker1);
+  markers.push(pathMarker2);
 
-    const name = pathMarker1._marker_data.options.title;
+  const infoWindowArray: any[] = [];
+
+  markers.map((currentMarker) => {
+    const lat = currentMarker._marker_data.options.position._lat;
+    const lng = currentMarker._marker_data.options.position._lng;
+
+    const name = currentMarker._marker_data.options.title;
     const content = `
     <div style='display: flex; align-items: center; padding: 0px 5px; background-color: ${COLOR.WHITE}; outline-offset: 0.1rem; outline: 1rem solid white;
     width: 220px; border-radius: 100px;'>
       <div style='font-size: 16px; font-weight: 500; width: 150px;'>${name}</div>
-      <div style='background-color: ${COLOR.BLUE1}; color: ${COLOR.WHITE}; width: 100px; height: 40px; 
+      <div style='background-color: ${COLOR.BLUE1}; color: ${COLOR.WHITE}; width: 100px; height: 40px;
       border-radius: 100px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700'>
-          <a href='/map?result=${name}'>길찾기</a> 
+          <a href='/map?result=${name}'>길찾기</a>
         </div>
       </div>`;
 
-    const infoWindow = new window.Tmapv2.InfoWindow({
-      position: new window.Tmapv2.LatLng(lat + 0.031, lng - 0.03), //Popup 이 표출될 맵 좌표
-      content: content, //Popup 표시될 text
-      type: 2,
-      map: CURRENT_MAP,
-      border: 0
-    });
-
-    // function onClose() {
-    //   infoWindow.setVisible(false);
-    // }
-
-    infoWindow.setContent(content);
-    infoWindow.draw();
+    infoWindowArray.push(
+      new window.Tmapv2.InfoWindow({
+        position: new window.Tmapv2.LatLng(lat + 0.031, lng - 0.03), //Popup 이 표출될 맵 좌표
+        content: content, //Popup 표시될 text
+        type: 2,
+        map: CURRENT_MAP,
+        border: 0,
+        visible: false
+      })
+    );
   });
 
-  pathMarker2.addListener('click', () => {
-    console.log('pathMarker2 event: ', pathMarker2);
-    const lat = pathMarker2._marker_data.options.position._lat;
-    const lng = pathMarker2._marker_data.options.position._lng;
-    CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
+  markers.map((marker, idx) =>
+    marker.addListener('click', () => {
+      const lat = marker._marker_data.options.position._lat;
+      const lng = marker._marker_data.options.position._lng;
+      CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
+
+      infoWindowArray[idx].setVisible(true);
+    })
+  );
+
+  CURRENT_MAP.addListener('click', () => {
+    infoWindowArray.map((info) => info.setVisible(false));
   });
 };
 

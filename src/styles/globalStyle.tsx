@@ -1,135 +1,196 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  /* font cdn */
-  @font-face {
-    font-family: 'SEBANG_Gothic_Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SEBANG_Gothic_Bold.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
-  /* 리셋 css */
-  * {
-    margin:0;padding:0;border:0;
-  }
-  html, 
-  body {
-    width:100%; 
-    font-size: calc( 12px + 0.4vw ); 
-    font-family:'Noto Sans KR', sans-serif;
-    font-weight: 100;
-  }
-  html, 
-  h1, 
-  h2, 
-  h3, 
-  h4, 
-  h5, 
-  h6, 
-  form, 
-  fieldset, 
-  img {
-    margin:0;
-    padding:0;
-    border:0;
-  }
-  h1, 
-  h2, 
-  h3, 
-  h4, 
-  h5, 
-  h6 {
-    font-family:'Noto Sans KR', sans-serif;
-    font-size:1rem;
-    font-weight: 100;
-  }
-  article, 
-  aside, 
-  details, 
-  figcaption, 
-  figure, 
-  footer, 
-  header, 
-  hgroup, 
-  menu, 
-  nav, 
-  section {
-    display:block;
+
+* {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
+    'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
   }
 
-  ul, 
+* {
+    box-sizing: border-box;
+  }
+
+  svg {
+    display: inline-block;
+  }
+  
+  html,
+  body,
+  div,
+  span,
+  applet,
+  object,
+  iframe,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  blockquote,
+  pre,
+  a,
+  abbr,
+  acronym,
+  address,
+  big,
+  cite,
+  code,
+  del,
+  dfn,
+  em,
+  img,
+  ins,
+  kbd,
+  q,
+  s,
+  samp,
+  small,
+  strike,
+  strong,
+  sub,
+  sup,
+  tt,
+  var,
+  b,
+  u,
+  i,
+  center,
   dl,
   dt,
-  dd {
-    margin:0;
-    padding:0;
-    list-style:none;
+  dd,
+  ol,
+  ul,
+  li,
+  fieldset,
+  form,
+  label,
+  legend,
+  table,
+  caption,
+  tbody,
+  tfoot,
+  thead,
+  tr,
+  th,
+  td,
+  article,
+  aside,
+  canvas,
+  details,
+  embed,
+  figure,
+  figcaption,
+  footer,
+  header,
+  hgroup,
+  menu,
+  nav,
+  output,
+  ruby,
+  section,
+  summary,
+  time,
+  mark,
+  audio,
+  video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
   }
-  legend {
-    position:absolute;
-    margin:0;
-    padding:0;
-    font-size:0;
-    line-height:0;
-    text-indent:-9999em;
-    overflow:hidden;
+  article,
+  aside,
+  details,
+  figcaption,
+  figure,
+  footer,
+  header,
+  hgroup,
+  menu,
+  nav,
+  section {
+    display: block;
   }
-  label, 
-  input, 
-  button, 
-  select, 
-  img {
-    vertical-align:middle;
-    font-size:1em;
+
+  html, body{
+    padding: 0;
+    margin: 0;
   }
-  input, 
+
+  html {
+    width: 100%;
+    height: 100vh;
+  }
+  body {
+    width: 100%;
+    height: 100%;
+  }
+
+  ol,
+  ul {
+    list-style: none;
+  }
+  blockquote,
+  q {
+    quotes: none;
+  }
+  blockquote:before,
+  blockquote:after,
+  q:before,
+  q:after {
+    content: "";
+    content: none;
+  }
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
   button {
-    margin:0;
-    padding:0;
-    font-family:'Noto Sans KR', sans-serif;
-    font-size:1em;
+    background: inherit;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    cursor: pointer;
   }
-  input[type="submit"] {
-    cursor:pointer
-  }
-  button {
-    cursor:pointer
-  }
-  textarea, 
-  select {
-    font-family:'Noto Sans KR', sans-serif;
-    font-size:1em;
-  }
-  select {
-    margin:0;
-  }
-  p {
-    margin:0;
-    padding:0;
-    word-break:break-all;
-  }
-  hr {
-    display:none;
-  }
-  pre {
-    overflow-x:scroll;
-    font-size:1.1em;
-  }
+  
   a {
-    color:#000;
-    text-decoration:none;
+    color: inherit;
+    text-decoration: none;
+    outline: none;
   }
-  a:hover {
-    color:#000;
-    text-decoration:none;
+  
+  a:visited {
+    text-decoration: none;
+    color: inherit;
   }
-  *, :after, :before {
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  
+  input {
+    -webkit-appearance: none; /* Safari and Chrome */
+    -moz-appearance: none; /* Firefox */
+    appearance: none;
+  }
+  
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  
+  input:focus {
+    outline: none;
+  }
+
+  #root{
+    width:100%;
+    height:100%;
+  }
 `;
 
 export default GlobalStyle;

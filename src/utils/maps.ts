@@ -79,6 +79,20 @@ export const initTmap = () => {
     iconSize: new window.Tmapv2.Size(24, 38),
     map: CURRENT_MAP
   });
+
+  pathMarker1.addListener('click', () => {
+    console.log('pathMarker1 event: ', pathMarker1);
+    const lat = pathMarker1._marker_data.options.position._lat;
+    const lng = pathMarker1._marker_data.options.position._lng;
+    CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
+  });
+
+  pathMarker2.addListener('click', () => {
+    console.log('pathMarker2 event: ', pathMarker2);
+    const lat = pathMarker2._marker_data.options.position._lat;
+    const lng = pathMarker2._marker_data.options.position._lng;
+    CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
+  });
 };
 
 export const initRouteMap = async (CURRENT_MAP: any) => {

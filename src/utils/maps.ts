@@ -85,6 +85,25 @@ export const initTmap = () => {
     const lat = pathMarker1._marker_data.options.position._lat;
     const lng = pathMarker1._marker_data.options.position._lng;
     CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
+
+    const name = '국립고궁박물관';
+    const content = `
+    <div style='display: flex; align-items: center; padding: 0px 5px; background-color: ${COLOR.WHITE}; outline-offset: 0.1rem; outline: 1rem solid white;
+    width: 220px; border-radius: 100px;'>
+      <div style='font-size: 16px; font-weight: 500; width: 150px;'>${name}</div>
+      <div style='background-color: ${COLOR.BLUE1}; color: ${COLOR.WHITE}; 
+        border-radius: 100px; width: 100px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700'>
+        길찾기 
+        </div>
+      </div>`;
+
+    const infoWindow = new window.Tmapv2.InfoWindow({
+      position: new window.Tmapv2.LatLng(lat + 0.031, lng - 0.03), //Popup 이 표출될 맵 좌표
+      content: content, //Popup 표시될 text
+      type: 2,
+      map: CURRENT_MAP,
+      border: 0
+    });
   });
 
   pathMarker2.addListener('click', () => {

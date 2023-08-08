@@ -15,6 +15,15 @@ jobs:
         run: |
           npm install
 
+      # 환경 변수 파일을 생성.
+      - name: Generate Environment Variables File for Production
+        run: |
+          echo "NEXT_PUBLIC_GOOGLE_MAP_KEY=$NEXT_PUBLIC_GOOGLE_MAP_KEY" >> .env.production
+          echo "NEXT_PUBLIC_TMAP_KEY=$NEXT_PUBLIC_TMAP_KEY" >> .env.production
+        env:
+          NEXT_PUBLIC_GOOGLE_MAP_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAP_KEY }}
+          NEXT_PUBLIC_TMAP_KEY: ${{ secrets.NEXT_PUBLIC_TMAP_KEY }}
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

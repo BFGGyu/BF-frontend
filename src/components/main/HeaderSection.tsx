@@ -4,9 +4,15 @@ import FONT from '@constants/fonts';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import Header from '@common/Header';
+import axios from 'axios';
 
 const HeaderSection = () => {
   const router = useRouter();
+
+  const handleClickSearch = () => {
+    axios.get('/api/product').then((res) => console.log(res.data.center));
+    router.push('/search');
+  };
   return (
     <Wrapper>
       <Header />
@@ -20,7 +26,7 @@ const HeaderSection = () => {
         </MainTextWrapper>
         <GuideButton>아이콘</GuideButton>
       </BodyWrapper>
-      <SearchWrapper onClick={() => router.push('/search')}>
+      <SearchWrapper onClick={handleClickSearch}>
         <SearchDiv>검색어를 입력하세요.</SearchDiv>
         <SearchButton>
           <AiOutlineSearch />

@@ -69,6 +69,7 @@ export const initTmap = () => {
     position: new window.Tmapv2.LatLng(PATH_MARKER_1.LAT, PATH_MARKER_1.LNG),
     icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
     iconSize: new window.Tmapv2.Size(24, 38),
+    title: '국립고궁박물관',
     map: CURRENT_MAP
   });
 
@@ -86,7 +87,7 @@ export const initTmap = () => {
     const lng = pathMarker1._marker_data.options.position._lng;
     CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
 
-    const name = '국립고궁박물관';
+    const name = pathMarker1._marker_data.options.title;
     const content = `
     <div style='display: flex; align-items: center; padding: 0px 5px; background-color: ${COLOR.WHITE}; outline-offset: 0.1rem; outline: 1rem solid white;
     width: 220px; border-radius: 100px;'>

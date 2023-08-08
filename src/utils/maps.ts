@@ -91,9 +91,9 @@ export const initTmap = () => {
     <div style='display: flex; align-items: center; padding: 0px 5px; background-color: ${COLOR.WHITE}; outline-offset: 0.1rem; outline: 1rem solid white;
     width: 220px; border-radius: 100px;'>
       <div style='font-size: 16px; font-weight: 500; width: 150px;'>${name}</div>
-      <div style='background-color: ${COLOR.BLUE1}; color: ${COLOR.WHITE}; 
-        border-radius: 100px; width: 100px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700'>
-        길찾기 
+      <div style='background-color: ${COLOR.BLUE1}; color: ${COLOR.WHITE}; width: 100px; height: 40px; 
+      border-radius: 100px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700'>
+          <a href='/map?result=${name}'>길찾기</a> 
         </div>
       </div>`;
 
@@ -104,6 +104,13 @@ export const initTmap = () => {
       map: CURRENT_MAP,
       border: 0
     });
+
+    // function onClose() {
+    //   infoWindow.setVisible(false);
+    // }
+
+    infoWindow.setContent(content);
+    infoWindow.draw();
   });
 
   pathMarker2.addListener('click', () => {

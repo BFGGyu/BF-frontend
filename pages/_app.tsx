@@ -6,6 +6,13 @@ import styled from 'styled-components';
 import { RecoilRoot } from 'recoil';
 import SCREEN_SIZE from '@constants/sizes';
 
+if (process.env.NODE_ENV === 'development') {
+  (async () => {
+    const { worker } = await import('../src/mocks/browser');
+    worker.start();
+  })();
+}
+
 const Reactproject: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
     <>

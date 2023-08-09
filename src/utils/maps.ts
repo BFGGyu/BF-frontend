@@ -175,49 +175,15 @@ export const initRouteMap = async (CURRENT_MAP: any) => {
     map: CURRENT_MAP
   });
 
-  // 경로1
-  const pathMarker1 = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(PATH1.LAT, PATH1.LNG),
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
-    iconSize: new window.Tmapv2.Size(24, 38),
-    map: CURRENT_MAP
-  });
-
-  // 경로2
-  const pathMarker2 = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(PATH2.LAT, PATH2.LNG),
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
-    iconSize: new window.Tmapv2.Size(24, 38),
-    map: CURRENT_MAP
-  });
-
-  const pathMarker3 = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(PATH3.LAT, PATH3.LNG),
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
-    iconSize: new window.Tmapv2.Size(24, 38),
-    map: CURRENT_MAP
-  });
-
-  const pathMarker4 = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(PATH4.LAT, PATH4.LNG),
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
-    iconSize: new window.Tmapv2.Size(24, 38),
-    map: CURRENT_MAP
-  });
-
-  const pathMarker5 = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(PATH5.LAT, PATH5.LNG),
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
-    iconSize: new window.Tmapv2.Size(24, 38),
-    map: CURRENT_MAP
-  });
-
-  const pathMarker6 = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(PATH6.LAT, PATH6.LNG),
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
-    iconSize: new window.Tmapv2.Size(24, 38),
-    map: CURRENT_MAP
-  });
+  markerList.map(
+    (marker) =>
+      new window.Tmapv2.Marker({
+        position: new window.Tmapv2.LatLng(marker.LAT, marker.LNG),
+        icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
+        iconSize: new window.Tmapv2.Size(24, 38),
+        map: CURRENT_MAP
+      })
+  );
 
   const passList = `${PATH1.LNG},${PATH1.LAT}_${PATH2.LNG},${PATH2.LAT}_${PATH3.LNG},${PATH3.LAT}_${PATH4.LNG},${PATH4.LAT}_${PATH5.LNG},${PATH5.LAT}`;
 

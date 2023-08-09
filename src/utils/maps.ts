@@ -185,7 +185,9 @@ export const initRouteMap = async (CURRENT_MAP: any) => {
       })
   );
 
-  const passList = `${PATH1.LNG},${PATH1.LAT}_${PATH2.LNG},${PATH2.LAT}_${PATH3.LNG},${PATH3.LAT}_${PATH4.LNG},${PATH4.LAT}_${PATH5.LNG},${PATH5.LAT}`;
+  let text: string[] = [];
+  pathList.map((path) => text.push(`${path.LNG},${path.LAT}`));
+  const passList = text.join('_');
 
   const requestData = {
     startX: START1.LNG,

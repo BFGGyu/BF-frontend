@@ -58,7 +58,13 @@ const MapPage: NextPage = () => {
           </RightWrapper>
         </InfoWrapper>
         <ButtonWrapper>
-          <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} width='90%' height='50px'>
+          <Button
+            bgColor={COLOR.BLUE1}
+            color={COLOR.WHITE}
+            width='90%'
+            height='50px'
+            onClick={() => router.push('/navigation')}
+          >
             안내시작
           </Button>
         </ButtonWrapper>

@@ -2,7 +2,7 @@ import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import SCREEN_SIZE from '@constants/sizes';
-import { initTmap } from '@utils/maps';
+import { initNavigationTmap } from '@utils/maps';
 import React, { useEffect, useRef } from 'react';
 import { BiMapAlt } from 'react-icons/bi';
 import { PiArrowBendUpLeftBold, PiArrowBendUpRightBold } from 'react-icons/pi';
@@ -12,7 +12,7 @@ const NavigationPage = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    initTmap();
+    initNavigationTmap();
   }, []);
   return (
     <div>
@@ -106,6 +106,7 @@ const MapDiv = styled.div`
 
 const MapIconWrapper = styled.div`
   width: fit-content;
+  height: fit-content;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -114,14 +115,17 @@ const MapIconWrapper = styled.div`
   border-color: ${COLOR.BLUE1};
   padding: 10px;
   cursor: pointer;
+  background-color: ${COLOR.WHITE};
 `;
 
 const FooterWrapper = styled.div`
   display: flex;
   gap: 10px;
   width: 390px;
+  padding: 30px 20px;
   position: absolute;
   z-index: 1;
+  bottom: 0;
 `;
 
 export default NavigationPage;

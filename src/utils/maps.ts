@@ -14,6 +14,19 @@ const END = { LAT: '37.49288934463672', LNG: '127.11971717230388' };
 const PATH_MARKER_1 = { LAT: '37.5591696189164', LNG: '127.07389565460413' };
 const PATH_MARKER_2 = { LAT: '37.52127761904626', LNG: '127.13346617572014' };
 
+const CENTER1 = { LAT: '37.5770498', LNG: '126.9749061' };
+const START1 = { LAT: '37.5759848', LNG: '126.9740679' };
+const PATH1 = { LAT: '37.5760863', LNG: '126.9741329' };
+const PATH2 = { LAT: '37.5771287', LNG: '126.9740089' };
+const PATH3 = { LAT: '37.5771646', LNG: '126.9742312' };
+const PATH4 = { LAT: '37.5770251', LNG: '126.9743039' };
+const PATH5 = { LAT: '37.5770498', LNG: '126.9757761' };
+const PATH6 = { LAT: '37.5765595', LNG: '126.9757996' };
+const END1 = { LAT: '37.5765513', LNG: '126.9756893' };
+
+const pathList = [PATH1, PATH2, PATH3, PATH4, PATH5]; // 최대 5개
+const markerList = [PATH1, PATH2, PATH3, PATH4, PATH5, PATH6];
+
 // 교통정보에 따라 달라지는 색깔
 const trafficColors = {
   extractStyles: true,
@@ -136,17 +149,17 @@ export const initRouteMap = async (CURRENT_MAP: any) => {
   // map 생성
   // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
   CURRENT_MAP = new window.Tmapv2.Map('map_div', {
-    center: new window.Tmapv2.LatLng(CENTER.LAT, CENTER.LNG), // 지도 초기 좌표
+    center: new window.Tmapv2.LatLng(CENTER1.LAT, CENTER1.LNG), // 지도 초기 좌표
     width: '390px',
     height: '570px',
-    zoom: 12,
+    zoom: 18,
     pinchZoom: true,
     zoomControl: false
   });
 
   // 출발
   const startMarker = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(START.LAT, START.LNG),
+    position: new window.Tmapv2.LatLng(START1.LAT, START1.LNG),
 
     icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png',
     iconSize: new window.Tmapv2.Size(24, 38),
@@ -155,36 +168,32 @@ export const initRouteMap = async (CURRENT_MAP: any) => {
 
   // 도착
   const endMarker = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(END.LAT, END.LNG),
+    position: new window.Tmapv2.LatLng(END1.LAT, END1.LNG),
 
     icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png',
     iconSize: new window.Tmapv2.Size(24, 38),
     map: CURRENT_MAP
   });
 
-  // 경로1
-  const pathMarker1 = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(PATH_MARKER_1.LAT, PATH_MARKER_1.LNG),
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
-    iconSize: new window.Tmapv2.Size(24, 38),
-    map: CURRENT_MAP
-  });
+  markerList.map(
+    (marker) =>
+      new window.Tmapv2.Marker({
+        position: new window.Tmapv2.LatLng(marker.LAT, marker.LNG),
+        icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
+        iconSize: new window.Tmapv2.Size(24, 38),
+        map: CURRENT_MAP
+      })
+  );
 
-  // 경로2
-  const pathMarker2 = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(PATH_MARKER_2.LAT, PATH_MARKER_2.LNG),
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
-    iconSize: new window.Tmapv2.Size(24, 38),
-    map: CURRENT_MAP
-  });
-
-  const passList = `${PATH_MARKER_1.LNG},${PATH_MARKER_1.LAT}_${PATH_MARKER_2.LNG},${PATH_MARKER_2.LAT}`;
+  let text: string[] = [];
+  pathList.map((path) => text.push(`${path.LNG},${path.LAT}`));
+  const passList = text.join('_');
 
   const requestData = {
-    startX: START.LNG,
-    startY: START.LAT,
-    endX: END.LNG,
-    endY: END.LAT,
+    startX: START1.LNG,
+    startY: START1.LAT,
+    endX: END1.LNG,
+    endY: END1.LAT,
     passList: passList,
     reqCoordType: 'WGS84GEO',
     resCoordType: 'EPSG3857',
@@ -299,6 +308,12 @@ export const initRouteMap = async (CURRENT_MAP: any) => {
       });
     })
     .catch((e) => console.log(e));
+  return CURRENT_MAP;
+};
+
+export const startNavigation = (CURRENT_MAP: any) => {
+  CURRENT_MAP.panTo(new window.Tmapv2.LatLng(START.LAT, START.LNG));
+  setTimeout(() => CURRENT_MAP.setZoom(17), 500);
 };
 
 export const initNavigationTmap = () => {
@@ -307,10 +322,10 @@ export const initNavigationTmap = () => {
   // map 생성
   // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
   const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
-    center: new window.Tmapv2.LatLng(CENTER.LAT, CENTER.LNG), // 지도 초기 좌표
+    center: new window.Tmapv2.LatLng(START.LAT, START.LNG), // 지도 초기 좌표
     width: '390px',
     height: '100%',
-    zoom: 12,
+    zoom: 17,
     pinchZoom: true,
     scrollwheel: false,
     zoomControl: false

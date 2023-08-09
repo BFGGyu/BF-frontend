@@ -70,12 +70,12 @@ const PlaceItem = styled.div`
   background-color: white;
   height: 90%;
   width: 45%;
-  border: 3px solid black;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
   padding: 15px;
   gap: 10px;
+  box-shadow: 0px 4px 16px 0px rgba(43, 84, 203, 0.26);
 `;
 
 const IconWrapper = styled.div`

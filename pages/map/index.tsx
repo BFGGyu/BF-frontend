@@ -58,7 +58,13 @@ const MapPage: NextPage = () => {
           </RightWrapper>
         </InfoWrapper>
         <ButtonWrapper>
-          <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} width='90%' height='50px'>
+          <Button
+            bgColor={COLOR.BLUE1}
+            color={COLOR.WHITE}
+            width='90%'
+            height='50px'
+            onClick={() => router.push('/navigation')}
+          >
             안내시작
           </Button>
         </ButtonWrapper>
@@ -81,6 +87,8 @@ const PlaceSelectBarWrapper = styled.div`
 
 const PlaceSelectBar = styled.div`
   display: flex;
+  align-items: center;
+
   gap: 20px;
   width: 95%;
   background-color: rgba(255, 255, 255, 0.6);
@@ -132,7 +140,7 @@ const InfoWrapper = styled.div`
   display: flex;
   padding: 10px;
   border-top: 1px solid black;
-  border-color: COLOR.BLUE1;
+  border-color: ${COLOR.BLUE1};
 `;
 
 const ButtonWrapper = styled.div`

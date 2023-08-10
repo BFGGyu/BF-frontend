@@ -5,9 +5,47 @@ import styled from 'styled-components';
 import Loading from '@pages/Loading';
 import { initTmap } from '@utils/maps';
 
+interface IMarkerData {
+  id: number;
+  lat: string;
+  lng: string;
+  name: string;
+  type: string;
+}
+
 const MapSection = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const sampleData = useState<IMarkerData[]>([
+    {
+      id: 0,
+      lat: '37.519892712436906',
+      lng: '127.02810900563199',
+      name: '고궁1',
+      type: 'artGallery'
+    },
+    {
+      id: 1,
+      lat: '37.53288934463672',
+      lng: '127.11971717230388',
+      name: '고궁2',
+      type: 'artGallery'
+    },
+    {
+      id: 2,
+      lat: '37.52127761904626',
+      lng: '127.13346617572014',
+      name: '국립고궁박물관',
+      type: 'museum'
+    },
+    {
+      id: 3,
+      lat: '37.5591696189164',
+      lng: '127.07389565460413',
+      name: '국립현대미술관',
+      type: 'exhibition'
+    }
+  ]);
 
   const [tags, setTags] = useState([
     {
@@ -34,7 +72,7 @@ const MapSection = () => {
   };
 
   useEffect(() => {
-    initTmap();
+    initTmap(sampleData);
   }, []);
 
   return (

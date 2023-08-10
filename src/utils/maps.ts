@@ -48,7 +48,15 @@ const styleRed = {
   title: 'this is a red line'
 };
 
-export const initTmap = () => {
+interface IMarkerData {
+  id: number;
+  lat: string;
+  lng: string;
+  name: string;
+  type: string;
+}
+
+export const initTmap = (markerData: IMarkerData[]) => {
   let markers: any[] = [];
 
   // map 생성
@@ -62,44 +70,16 @@ export const initTmap = () => {
     scrollwheel: false
   });
 
-  // 출발
-  const startMarker = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(START.LAT, START.LNG),
-
-    icon: `${process.env.NEXT_PUBLIC_AWS_S3}/artGallery.svg`,
-    iconSize: new window.Tmapv2.Size(40, 40),
-    map: CURRENT_MAP
+  markerData.map((data) => {
+    const newMarker = new window.Tmapv2.Marker({
+      position: new window.Tmapv2.LatLng(data.lat, data.lng),
+      icon: `${process.env.NEXT_PUBLIC_AWS_S3}/${data.type}.svg`,
+      iconSize: new window.Tmapv2.Size(40, 40),
+      title: data.name,
+      map: CURRENT_MAP
+    });
+    markers.push(newMarker);
   });
-
-  // 도착
-  const endMarker = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(END.LAT, END.LNG),
-
-    icon: `${process.env.NEXT_PUBLIC_AWS_S3}/artGallery.svg`,
-    iconSize: new window.Tmapv2.Size(40, 40),
-    map: CURRENT_MAP
-  });
-
-  // 경로1
-  const pathMarker1 = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(PATH_MARKER_1.LAT, PATH_MARKER_1.LNG),
-    icon: `${process.env.NEXT_PUBLIC_AWS_S3}/museum.svg`,
-    iconSize: new window.Tmapv2.Size(40, 40),
-    title: '국립고궁박물관',
-    map: CURRENT_MAP
-  });
-
-  // 경로2
-  const pathMarker2 = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(PATH_MARKER_2.LAT, PATH_MARKER_2.LNG),
-    icon: `${process.env.NEXT_PUBLIC_AWS_S3}/exhibition.svg`,
-    iconSize: new window.Tmapv2.Size(40, 40),
-    title: '국립현대미술관',
-    map: CURRENT_MAP
-  });
-
-  markers.push(pathMarker1);
-  markers.push(pathMarker2);
 
   const infoWindowArray: any[] = [];
 

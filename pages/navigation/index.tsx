@@ -2,17 +2,62 @@ import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import SCREEN_SIZE from '@constants/sizes';
-import { initNavigationTmap } from '@utils/maps';
+import { changeCurrentPostion, initNavigationTmap } from '@utils/maps';
 import React, { useEffect, useRef } from 'react';
 import { BiMapAlt } from 'react-icons/bi';
 import { PiArrowBendUpLeftBold, PiArrowBendUpRightBold } from 'react-icons/pi';
 import styled from 'styled-components';
 
+const options = {
+  enableHighAccuracy: false,
+  maximumAge: 10000,
+  timeout: 20000
+};
+
+const handleError = (err: any) => {
+  console.log('geolocation ERROR: ', err);
+  alert('GPS가 원활하지 않습니다. 새로고침 해주세요.');
+};
+
 const NavigationPage = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
+  const currentMapRef = useRef(null);
+  const startMarkerRef = useRef(null);
+  const watchId = useRef<number>();
+
+  const speakStartNavigation = () => {
+    const voice = '경로안내를 시작합니다';
+    const utterance = new SpeechSynthesisUtterance(voice);
+    speechSynthesis.speak(utterance);
+  };
+
+  const handlePosition = (position: any) => {
+    const lat = position.coords.latitude;
+    const lng = position.coords.longitude;
+    changeCurrentPostion(currentMapRef.current, startMarkerRef.current, lat, lng);
+  };
 
   useEffect(() => {
-    initNavigationTmap();
+    if ('geolocation' in navigator) {
+      /* 위치정보 사용 가능 */
+      watchId.current = navigator.geolocation.watchPosition(handlePosition, handleError, options);
+    } else {
+      /* 위치정보 사용 불가능 */
+      alert('위치 정보를 사용할 수 없는 장소입니다.');
+    }
+
+    return () => {
+      if (watchId.current) return navigator.geolocation.clearWatch(watchId.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    speakStartNavigation();
+    initNavigationTmap().then((data) => {
+      console.log('지도데이터 로딩 성공 !', data);
+      currentMapRef.current = data[0];
+      startMarkerRef.current = data[1];
+    });
   }, []);
   return (
     <div>

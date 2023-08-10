@@ -10,7 +10,7 @@ declare global {
 const APP_KEY = process.env.NEXT_PUBLIC_TMAP_KEY;
 const CENTER = { LAT: '37.53084364186228', LNG: '127.081908811749' };
 const START = { LAT: '37.519892712436906', LNG: '127.02810900563199' };
-const END = { LAT: '37.49288934463672', LNG: '127.11971717230388' };
+const END = { LAT: '37.53288934463672', LNG: '127.11971717230388' };
 const PATH_MARKER_1 = { LAT: '37.5591696189164', LNG: '127.07389565460413' };
 const PATH_MARKER_2 = { LAT: '37.52127761904626', LNG: '127.13346617572014' };
 
@@ -66,8 +66,8 @@ export const initTmap = () => {
   const startMarker = new window.Tmapv2.Marker({
     position: new window.Tmapv2.LatLng(START.LAT, START.LNG),
 
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png',
-    iconSize: new window.Tmapv2.Size(24, 38),
+    icon: `${process.env.NEXT_PUBLIC_AWS_S3}/artGallery.svg`,
+    iconSize: new window.Tmapv2.Size(40, 40),
     map: CURRENT_MAP
   });
 
@@ -75,16 +75,16 @@ export const initTmap = () => {
   const endMarker = new window.Tmapv2.Marker({
     position: new window.Tmapv2.LatLng(END.LAT, END.LNG),
 
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png',
-    iconSize: new window.Tmapv2.Size(24, 38),
+    icon: `${process.env.NEXT_PUBLIC_AWS_S3}/artGallery.svg`,
+    iconSize: new window.Tmapv2.Size(40, 40),
     map: CURRENT_MAP
   });
 
   // 경로1
   const pathMarker1 = new window.Tmapv2.Marker({
     position: new window.Tmapv2.LatLng(PATH_MARKER_1.LAT, PATH_MARKER_1.LNG),
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
-    iconSize: new window.Tmapv2.Size(24, 38),
+    icon: `${process.env.NEXT_PUBLIC_AWS_S3}/museum.svg`,
+    iconSize: new window.Tmapv2.Size(40, 40),
     title: '국립고궁박물관',
     map: CURRENT_MAP
   });
@@ -92,8 +92,8 @@ export const initTmap = () => {
   // 경로2
   const pathMarker2 = new window.Tmapv2.Marker({
     position: new window.Tmapv2.LatLng(PATH_MARKER_2.LAT, PATH_MARKER_2.LNG),
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
-    iconSize: new window.Tmapv2.Size(24, 38),
+    icon: `${process.env.NEXT_PUBLIC_AWS_S3}/exhibition.svg`,
+    iconSize: new window.Tmapv2.Size(40, 40),
     title: '국립현대미술관',
     map: CURRENT_MAP
   });
@@ -316,16 +316,14 @@ export const startNavigation = (CURRENT_MAP: any) => {
   setTimeout(() => CURRENT_MAP.setZoom(17), 500);
 };
 
-export const initNavigationTmap = () => {
-  let markers: any[] = [];
-
+export const initNavigationTmap = async () => {
   // map 생성
   // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
   const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
-    center: new window.Tmapv2.LatLng(START.LAT, START.LNG), // 지도 초기 좌표
+    center: new window.Tmapv2.LatLng(START1.LAT, START1.LNG), // 지도 초기 좌표
     width: '390px',
     height: '100%',
-    zoom: 17,
+    zoom: 19,
     pinchZoom: true,
     scrollwheel: false,
     zoomControl: false
@@ -333,40 +331,155 @@ export const initNavigationTmap = () => {
 
   // 출발
   const startMarker = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(START.LAT, START.LNG),
+    position: new window.Tmapv2.LatLng(START1.LAT, START1.LNG),
 
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png',
+    icon: `${process.env.NEXT_PUBLIC_AWS_S3}/artGallery.svg`,
+
     iconSize: new window.Tmapv2.Size(24, 38),
     map: CURRENT_MAP
   });
 
   // 도착
   const endMarker = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(END.LAT, END.LNG),
+    position: new window.Tmapv2.LatLng(END1.LAT, END1.LNG),
 
     icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png',
     iconSize: new window.Tmapv2.Size(24, 38),
     map: CURRENT_MAP
   });
 
-  // 경로1
-  const pathMarker1 = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(PATH_MARKER_1.LAT, PATH_MARKER_1.LNG),
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
-    iconSize: new window.Tmapv2.Size(24, 38),
-    title: '국립고궁박물관',
-    map: CURRENT_MAP
-  });
+  markerList.map(
+    (marker) =>
+      new window.Tmapv2.Marker({
+        position: new window.Tmapv2.LatLng(marker.LAT, marker.LNG),
+        icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
+        iconSize: new window.Tmapv2.Size(24, 38),
+        map: CURRENT_MAP
+      })
+  );
 
-  // 경로2
-  const pathMarker2 = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(PATH_MARKER_2.LAT, PATH_MARKER_2.LNG),
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
-    iconSize: new window.Tmapv2.Size(24, 38),
-    title: '국립현대미술관',
-    map: CURRENT_MAP
-  });
+  let text: string[] = [];
+  pathList.map((path) => text.push(`${path.LNG},${path.LAT}`));
+  const passList = text.join('_');
 
-  markers.push(pathMarker1);
-  markers.push(pathMarker2);
+  const requestData = {
+    startX: START1.LNG,
+    startY: START1.LAT,
+    endX: END1.LNG,
+    endY: END1.LAT,
+    passList: passList,
+    reqCoordType: 'WGS84GEO',
+    resCoordType: 'EPSG3857',
+    startName: '출발지',
+    endName: '도착지'
+  };
+
+  const headers = {
+    appKey: APP_KEY
+  };
+
+  await axios
+    .post(
+      'https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result',
+      requestData,
+      { headers: headers }
+    )
+    .then((response) => {
+      const resultData = response.data.features;
+      const tDistance =
+        '총 거리 : ' + (resultData[0].properties.totalDistance / 1000).toFixed(1) + 'km,';
+      const tTime = ' 총 시간 : ' + (resultData[0].properties.totalTime / 60).toFixed(0) + '분';
+      const resultText = tDistance + tTime;
+      console.log(resultData);
+
+      const drawInfoArr = [];
+
+      // for문 시작
+      for (let i in resultData) {
+        const geometry = resultData[i].geometry;
+        const properties = resultData[i].properties;
+
+        // geometry.type == 'LineString' | 'Point'
+        if (geometry.type == 'LineString') {
+          for (let j in geometry.coordinates) {
+            // 경로들의 결과값(구간)들을 포인트 객체로 변환
+            const latlng = new window.Tmapv2.Point(
+              geometry.coordinates[j][0],
+              geometry.coordinates[j][1]
+            );
+            // 포인트 객체를 받아 좌표값으로 변환
+            const convertPoint = new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
+            // 포인트객체의 정보로 좌표값 변환 객체로 저장
+            const convertChange = new window.Tmapv2.LatLng(convertPoint._lat, convertPoint._lng);
+            // 배열에 담기
+            drawInfoArr.push(convertChange);
+          }
+        } else {
+          let markerImg = '';
+          let pType = '';
+          let size;
+
+          if (properties.pointType == 'S') {
+            //출발지 마커
+            markerImg = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
+            pType = 'S';
+            size = new window.Tmapv2.Size(24, 38);
+          } else if (properties.pointType == 'E') {
+            //도착지 마커
+            markerImg = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png';
+            pType = 'E';
+            size = new window.Tmapv2.Size(24, 38);
+          } else {
+            //각 포인트 마커
+            markerImg = 'http://topopen.tmap.co.kr/imgs/point.png';
+            pType = 'P';
+            size = new window.Tmapv2.Size(8, 8);
+          }
+
+          // 경로들의 결과값들을 포인트 객체로 변환
+          const latlon = new window.Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]); // 포인트 객체를 받아 좌표값으로 다시 변환
+          const convertPoint = new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlon);
+
+          const routeInfoObj = {
+            markerImage: markerImg,
+            lng: convertPoint._lng,
+            lat: convertPoint._lat,
+            pointType: pType
+          };
+
+          // Marker 추가 (흰색 동그라미 마커)
+          const marker_p = new window.Tmapv2.Marker({
+            position: new window.Tmapv2.LatLng(routeInfoObj.lat, routeInfoObj.lng),
+            icon: routeInfoObj.markerImage,
+            iconSize: size,
+            map: CURRENT_MAP
+          });
+        }
+      }
+
+      //for문 종료
+      drawLine(drawInfoArr);
+
+      function drawLine(arrPoint: any[]) {
+        new window.Tmapv2.Polyline({
+          path: arrPoint,
+          strokeColor: COLOR.BLUE1,
+          strokeWeight: 6,
+          map: CURRENT_MAP
+        });
+      }
+
+      new window.Tmapv2.InfoWindow({
+        position: new window.Tmapv2.LatLng(END.LAT, END.LNG),
+        type: 2,
+        content: 'BFGGyu',
+        border: '3px dashed black',
+        background: COLOR.BLUE3,
+        zIndex: 1,
+        visible: true,
+        map: CURRENT_MAP
+      });
+    })
+    .catch((e) => console.log(e));
+  return CURRENT_MAP;
 };

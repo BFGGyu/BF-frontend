@@ -94,7 +94,7 @@ const MapSection = () => {
             key={tag.id}
             style={FONT.HEADLINE2}
             type={tag.type}
-            clicked={tag.clicked}
+            $clicked={tag.clicked}
             onClick={() => handleClickTag(tag.id)}
           >
             {tag.name}
@@ -127,7 +127,7 @@ const TagWrapper = styled.div`
 
 interface PlaceTypeProps {
   type: string;
-  clicked: boolean;
+  $clicked: boolean;
 }
 
 type ObjType = {
@@ -141,8 +141,8 @@ const TYPE_TO_COLOR: ObjType = {
 };
 
 const TagButton = styled.div<PlaceTypeProps>`
-  background-color: ${(props) => (props.clicked ? TYPE_TO_COLOR[props.type] : 'white')};
-  color: ${(props) => (props.clicked ? 'white' : COLOR.GREY)};
+  background-color: ${(props) => (props.$clicked ? TYPE_TO_COLOR[props.type] : 'white')};
+  color: ${(props) => (props.$clicked ? 'white' : COLOR.GREY)};
   padding: 10px;
   border-radius: 50px;
   cursor: pointer;

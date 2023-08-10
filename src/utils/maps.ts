@@ -48,15 +48,23 @@ const styleRed = {
   title: 'this is a red line'
 };
 
-interface IMarkerData {
+interface IMarker {
   id: number;
   lat: string;
   lng: string;
   name: string;
-  type: string;
+  type: 'artGallery' | 'museum' | 'exhibition';
 }
 
-export const initTmap = (markerData: IMarkerData[]) => {
+export const changeMarker = (markerType: string, markers: any) => {
+  markers.forEach((marker: any) => {
+    if (marker._marker_data.id === markerType) {
+      marker.setVisible(true);
+    } else marker.setVisible(false);
+  });
+};
+
+export const initTmap = async (markerData: IMarker[]) => {
   let markers: any[] = [];
 
   // map 생성
@@ -76,7 +84,8 @@ export const initTmap = (markerData: IMarkerData[]) => {
       icon: `${process.env.NEXT_PUBLIC_AWS_S3}/${data.type}.svg`,
       iconSize: new window.Tmapv2.Size(40, 40),
       title: data.name,
-      map: CURRENT_MAP
+      map: CURRENT_MAP,
+      id: data.type
     });
     markers.push(newMarker);
   });
@@ -123,6 +132,8 @@ export const initTmap = (markerData: IMarkerData[]) => {
   CURRENT_MAP.addListener('click', () => {
     infoWindowArray.map((info) => info.setVisible(false));
   });
+
+  return markers;
 };
 
 export const initRouteMap = async (CURRENT_MAP: any) => {

@@ -2,21 +2,20 @@ import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import Loading from '@pages/Loading';
-import { initTmap } from '@utils/maps';
+import { changeMarker, initTmap } from '@utils/maps';
 
-interface IMarkerData {
+interface IMarker {
   id: number;
   lat: string;
   lng: string;
   name: string;
-  type: string;
+  type: 'artGallery' | 'museum' | 'exhibition';
 }
 
 const MapSection = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const sampleData = useState<IMarkerData[]>([
+  const markersRef = useRef(null);
+  const [markerList, setMarkerList] = useState<IMarker[]>([
     {
       id: 0,
       lat: '37.519892712436906',
@@ -50,17 +49,20 @@ const MapSection = () => {
   const [tags, setTags] = useState([
     {
       id: 0,
-      type: '박물관',
+      type: 'museum',
+      name: '박물관',
       clicked: false
     },
     {
       id: 1,
-      type: '미술관',
+      type: 'artGallery',
+      name: '미술관',
       clicked: false
     },
     {
       id: 2,
-      type: '전시회',
+      type: 'exhibition',
+      name: '전시회',
       clicked: false
     }
   ]);
@@ -72,7 +74,16 @@ const MapSection = () => {
   };
 
   useEffect(() => {
-    initTmap(sampleData);
+    const tag = tags.filter((tag) => tag.clicked === true);
+    if (tag.length) {
+      changeMarker(tag[0].type, markersRef.current);
+    }
+  }, [tags]);
+
+  useEffect(() => {
+    initTmap(markerList).then((markers: any) => {
+      markersRef.current = markers;
+    });
   }, []);
 
   return (
@@ -86,7 +97,7 @@ const MapSection = () => {
             clicked={tag.clicked}
             onClick={() => handleClickTag(tag.id)}
           >
-            {tag.type}
+            {tag.name}
           </TagButton>
         ))}
       </TagWrapper>
@@ -124,9 +135,9 @@ type ObjType = {
 };
 
 const TYPE_TO_COLOR: ObjType = {
-  박물관: COLOR.ORANGE,
-  미술관: COLOR.GREEN,
-  전시회: COLOR.RED
+  museum: COLOR.ORANGE,
+  artGallery: COLOR.GREEN,
+  exhibition: COLOR.RED
 };
 
 const TagButton = styled.div<PlaceTypeProps>`

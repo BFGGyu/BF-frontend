@@ -56,6 +56,17 @@ interface IMarker {
   type: 'artGallery' | 'museum' | 'exhibition';
 }
 
+export const changeCurrentPostion = (
+  CURRENT_MAP: any,
+  startMarker: any,
+  lat: number,
+  lng: number
+) => {
+  if (CURRENT_MAP) CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
+  if (startMarker) startMarker.setPosition(new window.Tmapv2.LatLng(lat, lng));
+  console.log('cahngeCurrentPosition: ', CURRENT_MAP, startMarker);
+};
+
 export const changeMarker = (markerType: string, markers: any) => {
   markers.forEach((marker: any) => {
     if (marker._marker_data.id === markerType) {
@@ -323,9 +334,8 @@ export const initNavigationTmap = async () => {
   // 출발
   const startMarker = new window.Tmapv2.Marker({
     position: new window.Tmapv2.LatLng(START1.LAT, START1.LNG),
-
+    // 아이콘 수정 필요
     icon: `${process.env.NEXT_PUBLIC_AWS_S3}/artGallery.svg`,
-
     iconSize: new window.Tmapv2.Size(24, 38),
     map: CURRENT_MAP
   });
@@ -472,5 +482,5 @@ export const initNavigationTmap = async () => {
       });
     })
     .catch((e) => console.log(e));
-  return CURRENT_MAP;
+  return [CURRENT_MAP, startMarker];
 };

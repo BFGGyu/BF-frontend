@@ -31,6 +31,10 @@ class MyDocument extends Document {
       <Html lang='en'>
         <Head>
           <meta name='theme-color' content='#3D39F1' />
+          <meta
+            name='description'
+            content='A service that provides a safe route for wheelchair users to enjoy cultural life.'
+          ></meta>
           <link rel='manifest' href='/manifest.json' />
           <link
             href='https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css'

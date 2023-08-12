@@ -2,16 +2,19 @@ import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import InfoSection from '@PlaceItem/InfoSection';
-import { initRouteMap } from '@utils/maps';
+import { initRouteMap } from '@utils/map';
+import axios from 'axios';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 
 let CURRENT_MAP: any;
+let a: any;
 const MapPage: NextPage = () => {
   const router = useRouter();
   const mapRef = useRef<HTMLDivElement | null>(null);
+  const CURRENT_MAP = useRef(null);
   const [selectedPlace, setSelectedPlace] = useState({
     id: '0',
     name: '국립 고궁 박물관',
@@ -21,7 +24,12 @@ const MapPage: NextPage = () => {
   });
 
   useEffect(() => {
-    initRouteMap(CURRENT_MAP);
+    axios.get('/api/map').then((res) => {
+      const { center, arrival, departure, markers, routes } = res.data.data;
+      initRouteMap(center, departure, arrival, markers, routes).then((data) => {
+        console.log('지도데이터 로딩 성공 !', data);
+      });
+    });
   }, []);
 
   return (
@@ -64,6 +72,7 @@ const MapPage: NextPage = () => {
             width='90%'
             height='50px'
             onClick={() => router.push('/navigation')}
+            // onClick={() => startNavigation(CURRENT_MAP.current)}
           >
             안내시작
           </Button>

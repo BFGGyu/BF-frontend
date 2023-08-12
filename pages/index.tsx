@@ -4,14 +4,16 @@ import MapSection from '@main/MapSection';
 import type { NextPage } from 'next';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import Splash from './Splash';
 
 const Index: NextPage = () => {
   return (
-    <SectionWrapper>
-      <HeaderSection />
-      <MapSection />
-      <FooterSection />
-    </SectionWrapper>
+    <Splash />
+    // <SectionWrapper>
+    //   <HeaderSection />
+    //   <MapSection />
+    //   <FooterSection />
+    // </SectionWrapper>
   );
 };
 

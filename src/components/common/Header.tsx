@@ -9,8 +9,8 @@ interface IHeaderProps {
 const Header = ({ bgColor, color }: IHeaderProps) => {
   return (
     <HeaderWrapper $bgColor={bgColor} $color={color}>
-      <Image src='/images/wheelChair.svg' alt='' width={25} height={25} />
-      <ServiceName>서비스명</ServiceName>
+      <Image src='/images/main.svg' alt='' width={25} height={25} />
+      <ServiceName>wheelpass</ServiceName>
     </HeaderWrapper>
   );
 };

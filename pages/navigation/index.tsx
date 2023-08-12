@@ -4,6 +4,7 @@ import FONT from '@constants/fonts';
 import SCREEN_SIZE from '@constants/sizes';
 import { changeCurrentPostion, initNavigationTmap } from '@utils/map';
 import axios from 'axios';
+import Link from 'next/link';
 import React, { useEffect, useRef } from 'react';
 import { BiMapAlt } from 'react-icons/bi';
 import { PiArrowBendUpLeftBold, PiArrowBendUpRightBold } from 'react-icons/pi';
@@ -108,9 +109,11 @@ const NavigationPage = () => {
         <MapIconWrapper>
           <BiMapAlt color={COLOR.BLUE1} size={30} />
         </MapIconWrapper>
-        <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} height='50px'>
-          경로안내 마치기
-        </Button>
+        <Link href='/review'>
+          <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} height='50px'>
+            경로안내 마치기
+          </Button>
+        </Link>
       </FooterWrapper>
     </div>
   );

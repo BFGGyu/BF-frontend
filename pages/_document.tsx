@@ -40,6 +40,7 @@ class MyDocument extends Document {
             href='https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css'
             rel='stylesheet'
           />
+          <link rel='icon' href='favicon.ico' type='image/x-icon' />
 
           {/* eslint-disable-next-line @next/next/no-sync-scripts */}
           <script src='https://code.jquery.com/jquery-3.2.1.min.js' />

@@ -11,36 +11,36 @@ const CENTER = { LAT: '37.53084364186228', LNG: '127.081908811749' };
 const MapSection = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const markersRef = useRef(null);
-  const [markerList, setMarkerList] = useState<IMarker[]>([
-    {
-      id: 0,
-      latitude: '37.519892712436906',
-      longitude: '127.02810900563199',
-      name: '고궁1',
-      type: 'artGallery'
-    },
-    {
-      id: 1,
-      latitude: '37.53288934463672',
-      longitude: '127.11971717230388',
-      name: '고궁2',
-      type: 'artGallery'
-    },
-    {
-      id: 2,
-      latitude: '37.52127761904626',
-      longitude: '127.13346617572014',
-      name: '국립고궁박물관',
-      type: 'museum'
-    },
-    {
-      id: 3,
-      latitude: '37.5591696189164',
-      longitude: '127.07389565460413',
-      name: '국립현대미술관',
-      type: 'exhibition'
-    }
-  ]);
+  // const [markerList, setMarkerList] = useState<IMarker[]>([
+  //   {
+  //     id: 0,
+  //     latitude: '37.519892712436906',
+  //     longitude: '127.02810900563199',
+  //     name: '고궁1',
+  //     type: 'artGallery'
+  //   },
+  //   {
+  //     id: 1,
+  //     latitude: '37.53288934463672',
+  //     longitude: '127.11971717230388',
+  //     name: '고궁2',
+  //     type: 'artGallery'
+  //   },
+  //   {
+  //     id: 2,
+  //     latitude: '37.52127761904626',
+  //     longitude: '127.13346617572014',
+  //     name: '국립고궁박물관',
+  //     type: 'museum'
+  //   },
+  //   {
+  //     id: 3,
+  //     latitude: '37.5591696189164',
+  //     longitude: '127.07389565460413',
+  //     name: '국립현대미술관',
+  //     type: 'exhibition'
+  //   }
+  // ]);
 
   const [tags, setTags] = useState([
     {
@@ -72,22 +72,19 @@ const MapSection = () => {
   useEffect(() => {
     const tag = tags.filter((tag) => tag.clicked === true);
     if (tag.length) {
+      console.log('markersRef:', markersRef);
       changeMarker(tag[0].type, markersRef.current);
     }
   }, [tags]);
 
   useEffect(() => {
-    // axios
-    // .get('/api/center')
-    // .then((res) => [res.data.data.latitude, res.data.data.longitude])
-    // .then((res) =>
-    //   initTmap(markerList, res[0], res[1]).then((markers: any) => {
-    //     markersRef.current = markers;
-    //   })
-    // );
-
-    initTmap(markerList, CENTER.LAT, CENTER.LNG).then((markers: any) => {
-      markersRef.current = markers;
+    axios.get('/api/center').then((res) => {
+      const { latitude, longitude } = res.data.data.center;
+      const markers: IMarker[] = res.data.data.markers;
+      console.log(markers);
+      initTmap(markers, latitude, longitude).then((markers: any) => {
+        markersRef.current = markers;
+      });
     });
   }, []);
 

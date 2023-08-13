@@ -8,6 +8,7 @@ declare global {
 }
 
 export const initTmap = async (markerData: IMarker[], centerLat: any, centerLng: any) => {
+  console.log('initTmap markerData:', markerData);
   let markers: any[] = [];
 
   // map 생성
@@ -38,6 +39,7 @@ export const initTmap = async (markerData: IMarker[], centerLat: any, centerLng:
   markers.map((currentMarker) => {
     const lat = currentMarker._marker_data.options.position._lat;
     const lng = currentMarker._marker_data.options.position._lng;
+    console.log('lat lng:', lat, lng);
 
     const name = currentMarker._marker_data.options.title;
     const content = `
@@ -62,15 +64,26 @@ export const initTmap = async (markerData: IMarker[], centerLat: any, centerLng:
     );
   });
 
-  markers.map((marker, idx) =>
-    marker.addListener('click', () => {
+  markers.map((marker, idx) => {
+    marker.addListener('touchend', () => {
       const lat = marker._marker_data.options.position._lat;
       const lng = marker._marker_data.options.position._lng;
       CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
 
       infoWindowArray[idx].setVisible(true);
-    })
-  );
+    }),
+      marker.addListener('click', () => {
+        const lat = marker._marker_data.options.position._lat;
+        const lng = marker._marker_data.options.position._lng;
+        CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
+
+        infoWindowArray[idx].setVisible(true);
+      });
+  });
+
+  CURRENT_MAP.addListener('touchend', () => {
+    infoWindowArray.map((info) => info.setVisible(false));
+  });
 
   CURRENT_MAP.addListener('click', () => {
     infoWindowArray.map((info) => info.setVisible(false));

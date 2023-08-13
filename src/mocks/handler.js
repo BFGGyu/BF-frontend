@@ -191,16 +191,43 @@ const handlers = [
       ctx.status(200),
       ctx.delay(2000),
       ctx.json({
-        data: { lat: '37.53084364186228', lng: '127.081908811749' }
-      })
-    );
-  }),
-  rest.get('/api/product', (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.delay(2000),
-      ctx.json({
-        center: { LAT: '37.53084364186228', LNG: '127.081908811749' }
+        data: {
+          path_id: 1,
+          center: {
+            latitude: '37.53084364186228',
+            longitude: '127.081908811749'
+          },
+          markers: [
+            {
+              id: 0,
+              latitude: '37.519892712436906',
+              longitude: '127.02810900563199',
+              name: '고궁1',
+              type: 'artGallery'
+            },
+            {
+              id: 1,
+              latitude: '37.53288934463672',
+              longitude: '127.11971717230388',
+              name: '고궁2',
+              type: 'artGallery'
+            },
+            {
+              id: 2,
+              latitude: '37.52127761904626',
+              longitude: '127.13346617572014',
+              name: '국립고궁박물관',
+              type: 'museum'
+            },
+            {
+              id: 3,
+              latitude: '37.5591696189164',
+              longitude: '127.07389565460413',
+              name: '국립현대미술관',
+              type: 'exhibition'
+            }
+          ]
+        }
       })
     );
   })

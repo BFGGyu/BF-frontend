@@ -1,16 +1,18 @@
 import FONT from '@constants/fonts';
 import Image from 'next/image';
-import React from 'react';
 import styled from 'styled-components';
+import PageLayout from '@layout/PageLayout';
 
 const Splash = () => {
   return (
-    <SplashWrapper>
-      <BodyWrapper>
-        <Image src='/images/splash.svg' alt='title' width={200} height={100} />
-        <MainText style={FONT.HEADLINE2}>모두에게 편안한 문화생활의 길</MainText>
-      </BodyWrapper>
-    </SplashWrapper>
+    <PageLayout>
+      <SplashWrapper>
+        <BodyWrapper>
+          <Image src='/images/splash.svg' alt='title' width={200} height={100} priority />
+          <MainText style={FONT.HEADLINE2}>모두에게 편안한 문화생활의 길</MainText>
+        </BodyWrapper>
+      </SplashWrapper>
+    </PageLayout>
   );
 };
 

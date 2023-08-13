@@ -23,6 +23,7 @@
     "paths": {
       "@common/*": ["src/components/common/*"],
       "@main/*": ["src/components/main/*"],
+      "@layout/*": ["src/components/layout/*"],
       "@PlaceItem/*": ["src/components/PlaceItem/*"],
       "@pages/*": ["pages/*"],
       "@constants/*": ["src/constants/*"],

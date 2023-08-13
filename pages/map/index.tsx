@@ -7,10 +7,9 @@ import axios from 'axios';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
+import { getRoutingCoords } from 'src/apis/map';
 import { styled } from 'styled-components';
 
-let CURRENT_MAP: any;
-let a: any;
 const MapPage: NextPage = () => {
   const router = useRouter();
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -24,6 +23,16 @@ const MapPage: NextPage = () => {
   });
 
   useEffect(() => {
+    // 서버 연결
+    // getRoutingCoords().then((data) => {
+    //   initRouteMap(data.center, data.departure, data.arrival, data.markers, data.routes).then(
+    //     (data) => {
+    //       console.log('지도데이터 로딩 성공 !', data);
+    //     }
+    //   );
+    // });
+
+    // mock data
     axios.get('/api/map').then((res) => {
       const { center, arrival, departure, markers, routes } = res.data.data;
       initRouteMap(center, departure, arrival, markers, routes).then((data) => {

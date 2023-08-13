@@ -1,4 +1,4 @@
-import { IMarker } from '@@types/map';
+import { IFacilityMarker } from '@@types/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import { changeMarker, initTmap } from '@utils/map';
@@ -89,7 +89,7 @@ const MapSection = () => {
     // mock data
     axios.get('/api/center').then((res) => {
       const { latitude, longitude } = res.data.data.center;
-      const markers: IMarker[] = res.data.data.markers;
+      const markers: IFacilityMarker[] = res.data.data.markers;
       console.log(markers);
       initTmap(markers, latitude, longitude).then((markers: any) => {
         markersRef.current = markers;

@@ -1,4 +1,4 @@
-import { ICoord, IMarker, IRoute } from '@@types/map';
+import { ICoord, IFacilityMarker, IRoute, IRouteMarker } from '@@types/map';
 import COLOR from '@constants/colors';
 import axios from 'axios';
 
@@ -8,7 +8,7 @@ export const initRouteMap = async (
   center: ICoord,
   departure: ICoord,
   arrival: ICoord,
-  markerList: IMarker[],
+  markerList: IRouteMarker[],
   routes: IRoute[]
 ) => {
   // map 생성

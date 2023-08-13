@@ -1,9 +1,10 @@
-import { IMarker } from '@@types/map';
+import { IFacilityMarker } from '@@types/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import { changeMarker, initTmap } from '@utils/map';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
+import { getFacilityCoords } from 'src/apis/map';
 import styled from 'styled-components';
 
 const CENTER = { LAT: '37.53084364186228', LNG: '127.081908811749' };
@@ -78,9 +79,17 @@ const MapSection = () => {
   }, [tags]);
 
   useEffect(() => {
+    // 서버 연결
+    // getFacilityCoords().then((data) => {
+    //   initTmap(data.markers, data.latitude, data.longitude).then((markers: any) => {
+    //     markersRef.current = markers;
+    //   });
+    // });
+
+    // mock data
     axios.get('/api/center').then((res) => {
       const { latitude, longitude } = res.data.data.center;
-      const markers: IMarker[] = res.data.data.markers;
+      const markers: IFacilityMarker[] = res.data.data.markers;
       console.log(markers);
       initTmap(markers, latitude, longitude).then((markers: any) => {
         markersRef.current = markers;

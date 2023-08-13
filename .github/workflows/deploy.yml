@@ -21,10 +21,12 @@ jobs:
           echo "NEXT_PUBLIC_GOOGLE_MAP_KEY=$NEXT_PUBLIC_GOOGLE_MAP_KEY" >> .env.production
           echo "NEXT_PUBLIC_TMAP_KEY=$NEXT_PUBLIC_TMAP_KEY" >> .env.production
           echo "NEXT_PUBLIC_AWS_S3=$NEXT_PUBLIC_AWS_S3" >> .env.production
+          echo "NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL" >> .env.production
         env:
           NEXT_PUBLIC_GOOGLE_MAP_KEY: ${{ secrets.NEXT_PUBLIC_GOOGLE_MAP_KEY }}
           NEXT_PUBLIC_TMAP_KEY: ${{ secrets.NEXT_PUBLIC_TMAP_KEY }}
           NEXT_PUBLIC_AWS_S3: ${{ secrets.NEXT_PUBLIC_AWS_S3 }}
+          NEXT_PUBLIC_SERVER_URL: ${{ secrets.NEXT_PUBLIC_SERVER_URL }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1

@@ -8,6 +8,7 @@ import Link from 'next/link';
 import React, { useEffect, useRef } from 'react';
 import { BiMapAlt } from 'react-icons/bi';
 import { PiArrowBendUpLeftBold, PiArrowBendUpRightBold } from 'react-icons/pi';
+import { getNavigationCoords } from '@apis/map';
 import styled from 'styled-components';
 
 const options = {
@@ -49,6 +50,16 @@ const NavigationPage = () => {
 
   useEffect(() => {
     speakNavigationGuide('경로안내를 시작합니다');
+    // 서버 연결
+    // getNavigationCoords().then((data) => {
+    //   initNavigationTmap(data.departure, data.arrival, data.markers, data.routes).then((data) => {
+    //     console.log('지도데이터 로딩 성공 !', data);
+    //     currentMapRef.current = data[0];
+    //     startMarkerRef.current = data[1];
+    //   });
+    // });
+
+    // mock data
     axios.get('/api/path').then((res) => {
       const { arrival, departure, markers, routes } = res.data.data;
       initNavigationTmap(departure, arrival, markers, routes).then((data) => {
@@ -57,11 +68,6 @@ const NavigationPage = () => {
         startMarkerRef.current = data[1];
       });
     });
-    // initNavigationTmap(departure, arrival, markers,routes).then((data) => {
-    //   console.log('지도데이터 로딩 성공 !', data);
-    //   currentMapRef.current = data[0];
-    //   startMarkerRef.current = data[1];
-    // });
   }, []);
   return (
     <div>

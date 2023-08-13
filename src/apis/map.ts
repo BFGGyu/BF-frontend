@@ -9,6 +9,11 @@ export const getFacilityCoords = async () => {
 };
 
 export const getRoutingCoords = async () => {
-  const result = await Server.get<IRouteReturnType>('api/center');
+  const result = await Server.get<IRouteReturnType>('api/map');
+  return result.data.data;
+};
+
+export const getNavigationCoords = async () => {
+  const result = await Server.get<IRouteReturnType>('api/path');
   return result.data.data;
 };

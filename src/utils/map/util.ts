@@ -16,3 +16,8 @@ export const changeMarker = (markerType: string, markers: any) => {
     } else marker.setVisible(false);
   });
 };
+
+export const speakNavigationGuide = (voiceText: string) => {
+  const utterance = new SpeechSynthesisUtterance(voiceText);
+  speechSynthesis.speak(utterance);
+};

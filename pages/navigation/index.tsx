@@ -2,25 +2,13 @@ import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import SCREEN_SIZE from '@constants/sizes';
-import { changeCurrentPostion, initNavigationTmap } from '@utils/map';
+import { changeCurrentPostion, initNavigationTmap, speakNavigationGuide } from '@utils/map';
 import axios from 'axios';
 import Link from 'next/link';
 import React, { useEffect, useRef } from 'react';
 import { BiMapAlt } from 'react-icons/bi';
 import { PiArrowBendUpLeftBold, PiArrowBendUpRightBold } from 'react-icons/pi';
 import styled from 'styled-components';
-
-interface ICoord {
-  latitude: string;
-  longitude: string;
-}
-
-interface IRoute {
-  id: number;
-  latitude: string;
-  longitude: string;
-  path_id: number;
-}
 
 const options = {
   enableHighAccuracy: false,
@@ -38,12 +26,6 @@ const NavigationPage = () => {
   const currentMapRef = useRef(null);
   const startMarkerRef = useRef(null);
   const watchId = useRef<number>();
-
-  const speakStartNavigation = () => {
-    const voice = '경로안내를 시작합니다';
-    const utterance = new SpeechSynthesisUtterance(voice);
-    speechSynthesis.speak(utterance);
-  };
 
   const handlePosition = (position: any) => {
     const lat = position.coords.latitude;
@@ -66,7 +48,7 @@ const NavigationPage = () => {
   }, []);
 
   useEffect(() => {
-    speakStartNavigation();
+    speakNavigationGuide('경로안내를 시작합니다');
     axios.get('/api/path').then((res) => {
       const { arrival, departure, markers, routes } = res.data.data;
       initNavigationTmap(departure, arrival, markers, routes).then((data) => {

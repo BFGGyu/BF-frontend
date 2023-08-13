@@ -13,7 +13,7 @@ const ReviewPage: NextPage = () => {
 
   const handleSubmitReview = () => {
     // 제출하기 버튼 클릭 시 API 호출 후 라우팅. 제출 완료 토스트 메세지?
-    router.push('/');
+    router.push('/main');
   };
 
   const starCount = useRef(5);

@@ -2,11 +2,25 @@ import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import SCREEN_SIZE from '@constants/sizes';
-import { changeCurrentPostion, initNavigationTmap } from '@utils/maps';
+import { changeCurrentPostion, initNavigationTmap } from '@utils/map';
+import axios from 'axios';
+import Link from 'next/link';
 import React, { useEffect, useRef } from 'react';
 import { BiMapAlt } from 'react-icons/bi';
 import { PiArrowBendUpLeftBold, PiArrowBendUpRightBold } from 'react-icons/pi';
 import styled from 'styled-components';
+
+interface ICoord {
+  latitude: string;
+  longitude: string;
+}
+
+interface IRoute {
+  id: number;
+  latitude: string;
+  longitude: string;
+  path_id: number;
+}
 
 const options = {
   enableHighAccuracy: false,
@@ -53,11 +67,19 @@ const NavigationPage = () => {
 
   useEffect(() => {
     speakStartNavigation();
-    initNavigationTmap().then((data) => {
-      console.log('지도데이터 로딩 성공 !', data);
-      currentMapRef.current = data[0];
-      startMarkerRef.current = data[1];
+    axios.get('/api/path').then((res) => {
+      const { arrival, departure, markers, routes } = res.data.data;
+      initNavigationTmap(departure, arrival, markers, routes).then((data) => {
+        console.log('지도데이터 로딩 성공 !', data);
+        currentMapRef.current = data[0];
+        startMarkerRef.current = data[1];
+      });
     });
+    // initNavigationTmap(departure, arrival, markers,routes).then((data) => {
+    //   console.log('지도데이터 로딩 성공 !', data);
+    //   currentMapRef.current = data[0];
+    //   startMarkerRef.current = data[1];
+    // });
   }, []);
   return (
     <div>
@@ -87,9 +109,11 @@ const NavigationPage = () => {
         <MapIconWrapper>
           <BiMapAlt color={COLOR.BLUE1} size={30} />
         </MapIconWrapper>
-        <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} height='50px'>
-          경로안내 마치기
-        </Button>
+        <Link href='/review'>
+          <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} height='50px'>
+            경로안내 마치기
+          </Button>
+        </Link>
       </FooterWrapper>
     </div>
   );

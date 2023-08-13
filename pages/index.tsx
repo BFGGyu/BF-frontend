@@ -1,24 +1,18 @@
-import FooterSection from '@main/FooterSection';
-import HeaderSection from '@main/HeaderSection';
-import MapSection from '@main/MapSection';
 import type { NextPage } from 'next';
 import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import Splash from './Splash';
+import Router, { useRouter } from 'next/router';
 
 const Index: NextPage = () => {
-  return (
-    <SectionWrapper>
-      <HeaderSection />
-      <MapSection />
-      <FooterSection />
-    </SectionWrapper>
-  );
-};
+  const router = useRouter();
 
-const SectionWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-`;
+  useEffect(() => {
+    setTimeout(() => {
+      router.push('/main');
+    }, 1500);
+  }, []);
+
+  return <Splash />;
+};
 
 export default Index;

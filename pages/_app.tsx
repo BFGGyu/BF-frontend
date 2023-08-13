@@ -17,8 +17,7 @@ const Reactproject: NextPage<AppProps> = ({ Component, pageProps }: AppProps) =>
   return (
     <>
       <Head>
-        <meta charSet='utf-8' />
-        <title>BFGGyu</title>
+        <title>WheelPass</title>
       </Head>
       <RecoilRoot>
         <GlobalStyle />

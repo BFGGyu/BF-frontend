@@ -1,8 +1,12 @@
 import { Server } from './setting';
+import { LoginReturnType } from './type';
 
 export const login = async (code: string) => {
   try {
-    const result = await Server.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/login`, { code });
+    const result = await Server.post<LoginReturnType>(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/login`,
+      { code }
+    );
     console.log('kakao accessToken 발급 성공: ', result.data.access_token);
     localStorage.setItem('access', result.data.access_token);
     localStorage.setItem('refresh', result.data.refresh_token);

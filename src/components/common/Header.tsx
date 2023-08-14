@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { styled } from 'styled-components';
 import { AiOutlineUser } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 
 interface IHeaderProps {
   bgColor?: string;
@@ -9,13 +10,19 @@ interface IHeaderProps {
 }
 
 const Header = ({ bgColor, color, page }: IHeaderProps) => {
-  const handleClcikLogin = () => {};
+  const router = useRouter();
+
+  const handleClickLogin = () => {
+    router.push('/login');
+  };
 
   return (
     <HeaderWrapper $bgColor={bgColor} $color={color}>
       {page === 'main' && <Image src='/images/mainImage.svg' alt='' width={80} height={30} />}
       {page === 'review' && <Image src='/images/splash.svg' alt='' width={80} height={30} />}
-      <AiOutlineUser size={30} onClick={handleClcikLogin} />
+      <UserIconButton>
+        <AiOutlineUser size={30} onClick={handleClickLogin} />
+      </UserIconButton>
     </HeaderWrapper>
   );
 };
@@ -36,6 +43,8 @@ const HeaderWrapper = styled.div<HeaderType>`
   color: ${(props) => props.$color};
 `;
 
-const ServiceName = styled.div``;
+const UserIconButton = styled.div`
+  cursor: pointer;
+`;
 
 export default Header;

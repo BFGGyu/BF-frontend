@@ -21,3 +21,9 @@ export const speakNavigationGuide = (voiceText: string) => {
   const utterance = new SpeechSynthesisUtterance(voiceText);
   speechSynthesis.speak(utterance);
 };
+
+export const getDistanceCurrentToTarget = (current: any, target: any) => {
+  const currentLonLat = new window.Tmapv2.LatLng(current.latitude, current.longitude);
+  const distance = currentLonLat.distanceTo(target);
+  console.log('distance: ', distance);
+};

@@ -1,4 +1,4 @@
-import { ICoord, IMarker, IRoute } from '@@types/map';
+import { ICoord, IRoute, IRouteMarker } from '@@types/map';
 import COLOR from '@constants/colors';
 import axios from 'axios';
 
@@ -19,7 +19,7 @@ const APP_KEY = process.env.NEXT_PUBLIC_TMAP_KEY;
 export const initNavigationTmap = async (
   departure: ICoord,
   arrival: ICoord,
-  markerList: IMarker[],
+  markerList: IRouteMarker[],
   routes: IRoute[]
 ) => {
   const CURRENT_MAP = new window.Tmapv2.Map('map_div', {

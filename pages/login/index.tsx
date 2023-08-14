@@ -7,7 +7,6 @@ import React, { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { isLoggedInState, nicknameState } from '@states/user';
 import styled from 'styled-components';
-import axios from 'axios';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -21,21 +20,13 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (router.query.code && typeof router.query.code == 'string') {
-      axios.post('/api/login', { code: router.query.code }).then((res) => {
-        const { nickname, access_token, refresh_token } = res.data.data;
-        setNickname(`${nickname} 님`);
-        setIsLoggedIn(true);
-        localStorage.setItem('access', access_token);
-        localStorage.setItem('refresh', refresh_token);
-        router.push('/main');
+      login(router.query.code).then((data) => {
+        if (typeof data !== 'undefined') {
+          setNickname(data.nickname);
+          setIsLoggedIn(true);
+          router.push('/main');
+        }
       });
-      // login(router.query.code).then((data) => {
-      //   if (typeof data !== 'undefined') {
-      //     setNickname(`${data.nickname} 님`);
-      //     setIsLoggedIn(true);
-      //     router.push('/main');
-      //   }
-      // });
     }
   });
 

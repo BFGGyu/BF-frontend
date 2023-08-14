@@ -1,17 +1,30 @@
+import { login } from '@apis/user';
 import Header from '@common/Header';
 import FONT from '@constants/fonts';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { isLoggedInState } from '@states/user';
 import styled from 'styled-components';
 
 const LoginPage = () => {
   const router = useRouter();
+  const setIsLoggedIn = useSetRecoilState(isLoggedInState);
 
   const handleClickLogin = () => {
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_APP_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code`;
     router.push(KAKAO_AUTH_URL);
   };
+
+  useEffect(() => {
+    if (router.query.code && typeof router.query.code == 'string') {
+      login(router.query.code).then(() => {
+        setIsLoggedIn(true);
+        router.push('/');
+      });
+    }
+  });
 
   return (
     <LoginWrapper>

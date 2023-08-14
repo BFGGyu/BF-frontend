@@ -15,7 +15,7 @@ const HeaderSection = () => {
   };
   return (
     <Wrapper>
-      <Header />
+      <Header page='main' />
       <BodyWrapper>
         <MainTextWrapper>
           <MainText style={FONT.HEADLINE1}>

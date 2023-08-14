@@ -3,6 +3,20 @@ const CENTER1 = { LAT: '37.5770498', LNG: '126.9749061' };
 const { rest } = require('msw');
 
 const handlers = [
+  rest.post('/api/login', (req, res, ctx) => {
+    console.log('req:', req);
+    return res(
+      ctx.status(200),
+      ctx.delay(1000),
+      ctx.json({
+        data: {
+          nickname: 'Gyuhan Park',
+          access_token: 'access',
+          refresh_token: 'refresh'
+        }
+      })
+    );
+  }),
   rest.get('/api/map', (req, res, ctx) => {
     return res(
       ctx.status(200),

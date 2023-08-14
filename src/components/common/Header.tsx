@@ -1,16 +1,31 @@
 import Image from 'next/image';
 import { styled } from 'styled-components';
+import { AiOutlineUser } from 'react-icons/ai';
+import { useRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
+import { nicknameState } from '@states/user';
 
 interface IHeaderProps {
   bgColor?: string;
   color?: string;
+  type: string;
 }
 
-const Header = ({ bgColor, color }: IHeaderProps) => {
+const Header = ({ bgColor, color, type }: IHeaderProps) => {
+  const router = useRouter();
+  const nickname = useRecoilValue(nicknameState);
+
+  const handleClickLogin = () => {
+    router.push('/login');
+  };
+
   return (
     <HeaderWrapper $bgColor={bgColor} $color={color}>
-      <Image src='/images/main.svg' alt='' width={25} height={25} />
-      <ServiceName>wheelpass</ServiceName>
+      {type === 'blue' && <Image src='/images/blueHeader.svg' alt='' width={80} height={30} />}
+      {type === 'white' && <Image src='/images/whiteHeader.svg' alt='' width={80} height={30} />}
+      <UserIconButton onClick={handleClickLogin}>
+        {nickname ? <AiOutlineUser size={30} /> : <div>로그인</div>}
+      </UserIconButton>
     </HeaderWrapper>
   );
 };
@@ -25,11 +40,17 @@ const HeaderWrapper = styled.div<HeaderType>`
   height: 5vh;
   gap: 5px;
   align-items: center;
-  padding: 10px;
+  justify-content: space-between;
+  padding: 20px 10px;
   background-color: ${(props) => props.$bgColor};
   color: ${(props) => props.$color};
 `;
 
-const ServiceName = styled.div``;
+const UserIconButton = styled.div`
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
 
 export default Header;

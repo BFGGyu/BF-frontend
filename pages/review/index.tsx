@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { styled } from 'styled-components';
 import { AiFillStar } from 'react-icons/ai';
 import { useRef, useState } from 'react';
+import Image from 'next/image';
 
 const ReviewPage: NextPage = () => {
   const router = useRouter();
@@ -29,7 +30,7 @@ const ReviewPage: NextPage = () => {
 
   return (
     <ReviewMainWrapper>
-      <Header />
+      <Header type='blue' />
       <TextWrapper>
         <ReviewTitle style={FONT.HEADLINE1}>이용한 경로에 대한 평가를 부탁드립니다.</ReviewTitle>
         <StarRating style={FONT.HEADLINE1}>
@@ -43,13 +44,14 @@ const ReviewPage: NextPage = () => {
           ))}
         </StarRating>
         <ReviewText placeholder='자유롭게 의견을 적어주세요.' />
+        <Image src='/images/reviewImage.svg' alt='' width={300} height={100} />
       </TextWrapper>
       <FooterButtonWrapper>
         <Button
           bgColor={COLOR.BLUE3}
           color={COLOR.BLUE1}
           height='80%'
-          onClick={() => router.push('/')}
+          onClick={() => router.push('/main')}
         >
           건너뛰기
         </Button>

@@ -21,3 +21,9 @@ export interface IRouteReturnType {
     routes: IRouteMarker[];
   };
 }
+
+export interface LoginReturnType {
+  nickname: string;
+  access_token: string;
+  refresh_token: string;
+}

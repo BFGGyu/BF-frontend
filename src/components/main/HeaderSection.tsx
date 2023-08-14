@@ -4,15 +4,14 @@ import FONT from '@constants/fonts';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import Header from '@common/Header';
-import axios from 'axios';
 
 const HeaderSection = () => {
   const router = useRouter();
 
   const handleClickSearch = () => {
-    axios.get('/api/product').then((res) => console.log(res.data.center));
     router.push('/search');
   };
+
   return (
     <Wrapper>
       <Header type='white' />

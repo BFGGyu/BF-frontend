@@ -5,12 +5,13 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { isLoggedInState } from '@states/user';
+import { isLoggedInState, nicknameState } from '@states/user';
 import styled from 'styled-components';
 
 const LoginPage = () => {
   const router = useRouter();
   const setIsLoggedIn = useSetRecoilState(isLoggedInState);
+  const setNickname = useSetRecoilState(nicknameState);
 
   const handleClickLogin = () => {
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_APP_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}&response_type=code`;
@@ -19,16 +20,19 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (router.query.code && typeof router.query.code == 'string') {
-      login(router.query.code).then(() => {
-        setIsLoggedIn(true);
-        router.push('/');
+      login(router.query.code).then((data) => {
+        if (typeof data !== 'undefined') {
+          setNickname(`${data.nickname} 님`);
+          setIsLoggedIn(true);
+          router.push('/');
+        }
       });
     }
   });
 
   return (
     <LoginWrapper>
-      <Header page='review' />
+      <Header type='blue' />
       <TextWrapper>
         <LoginText style={FONT.HEADLINE1}>로그인</LoginText>
         <SubText style={FONT.HEADLINE2}>소셜로그인으로 가입할 수 있습니다.</SubText>

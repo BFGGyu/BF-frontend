@@ -10,6 +10,7 @@ export const login = async (code: string) => {
     console.log('kakao accessToken 발급 성공: ', result.data.access_token);
     localStorage.setItem('access', result.data.access_token);
     localStorage.setItem('refresh', result.data.refresh_token);
+    return result.data;
   } catch (error: any) {
     console.log('getKakaoAccessToken 에러: ', error);
     if (error.response.status === 401) {
@@ -17,7 +18,7 @@ export const login = async (code: string) => {
       console.log('에러시 재발급: ', result);
       if (result) {
         error.config.headers.Authorization = result.data.access_token;
-        return await Server.post(error.config.url, error.config);
+        await Server.post(error.config.url, error.config);
       }
     }
   }

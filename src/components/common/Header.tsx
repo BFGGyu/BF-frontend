@@ -2,15 +2,18 @@ import Image from 'next/image';
 import { styled } from 'styled-components';
 import { AiOutlineUser } from 'react-icons/ai';
 import { useRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
+import { nicknameState } from '@states/user';
 
 interface IHeaderProps {
   bgColor?: string;
   color?: string;
-  page: string;
+  type: string;
 }
 
-const Header = ({ bgColor, color, page }: IHeaderProps) => {
+const Header = ({ bgColor, color, type }: IHeaderProps) => {
   const router = useRouter();
+  const nickname = useRecoilValue(nicknameState);
 
   const handleClickLogin = () => {
     router.push('/login');
@@ -18,10 +21,10 @@ const Header = ({ bgColor, color, page }: IHeaderProps) => {
 
   return (
     <HeaderWrapper $bgColor={bgColor} $color={color}>
-      {page === 'main' && <Image src='/images/mainImage.svg' alt='' width={80} height={30} />}
-      {page === 'review' && <Image src='/images/splash.svg' alt='' width={80} height={30} />}
-      <UserIconButton>
-        <AiOutlineUser size={30} onClick={handleClickLogin} />
+      {type === 'blue' && <Image src='/images/blueHeader.svg' alt='' width={80} height={30} />}
+      {type === 'white' && <Image src='/images/whiteHeader.svg' alt='' width={80} height={30} />}
+      <UserIconButton onClick={handleClickLogin}>
+        {nickname ? <AiOutlineUser size={30} /> : <div>로그인</div>}
       </UserIconButton>
     </HeaderWrapper>
   );
@@ -44,6 +47,9 @@ const HeaderWrapper = styled.div<HeaderType>`
 `;
 
 const UserIconButton = styled.div`
+  height: 5vh;
+  display: flex;
+  align-items: center;
   cursor: pointer;
 `;
 

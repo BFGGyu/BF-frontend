@@ -30,7 +30,7 @@ const ReviewPage: NextPage = () => {
 
   return (
     <ReviewMainWrapper>
-      <Header page='review' />
+      <Header type='blue' />
       <TextWrapper>
         <ReviewTitle style={FONT.HEADLINE1}>이용한 경로에 대한 평가를 부탁드립니다.</ReviewTitle>
         <StarRating style={FONT.HEADLINE1}>

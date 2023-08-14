@@ -4,10 +4,10 @@ import { LoginReturnType } from './type';
 export const login = async (code: string) => {
   try {
     const result = await Server.post<LoginReturnType>(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/login`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/accounts/kakao/callback`,
       { code }
     );
-    console.log('kakao accessToken 발급 성공: ', result.data.access_token);
+    console.log('accessToken 발급 성공: ', result);
     localStorage.setItem('access', result.data.access_token);
     localStorage.setItem('refresh', result.data.refresh_token);
     return result.data;

@@ -28,7 +28,7 @@ export const initNavigationTmap = async (
     height: '100%',
     zoom: 19,
     pinchZoom: true,
-    scrollwheel: false,
+    // scrollwheel: false,
     zoomControl: false
   });
 
@@ -57,6 +57,10 @@ export const initNavigationTmap = async (
         map: CURRENT_MAP
       })
   );
+
+  const drawInfoArray: any[] = [];
+  const pointArray: any[] = [];
+  let markerArray: any[] = [];
 
   let text: string[] = [];
   routes.map((path) => text.push(`${path.longitude},${path.latitude}`));
@@ -93,8 +97,6 @@ export const initNavigationTmap = async (
       console.log(resultText);
       console.log(resultData);
 
-      const drawInfoArr = [];
-
       // for문 시작
       for (let i in resultData) {
         const geometry = resultData[i].geometry;
@@ -113,7 +115,8 @@ export const initNavigationTmap = async (
             // 포인트객체의 정보로 좌표값 변환 객체로 저장
             const convertChange = new window.Tmapv2.LatLng(convertPoint._lat, convertPoint._lng);
             // 배열에 담기
-            drawInfoArr.push(convertChange);
+
+            drawInfoArray.push(convertChange);
           }
         } else {
           let markerImg = '';
@@ -132,9 +135,9 @@ export const initNavigationTmap = async (
             size = new window.Tmapv2.Size(24, 38);
           } else {
             //각 포인트 마커
-            markerImg = 'http://topopen.tmap.co.kr/imgs/point.png';
+            markerImg = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png';
             pType = 'P';
-            size = new window.Tmapv2.Size(8, 8);
+            size = new window.Tmapv2.Size(24, 38);
           }
 
           // 경로들의 결과값들을 포인트 객체로 변환
@@ -148,6 +151,12 @@ export const initNavigationTmap = async (
             pointType: pType
           };
 
+          pointArray.push({
+            latitude: convertPoint._lat,
+            longitude: convertPoint._lng,
+            description: properties.description
+          });
+
           // Marker 추가 (흰색 동그라미 마커)
           const marker_p = new window.Tmapv2.Marker({
             position: new window.Tmapv2.LatLng(routeInfoObj.lat, routeInfoObj.lng),
@@ -159,7 +168,12 @@ export const initNavigationTmap = async (
       }
 
       //for문 종료
-      drawLine(drawInfoArr);
+      drawLine(drawInfoArray);
+
+      const regex = /[^0-9]/g;
+      markerArray = pointArray.map((point) => {
+        return { ...point, distance: point.description.replace(regex, '') };
+      });
 
       function drawLine(arrPoint: any[]) {
         new window.Tmapv2.Polyline({
@@ -171,5 +185,5 @@ export const initNavigationTmap = async (
       }
     })
     .catch((e) => console.log(e));
-  return [CURRENT_MAP, startMarker];
+  return [CURRENT_MAP, startMarker, markerArray];
 };

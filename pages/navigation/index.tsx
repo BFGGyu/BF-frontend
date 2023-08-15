@@ -1,11 +1,11 @@
-import Button from '@common/Button';
-import COLOR from '@constants/colors';
-import SCREEN_SIZE from '@constants/sizes';
 import Link from 'next/link';
 import React, { useRef } from 'react';
 import { BiMapAlt } from 'react-icons/bi';
 import styled from 'styled-components';
-import RoutingSection from 'src/components/navigation/RoutingSection';
+import RoutingSection from '@navigation/RoutingSection';
+import COLOR from '@constants/colors';
+import Button from '@common/Button';
+import SCREEN_SIZE from '@constants/sizes';
 
 const NavigationPage = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);

@@ -2,8 +2,8 @@ import Header from '@common/Header';
 import { NextPage } from 'next';
 import { styled } from 'styled-components';
 import { useState } from 'react';
-import ReviewFooterSection from 'src/components/review/ReviewFooterSection';
-import ReviewMainSection from 'src/components/review/ReviewMainSection';
+import ReviewFooterSection from '@review/ReviewFooterSection';
+import ReviewMainSection from '@review/ReviewMainSection';
 
 const ReviewPage: NextPage = () => {
   const [starCount, setStarCount] = useState<number>(5);

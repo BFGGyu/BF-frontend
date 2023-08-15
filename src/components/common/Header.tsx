@@ -15,16 +15,16 @@ const Header = ({ bgColor, color, type }: IHeaderProps) => {
   const router = useRouter();
   const nickname = useRecoilValue(nicknameState);
 
-  const handleClickLogin = () => {
-    router.push('/login');
-  };
-
   return (
     <HeaderWrapper $bgColor={bgColor} $color={color}>
       {type === 'blue' && <Image src='/images/blueHeader.svg' alt='' width={80} height={30} />}
       {type === 'white' && <Image src='/images/whiteHeader.svg' alt='' width={80} height={30} />}
-      <UserIconButton onClick={handleClickLogin}>
-        {nickname ? <AiOutlineUser size={30} /> : <div>로그인</div>}
+      <UserIconButton>
+        {nickname ? (
+          <AiOutlineUser onClick={() => router.push('/mypage')} size={30} />
+        ) : (
+          <LoginText onClick={() => router.push('/login')}>로그인</LoginText>
+        )}
       </UserIconButton>
     </HeaderWrapper>
   );
@@ -52,5 +52,7 @@ const UserIconButton = styled.div`
   align-items: center;
   cursor: pointer;
 `;
+
+const LoginText = styled.div``;
 
 export default Header;

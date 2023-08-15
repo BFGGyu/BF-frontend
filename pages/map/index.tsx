@@ -1,7 +1,7 @@
 import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
-import InfoSection from '@PlaceItem/InfoSection';
+import InfoSection from 'src/components/place/InfoSection';
 import { initRouteMap } from '@utils/map';
 import axios from 'axios';
 import type { NextPage } from 'next';

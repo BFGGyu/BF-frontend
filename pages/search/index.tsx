@@ -1,10 +1,10 @@
 import SearchBar from '@common/SearchBar';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
-import PlaceItem from '@PlaceItem/index';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
+import PlaceItem from 'src/components/place/PlaceItem';
 import styled from 'styled-components';
 
 interface IPlace {

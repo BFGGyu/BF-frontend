@@ -1,5 +1,5 @@
 import Button from '@common/Button';
-import InfoSection from '@PlaceItem/InfoSection';
+import InfoSection from 'src/components/place/InfoSection';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import { useState } from 'react';

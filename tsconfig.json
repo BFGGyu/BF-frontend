@@ -24,7 +24,7 @@
       "@common/*": ["src/components/common/*"],
       "@main/*": ["src/components/main/*"],
       "@layout/*": ["src/components/layout/*"],
-      "@placeItem/*": ["src/components/placeItem/*"],
+      "@place/*": ["src/components/place/*"],
       "@review/*": ["src/components/review/*"],
       "@navigation/*": ["src/components/navigation/*"],
       "@pages/*": ["pages/*"],

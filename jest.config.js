@@ -19,8 +19,9 @@ const customJestConfig = {
   moduleNameMapper: {
     '@common/(.*)': '<rootDir>/src/components/common/$1',
     '@main/(.*)': '<rootDir>/src/components/main/$1',
-    '@placeItem/(.*)': '<rootDir>/src/components/placeItem/$1',
+    '@place/(.*)': '<rootDir>/src/components/place/$1',
     '@review/(.*)': '<rootDir>/src/components/review/$1',
+    '@navigation/(.*)': '<rootDir>/src/components/navigation/$1',
     '@pages/(.*)': '<rootDir>/pages/$1',
     '@utils/(.*)': '<rootDir>/src/components/utils/$1',
     '@types/(.*)': '<rootDir>/src/components/types/$1',

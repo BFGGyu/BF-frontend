@@ -1,21 +1,14 @@
+import { IPlace } from '@@types/facility';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import Image from 'next/image';
 import { styled } from 'styled-components';
 
-interface IPlace {
-  id: string;
-  name: string;
-  type: string;
-  location: string;
-  startTimeAt: string;
-}
-
-interface IPlaceItemProps {
+interface IInfoSectionProps {
   place: IPlace;
 }
 
-const InfoSection = ({ place }: IPlaceItemProps) => {
+const InfoSection = ({ place }: IInfoSectionProps) => {
   return (
     <>
       <PlaceHeadWrapper>

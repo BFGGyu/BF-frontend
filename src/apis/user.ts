@@ -4,7 +4,7 @@ import { LoginReturnType } from './type';
 export const login = async (code: string) => {
   try {
     const result = await Server.post<LoginReturnType>(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/accounts/kakao/callback`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/accounts/kakao/callback/`,
       { code }
     );
     console.log('accessToken 발급 성공: ', result);

@@ -1,4 +1,4 @@
-import { IMarker } from '@@types/map';
+import { IFacilityMarker } from '@@types/map';
 import COLOR from '@constants/colors';
 
 declare global {
@@ -7,7 +7,7 @@ declare global {
   }
 }
 
-export const initTmap = async (markerData: IMarker[], centerLat: any, centerLng: any) => {
+export const initTmap = async (markerData: IFacilityMarker[], centerLat: any, centerLng: any) => {
   console.log('initTmap markerData:', markerData);
   let markers: any[] = [];
 

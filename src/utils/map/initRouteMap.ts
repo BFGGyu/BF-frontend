@@ -80,7 +80,8 @@ export const initRouteMap = async (
         '총 거리 : ' + (resultData[0].properties.totalDistance / 1000).toFixed(1) + 'km,';
       const tTime = ' 총 시간 : ' + (resultData[0].properties.totalTime / 60).toFixed(0) + '분';
       const resultText = tDistance + tTime;
-      console.log(resultData);
+      console.log(resultText);
+      console.log('MAP Route API data: ', resultData);
 
       const drawInfoArr = [];
 
@@ -121,9 +122,9 @@ export const initRouteMap = async (
             size = new window.Tmapv2.Size(24, 38);
           } else {
             //각 포인트 마커
-            markerImg = 'http://topopen.tmap.co.kr/imgs/point.png';
+            markerImg = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png';
             pType = 'P';
-            size = new window.Tmapv2.Size(8, 8);
+            size = new window.Tmapv2.Size(24, 38);
           }
 
           // 경로들의 결과값들을 포인트 객체로 변환

@@ -1,16 +1,9 @@
 import COLOR from '@constants/colors';
 import { useRouter } from 'next/router';
 import { styled } from 'styled-components';
-import Button from '../common/Button';
+import Button from '@common/Button';
 import InfoSection from './InfoSection';
-
-interface IPlace {
-  id: string;
-  name: string;
-  type: string;
-  location: string;
-  startTimeAt: string;
-}
+import { IPlace } from '@@types/facility';
 
 interface IPlaceItemProps {
   place: IPlace;

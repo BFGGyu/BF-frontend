@@ -8,13 +8,29 @@ import { styled } from 'styled-components';
 import { AiFillStar } from 'react-icons/ai';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
+import toast, { Toaster } from 'react-hot-toast';
+
+const notifySubmitReview = () =>
+  toast.success('제출이 완료되었습니다. 감사합니다 😎', {
+    duration: 1000,
+    style: {
+      ...FONT.HEADLINE2,
+      border: COLOR.BLUE3,
+      backgroundColor: COLOR.BLUE3,
+      color: COLOR.BLACK
+    },
+    iconTheme: {
+      primary: COLOR.BLUE1,
+      secondary: COLOR.WHITE
+    }
+  });
 
 const ReviewPage: NextPage = () => {
   const router = useRouter();
 
   const handleSubmitReview = () => {
-    // 제출하기 버튼 클릭 시 API 호출 후 라우팅. 제출 완료 토스트 메세지?
-    router.push('/main');
+    notifySubmitReview();
+    setTimeout(() => router.push('/main'), 1000);
   };
 
   const starCount = useRef(5);
@@ -58,6 +74,7 @@ const ReviewPage: NextPage = () => {
         <Button bgColor={COLOR.BLUE1} color={COLOR.BLUE3} height='80%' onClick={handleSubmitReview}>
           제출하기
         </Button>
+        <Toaster position='top-center' reverseOrder={false} />
       </FooterButtonWrapper>
     </ReviewMainWrapper>
   );

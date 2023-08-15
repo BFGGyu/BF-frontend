@@ -5,14 +5,15 @@ import FONT from '@constants/fonts';
 import { useState } from 'react';
 import { BsArrowLeft } from 'react-icons/bs';
 import { styled } from 'styled-components';
+import { IPlace } from '@@types/facility';
 
 const DetailPage = () => {
-  const [selectedPlace, setSelectedPlace] = useState({
+  const [selectedPlace, setSelectedPlace] = useState<IPlace>({
     id: '0',
     name: '국립 고궁 박물관',
-    type: '박물관',
-    location: '서울 종로구 세종로',
-    startTimeAt: '10:00'
+    type: 'museum',
+    address: '서울 종로구 세종로',
+    opening_time: '10:00'
   });
 
   const [reviewList, setReviewList] = useState([

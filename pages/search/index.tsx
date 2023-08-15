@@ -1,3 +1,5 @@
+import { FacilityType, IPlace } from '@@types/facility';
+import { getSearchResult } from '@apis/map';
 import SearchBar from '@common/SearchBar';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
@@ -7,47 +9,53 @@ import { AiOutlineClose } from 'react-icons/ai';
 import PlaceItem from 'src/components/place/PlaceItem';
 import styled from 'styled-components';
 
-interface IPlace {
-  id: string;
-  name: string;
-  type: string;
-  location: string;
-  startTimeAt: string;
-}
-
 const Search = () => {
   const router = useRouter();
-
   const [keyword, setKeyword] = useState<string>('');
   const [isSearched, setIsSearched] = useState<boolean>(false);
   const [searchList, setSearchList] = useState<IPlace[]>([
     {
       id: '0',
       name: '국립 고궁 박물관',
-      type: '박물관',
-      location: '서울 종로구 세종로',
-      startTimeAt: '10:00'
+      type: 'museum',
+      address: '서울 종로구 세종로',
+      opening_time: '10:00'
     },
     {
       id: '1',
       name: '국립 현대 미술관',
-      type: '미술관',
-      location: '서울 종로구 소격동',
-      startTimeAt: '9:30'
+      type: 'artGallery',
+      address: '서울 종로구 소격동',
+      opening_time: '9:30'
     },
-
     {
       id: '2',
       name: '진격의 거인전',
-      type: '전시회',
-      location: '서울 마포구 서교동',
-      startTimeAt: '10:30'
+      type: 'exhibition',
+      address: '서울 마포구 서교동',
+      opening_time: '10:30'
     }
   ]);
 
   useEffect(() => {
     if (typeof router.query.result === 'string') {
       setIsSearched(true);
+      // 배열로 줄 경우 & 가공해야 하는 경우
+      // getSearchResult(router.query.result).then((res) => {
+      //   const result = res.map((data:IPlace) => ({
+      //     id: data.id,
+      //     name: data.name,
+      //     type: data.type,
+      //     address: data.address,
+      //     opening_time: data.opening_time
+      //   }))
+      //   setSearchList(result);
+      // });
+
+      // 잘 줄 경우
+      // getSearchResult(router.query.result).then((data) => {
+      //   setSearchList(data);
+      // });
       setKeyword(router.query.result);
     }
   }, [router.query.result]);

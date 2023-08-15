@@ -1,7 +1,13 @@
 export interface IPlace {
   id: string;
+  address: string;
   name: string;
-  type: string;
-  location: string;
-  startTimeAt: string;
+  opening_time: string;
+  type: FacilityType;
+  closing_time?: string;
+  contact?: string;
+  latitude?: string;
+  longitude?: string;
 }
+
+export type FacilityType = 'museum' | 'artGallery' | 'exhibition';

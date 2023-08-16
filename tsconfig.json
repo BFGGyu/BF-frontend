@@ -27,6 +27,7 @@
       "@place/*": ["src/components/place/*"],
       "@review/*": ["src/components/review/*"],
       "@navigation/*": ["src/components/navigation/*"],
+      "@mypage/*": ["src/components/mypage/*"],
       "@pages/*": ["pages/*"],
       "@constants/*": ["src/constants/*"],
       "@styles/*": ["src/styles/*"],

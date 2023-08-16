@@ -13,8 +13,12 @@ const PlaceItem = ({ place }: IPlaceItemProps) => {
   const router = useRouter();
 
   const routeMap = () => {
-    router.push('/map');
+    router.push({
+      pathname: '/map',
+      query: { result: router.query.result }
+    });
   };
+
   return (
     <SearchListWrapper key={place.id}>
       <LeftWrapper>

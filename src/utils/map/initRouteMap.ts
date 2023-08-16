@@ -17,10 +17,27 @@ export const initRouteMap = async (
     center: new window.Tmapv2.LatLng(center.latitude, center.longitude), // 지도 초기 좌표
     width: '390px',
     height: '570px',
-    zoom: 18,
+    zoom: 15,
     pinchZoom: true,
     zoomControl: false
   });
+
+  const latlngBounds = new window.Tmapv2.LatLngBounds(
+    new window.Tmapv2.LatLng(markerList[0].latitude, markerList[0].longitude)
+  );
+  // console.log('bound:', latlngBounds);
+  markerList.map((marker) =>
+    latlngBounds.extend(new window.Tmapv2.LatLng(marker.latitude, marker.longitude))
+  );
+  // console.log('bound 2:', latlngBounds);
+
+  const margin = {
+    left: 20,
+    top: 20,
+    right: 20,
+    bottom: 20
+  };
+  CURRENT_MAP.fitBounds(latlngBounds, margin);
 
   // 출발
   const startMarker = new window.Tmapv2.Marker({

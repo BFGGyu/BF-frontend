@@ -17,10 +17,26 @@ export const initRouteMap = async (
     center: new window.Tmapv2.LatLng(center.latitude, center.longitude), // 지도 초기 좌표
     width: '390px',
     height: '570px',
-    zoom: 18,
+    zoom: 15,
     pinchZoom: true,
     zoomControl: false
   });
+
+  // markerList 에 맞게 zoom level 설정
+  const latlngBounds = new window.Tmapv2.LatLngBounds(
+    new window.Tmapv2.LatLng(markerList[0].latitude, markerList[0].longitude)
+  );
+  markerList.map((marker) =>
+    latlngBounds.extend(new window.Tmapv2.LatLng(marker.latitude, marker.longitude))
+  );
+
+  const margin = {
+    left: 20,
+    top: 20,
+    right: 20,
+    bottom: 20
+  };
+  CURRENT_MAP.fitBounds(latlngBounds, margin);
 
   // 출발
   const startMarker = new window.Tmapv2.Marker({

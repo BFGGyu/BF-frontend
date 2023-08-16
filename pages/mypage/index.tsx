@@ -32,6 +32,34 @@ const Mypage = () => {
     }
   ]);
 
+  const [badgeList, setBadgetList] = useState([
+    {
+      id: '0',
+      imageSrc: '/images/elevator.svg',
+      name: '어디든지 완전정복'
+    },
+    {
+      id: '1',
+      imageSrc: '/images/elevator.svg',
+      name: '어디든지 완전정복'
+    },
+    {
+      id: '2',
+      imageSrc: '/images/elevator.svg',
+      name: '어디든지 완전정복'
+    },
+    {
+      id: '3',
+      imageSrc: '/images/elevator.svg',
+      name: '어디든지 완전정복'
+    },
+    {
+      id: '4',
+      imageSrc: '/images/elevator.svg',
+      name: '어디든지 완전정복'
+    }
+  ]);
+
   const router = useRouter();
 
   return (
@@ -43,6 +71,7 @@ const Mypage = () => {
         <HeaderText style={FONT.BODY1}>마이페이지</HeaderText>
         <Blank>빈칸</Blank>
       </MypageHeader>
+
       <ProfileSection>
         <ProfileWrapper>
           <Image src='/images/elevator.svg' alt='' width={50} height={50} />
@@ -50,47 +79,21 @@ const Mypage = () => {
         </ProfileWrapper>
         <LogoutText style={FONT.CAPTION}>로그아웃</LogoutText>
       </ProfileSection>
+
       <BadgeSection>
         <TitleText style={FONT.HEADLINE1}>나의 뱃지</TitleText>
         <BadgeContainer>
-          <BadgeWrapper>
-            {/* 성공 했을 때와 성공안했을 때 분기처리 */}
-            {/* <Image src='/images/elevator.svg' alt='' width={80} height={80} /> */}
-            <div
-              style={{ backgroundColor: COLOR.LINE, width: 80, height: 80, borderRadius: 16 }}
-            ></div>
-            <BadgeName style={FONT.BODY2}>어디든지 완전정복</BadgeName>
-          </BadgeWrapper>
-
-          <BadgeWrapper>
-            <div
-              style={{ backgroundColor: COLOR.LINE, width: 80, height: 80, borderRadius: 16 }}
-            ></div>
-            <BadgeName style={FONT.BODY2}>어디든지 완전정복</BadgeName>
-          </BadgeWrapper>
-
-          <BadgeWrapper>
-            <div
-              style={{ backgroundColor: COLOR.LINE, width: 80, height: 80, borderRadius: 16 }}
-            ></div>
-            <BadgeName style={FONT.BODY2}>어디든지 완전정복</BadgeName>
-          </BadgeWrapper>
-
-          <BadgeWrapper>
-            <div
-              style={{ backgroundColor: COLOR.LINE, width: 80, height: 80, borderRadius: 16 }}
-            ></div>
-            <BadgeName style={FONT.BODY2}>어디든지 완전정복</BadgeName>
-          </BadgeWrapper>
-
-          <BadgeWrapper>
-            <div
-              style={{ backgroundColor: COLOR.LINE, width: 80, height: 80, borderRadius: 16 }}
-            ></div>
-            <BadgeName style={FONT.BODY2}>어디든지 완전정복</BadgeName>
-          </BadgeWrapper>
+          {badgeList.map((badge) => (
+            <BadgeWrapper key={badge.id}>
+              {/* 성공 했을 때와 성공안했을 때 분기처리 */}
+              {/* <Image src='/images/elevator.svg' alt='' width={80} height={80} /> */}
+              <NotCompletedBadge />
+              <BadgeName style={FONT.BODY2}>어디든지 완전정복</BadgeName>
+            </BadgeWrapper>
+          ))}
         </BadgeContainer>
       </BadgeSection>
+
       <div>
         <TitleText style={FONT.HEADLINE1}>찜한 시설</TitleText>
 
@@ -199,6 +202,13 @@ const BadgeWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px;
+`;
+
+const NotCompletedBadge = styled.div`
+  background-color: ${COLOR.LINE};
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
 `;
 
 const TitleText = styled.div`

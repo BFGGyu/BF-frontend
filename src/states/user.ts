@@ -1,12 +1,12 @@
-import { randomUUID } from 'crypto';
 import { atom } from 'recoil';
+import { v1 } from 'uuid';
 
 export const isLoggedInState = atom({
-  key: `isLoggedInState${randomUUID}`,
+  key: `isLoggedInState${v1()}`,
   default: false
 });
 
 export const nicknameState = atom({
-  key: `nicknameState${randomUUID}`,
+  key: `nicknameState${v1()}`,
   default: ''
 });

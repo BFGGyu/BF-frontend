@@ -6,6 +6,7 @@ const withPWA = require('next-pwa')({
   register: true,
   skipWaiting: true,
   runtimeCaching,
+  // customWorkerDir: 'worker'
   disable: prod ? false : true
 });
 

@@ -8,19 +8,25 @@ interface IInfoSectionProps {
   place: IPlace;
 }
 
+const PlaceTypeDic = {
+  museum: '박물관',
+  artGallery: '미술관',
+  exhibition: '전시회'
+};
+
 const InfoSection = ({ place }: IInfoSectionProps) => {
   return (
     <>
       <PlaceHeadWrapper>
         <PlaceName style={FONT.HEADLINE2}>{place.name}</PlaceName>
         <PlaceType style={FONT.BODY2} $type={place.type}>
-          {place.type}
+          {PlaceTypeDic[place.type]}
         </PlaceType>
       </PlaceHeadWrapper>
-      <PlaceLocation style={FONT.BODY2}>{place.location}</PlaceLocation>
+      <PlaceLocation style={FONT.BODY2}>{place.address}</PlaceLocation>
       <PlaceTimeWrapper style={FONT.BODY2}>
         <div style={{ color: COLOR.RED }}>운영종료</div>
-        <div>{place.startTimeAt} 에 운영시작</div>
+        <div>{place.opening_time} 에 운영시작</div>
       </PlaceTimeWrapper>
       <IconWrapper>
         <Image src='/images/wheelChair.svg' alt='wheelChair' width={30} height={30} />
@@ -40,9 +46,9 @@ type ObjType = {
 };
 
 const TYPE_TO_COLOR: ObjType = {
-  박물관: COLOR.ORANGE,
-  미술관: COLOR.GREEN,
-  전시회: COLOR.RED
+  museum: COLOR.ORANGE,
+  artGallery: COLOR.GREEN,
+  exhibition: COLOR.RED
 };
 
 const PlaceType = styled.div<PlaceTypeProps>`

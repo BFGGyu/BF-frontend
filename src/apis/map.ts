@@ -17,3 +17,8 @@ export const getNavigationCoords = async () => {
   const result = await Server.get<IRouteReturnType>('api/path');
   return result.data.data;
 };
+
+export const getSearchResult = async (keyword: string) => {
+  const result = await Server.get(`place/facility/${keyword}`);
+  return result.data;
+};

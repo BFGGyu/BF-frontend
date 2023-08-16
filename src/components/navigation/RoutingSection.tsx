@@ -47,11 +47,13 @@ const RoutingSection = () => {
     changeCurrentPostion(currentMapRef.current, startMarkerRef.current, lat, lng);
 
     // 현재 좌표와 타겟 좌표 사이의 거리 계산
-    if (markerList.current.length > 0) {
+    const length = markerList.current.length;
+    if (markerList.current.length > 0 && markerIndexRef.current < length) {
       console.log('왜없음?:', markerList.current);
       const { latitude, longitude } = markerList.current[markerIndexRef.current];
       const diff = getDistanceCurrentToTarget({ lat, lng }, { latitude, longitude });
       setDiffPosition(diff);
+      if (diff < 5) markerIndexRef.current++;
     }
   };
 
@@ -111,10 +113,15 @@ const RoutingSection = () => {
           <RoutingLeftWrapper>
             <PiArrowBendUpLeftBold size={40} />
             <div style={{ fontSize: '60%' }}>
-              {markerList.current.length > 0 && markerList.current[1].description}
+              {markerList.current.length > 0 &&
+                markerList.current[markerIndexRef.current + 1].description}
             </div>
           </RoutingLeftWrapper>
-          <div>{markerList.current.length > 0 && markerList.current[1].distance}m</div>
+          <div>
+            {markerList.current.length > 0 &&
+              diffPosition + parseInt(markerList.current[markerIndexRef.current + 1].distance)}
+            m
+          </div>
         </RoutingSecondSection>
       </RoutingWrapper>
     </HeaderWrapper>

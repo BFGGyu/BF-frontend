@@ -10,18 +10,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { getRoutingCoords } from 'src/apis/map';
 import { styled } from 'styled-components';
 import { IPlace } from '@@types/facility';
+import { IFacilityMarker } from '@@types/map';
 
 const MapPage: NextPage = () => {
   const router = useRouter();
   const mapRef = useRef<HTMLDivElement | null>(null);
   const CURRENT_MAP = useRef(null);
-  const [selectedPlace, setSelectedPlace] = useState<IPlace>({
-    id: '0',
-    name: '국립 고궁 박물관',
-    type: 'museum',
-    address: '서울 종로구 세종로',
-    opening_time: '10:00'
-  });
+  const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
 
   useEffect(() => {
     // 서버 연결

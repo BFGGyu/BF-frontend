@@ -4,7 +4,7 @@ import FONT from '@constants/fonts';
 import { changeMarker, initTmap } from '@utils/map';
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
-import { getFacilityCoords } from 'src/apis/map';
+import { getFacilityCoordList } from 'src/apis/map';
 import styled from 'styled-components';
 
 const CENTER = { LAT: '37.53084364186228', LNG: '127.081908811749' };
@@ -80,7 +80,7 @@ const MapSection = () => {
 
   useEffect(() => {
     // 서버 연결
-    getFacilityCoords().then((data) => {
+    getFacilityCoordList().then((data) => {
       console.log('MapSection 연결:', data);
       initTmap(data).then((markers: IFacilityMarker[]) => {
         markersRef.current = markers;

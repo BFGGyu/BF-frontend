@@ -1,11 +1,11 @@
-import { IPlace } from '@@types/facility';
+import { IFacilityMarker } from '@@types/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import Image from 'next/image';
 import { styled } from 'styled-components';
 
 interface IInfoSectionProps {
-  place: IPlace;
+  place: IFacilityMarker;
 }
 
 const PlaceTypeDic = {

@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import { styled } from 'styled-components';
 import Button from '@common/Button';
 import InfoSection from './InfoSection';
-import { IPlace } from '@@types/facility';
+import { IFacilityMarker } from '@@types/map';
 
 interface IPlaceItemProps {
-  place: IPlace;
+  place: IFacilityMarker;
 }
 
 const PlaceItem = ({ place }: IPlaceItemProps) => {

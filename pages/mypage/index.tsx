@@ -94,36 +94,28 @@ const Mypage = () => {
         </BadgeContainer>
       </BadgeSection>
 
-      <div>
+      <WishPlaceSection>
         <TitleText style={FONT.HEADLINE1}>찜한 시설</TitleText>
 
         {wishPlaceList.map((place) => (
-          <div
-            key={place.id}
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-              // padding: '10px 20px'
-            }}
-          >
-            <div style={{ flexBasis: '20%' }}>
+          <WishPlaceWrapper key={place.id}>
+            <WishPlaceImage>
               <Image src='/images/elevator.svg' alt='' width={80} height={80} />
-            </div>
-            <div style={{ flexBasis: '60%', paddingLeft: 20 }}>
+            </WishPlaceImage>
+            <WishPlaceInfo>
               <PlaceName style={FONT.HEADLINE2}>{place.name}</PlaceName>
               <PlaceType style={FONT.BODY2} $type={place.type}>
                 {/* {PlaceTypeDic[place.type]} */}
                 {PlaceTypeDic['museum']}
               </PlaceType>
               <PlaceLocation style={FONT.BODY2}>{place.address}</PlaceLocation>
-            </div>
+            </WishPlaceInfo>
             <HeartButton>
               <AiFillHeart color='red' size={25} />
             </HeartButton>
-          </div>
+          </WishPlaceWrapper>
         ))}
-      </div>
+      </WishPlaceSection>
     </div>
   );
 };
@@ -211,6 +203,8 @@ const NotCompletedBadge = styled.div`
   border-radius: 16px;
 `;
 
+const WishPlaceSection = styled.div``;
+
 const TitleText = styled.div`
   padding: 20px;
 `;
@@ -220,6 +214,25 @@ const BadgeName = styled.div`
   text-align: center;
   display: flex;
   flex-wrap: wrap;
+`;
+
+const WishPlaceWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const WishPlaceImage = styled.div`
+  flex-basis: 20%;
+`;
+
+const WishPlaceInfo = styled.div`
+  flex-basis: 60%;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 `;
 
 const HeartButton = styled.div`

@@ -25,7 +25,7 @@ export const initTmap = async (markerData: IFacilityMarker[], centerLat: any, ce
   markerData.map((data) => {
     const newMarker = new window.Tmapv2.Marker({
       position: new window.Tmapv2.LatLng(data.latitude, data.longitude),
-      icon: `${process.env.NEXT_PUBLIC_AWS_S3}/${data.type}.svg`,
+      icon: `/images/${data.type}.svg`,
       iconSize: new window.Tmapv2.Size(40, 40),
       title: data.name,
       map: CURRENT_MAP,

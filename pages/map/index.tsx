@@ -12,6 +12,10 @@ import { styled } from 'styled-components';
 import { IPlace } from '@@types/facility';
 import { IFacilityMarker } from '@@types/map';
 
+const removeBlank = (query: string) => {
+  return query.split('-').join('');
+};
+
 const MapPage: NextPage = () => {
   const router = useRouter();
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -26,10 +30,10 @@ const MapPage: NextPage = () => {
     const result = router.query.result;
     if (typeof result === 'string') {
       // 도착지는 url에서 받아오고, 출발지는 API 에서 받아옴
-      // getSearchResult(result).then((data) => {
-      //   setStation({ departure: data.station, arrival: result });
-      //   setSelectedPlace(data);
-      // });
+      getSearchResult(removeBlank(result)).then((data) => {
+        setStation({ departure: data.station, arrival: removeBlank(result) });
+        setSelectedPlace(data);
+      });
       axios.get('/api/map').then((res) => {
         const { center, arrival, departure, markers, routes } = res.data.data;
         initRouteMap(center, departure, arrival, markers, routes).then((data) => {

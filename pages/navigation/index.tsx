@@ -21,9 +21,11 @@ const NavigationPage = () => {
           <BiMapAlt color={COLOR.BLUE1} size={30} />
         </MapIconWrapper>
         <Link href='/review'>
-          <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} height='50px'>
-            경로안내 마치기
-          </Button>
+          <a>
+            <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} height='50px'>
+              경로안내 마치기
+            </Button>
+          </a>
         </Link>
       </FooterWrapper>
     </div>

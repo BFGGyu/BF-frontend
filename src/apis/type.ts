@@ -1,5 +1,18 @@
 import { ICoord, IFacilityMarker, IRouteMarker } from '@@types/map';
 
+export interface IFailityReturnType {
+  id: number;
+  name: string;
+  type: 'artGallery' | 'museum' | 'exhibition';
+  contact: string;
+  address: string;
+  opening_time: string;
+  closing_time: string;
+  latitude: string;
+  longitude: string;
+  imageSrc: string;
+}
+
 export interface IMarkerReturnType {
   [key: string]: {
     path_id: number;

@@ -1,11 +1,17 @@
 import { Server } from './setting';
-import { IMarkerReturnType, IRouteReturnType } from './type';
+import { IFailityReturnType, IMarkerReturnType, IRouteReturnType } from './type';
+
+// export const getFacilityCoords = async () => {
+//   const result = await Server.get<IMarkerReturnType>('place/facility');
+//   const { latitude, longitude } = result.data.data.center;
+//   const markers = result.data.data.markers;
+//   return { markers, latitude, longitude };
+// };
 
 export const getFacilityCoords = async () => {
-  const result = await Server.get<IMarkerReturnType>('api/center');
-  const { latitude, longitude } = result.data.data.center;
-  const markers = result.data.data.markers;
-  return { markers, latitude, longitude };
+  const result = await Server.get<IFailityReturnType[]>('place/facility');
+  console.log('시설 전체 좌표:', result.data);
+  return result.data;
 };
 
 export const getRoutingCoords = async () => {

@@ -1,8 +1,13 @@
 export interface IFacilityMarker {
   id: number;
+  name: string;
+  contact: string;
+  address: string;
+  opening_time: string;
+  closing_time: string;
   latitude: string;
   longitude: string;
-  name: string;
+  imageSrc: string;
   type: 'artGallery' | 'museum' | 'exhibition';
 }
 

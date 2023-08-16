@@ -22,14 +22,13 @@ export const initRouteMap = async (
     zoomControl: false
   });
 
+  // markerList 에 맞게 zoom level 설정
   const latlngBounds = new window.Tmapv2.LatLngBounds(
     new window.Tmapv2.LatLng(markerList[0].latitude, markerList[0].longitude)
   );
-  // console.log('bound:', latlngBounds);
   markerList.map((marker) =>
     latlngBounds.extend(new window.Tmapv2.LatLng(marker.latitude, marker.longitude))
   );
-  // console.log('bound 2:', latlngBounds);
 
   const margin = {
     left: 20,

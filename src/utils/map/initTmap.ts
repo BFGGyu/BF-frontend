@@ -17,10 +17,15 @@ export const initTmap = async (markerData: IFacilityMarker[], centerLat: any, ce
     center: new window.Tmapv2.LatLng(centerLat, centerLng), // 지도 초기 좌표
     width: '390px',
     height: '588px',
-    zoom: 12,
+    zoom: 8,
     pinchZoom: true,
     scrollwheel: false
   });
+
+  // markerList 에 맞게 zoom level 설정
+  const latlngBounds = new window.Tmapv2.LatLngBounds(
+    new window.Tmapv2.LatLng(markerData[0].latitude, markerData[0].longitude)
+  );
 
   markerData.map((data) => {
     const newMarker = new window.Tmapv2.Marker({
@@ -31,8 +36,17 @@ export const initTmap = async (markerData: IFacilityMarker[], centerLat: any, ce
       map: CURRENT_MAP,
       id: data.type
     });
+    latlngBounds.extend(new window.Tmapv2.LatLng(data.latitude, data.longitude));
     markers.push(newMarker);
   });
+
+  const margin = {
+    left: 20,
+    top: 20,
+    right: 20,
+    bottom: 150
+  };
+  CURRENT_MAP.fitBounds(latlngBounds, margin);
 
   const infoWindowArray: any[] = [];
 

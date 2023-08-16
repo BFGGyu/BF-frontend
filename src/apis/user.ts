@@ -1,3 +1,4 @@
+import { getItemWithExpireTime, setItemWithExpireTime } from '@utils/storage';
 import { Server } from './setting';
 import { LoginReturnType } from './type';
 
@@ -8,8 +9,8 @@ export const login = async (code: string) => {
       { code }
     );
     console.log('accessToken 발급 성공: ', result);
-    localStorage.setItem('access', result.data.access_token);
-    localStorage.setItem('refresh', result.data.refresh_token);
+    setItemWithExpireTime('access', result.data.access_token);
+    setItemWithExpireTime('refresh', result.data.refresh_token);
     return result.data;
   } catch (error: any) {
     console.log('getKakaoAccessToken 에러: ', error);
@@ -26,8 +27,8 @@ export const login = async (code: string) => {
 
 // 만료된 액세스 토큰 갱신
 export const getRefresh = async () => {
-  const accessToken = localStorage.getItem('access');
-  const refreshToken = localStorage.getItem('refresh');
+  const accessToken = getItemWithExpireTime('access');
+  const refreshToken = getItemWithExpireTime('refresh');
   const headers = { Authorization: `Bearer ${accessToken}` };
   // TODO: return 값으로 받아온 access token 으로 재요청
   try {
@@ -38,7 +39,7 @@ export const getRefresh = async () => {
 };
 
 export const logout = async () => {
-  const refreshToken = localStorage.getItem('refresh');
+  const refreshToken = getItemWithExpireTime('refresh');
   try {
     localStorage.clear();
     return await Server.post('/logout', {

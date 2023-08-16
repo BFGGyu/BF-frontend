@@ -20,7 +20,7 @@ const handlers = [
   rest.get('/api/map', (req, res, ctx) => {
     return res(
       ctx.status(200),
-      ctx.delay(2000),
+      ctx.delay(1000),
       ctx.json({
         data: {
           path_id: 1,
@@ -114,7 +114,7 @@ const handlers = [
   rest.get('/api/path', (req, res, ctx) => {
     return res(
       ctx.status(200),
-      ctx.delay(2000),
+      ctx.delay(1000),
       ctx.json({
         data: {
           path_id: 1,
@@ -203,7 +203,7 @@ const handlers = [
   rest.get('/api/center', (req, res, ctx) => {
     return res(
       ctx.status(200),
-      ctx.delay(2000),
+      ctx.delay(1000),
       ctx.json({
         data: {
           path_id: 1,

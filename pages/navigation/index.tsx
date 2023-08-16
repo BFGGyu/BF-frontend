@@ -6,9 +6,11 @@ import RoutingSection from '@navigation/RoutingSection';
 import COLOR from '@constants/colors';
 import Button from '@common/Button';
 import SCREEN_SIZE from '@constants/sizes';
+import { useRouter } from 'next/router';
 
 const NavigationPage = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
 
   return (
     <div>
@@ -20,17 +22,19 @@ const NavigationPage = () => {
         <MapIconWrapper>
           <BiMapAlt color={COLOR.BLUE1} size={30} />
         </MapIconWrapper>
-        <Link href='/review'>
-          <a>
-            <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} height='50px'>
-              경로안내 마치기
-            </Button>
-          </a>
-        </Link>
+        <ButtonWrapper onClick={() => router.push('/review')}>
+          <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} height='50px'>
+            경로안내 마치기
+          </Button>
+        </ButtonWrapper>
       </FooterWrapper>
     </div>
   );
 };
+
+const ButtonWrapper = styled.div`
+  width: inherit;
+`;
 
 const MapWrapper = styled.div`
   height: ${SCREEN_SIZE.HEIGHT};

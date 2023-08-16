@@ -8,7 +8,7 @@ import { IFailityReturnType, IMarkerReturnType, IRouteReturnType } from './type'
 //   return { markers, latitude, longitude };
 // };
 
-export const getFacilityCoords = async () => {
+export const getFacilityCoordList = async () => {
   const result = await Server.get<IFailityReturnType[]>('place/facility');
   console.log('시설 전체 좌표:', result.data);
   return result.data;
@@ -24,7 +24,9 @@ export const getNavigationCoords = async () => {
   return result.data.data;
 };
 
-export const getSearchResult = async (keyword: string) => {
+export const getSearchResult = async (search: string) => {
+  const keyword = search.split('-').join('');
+  console.log(keyword);
   const result = await Server.get(`place/facility/${keyword}`);
   return result.data;
 };

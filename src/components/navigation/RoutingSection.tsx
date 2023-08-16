@@ -31,7 +31,7 @@ const handleError = (err: any) => {
 
 const RoutingSection = () => {
   const currentMapRef = useRef(null);
-  const startMarkerRef = useRef(null);
+  const currentMarkerRef = useRef(null);
   const watchId = useRef<number>();
 
   // navigation 데이터 리스트
@@ -44,14 +44,16 @@ const RoutingSection = () => {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
 
-    changeCurrentPostion(currentMapRef.current, startMarkerRef.current, lat, lng);
+    changeCurrentPostion(currentMapRef.current, currentMarkerRef.current, lat, lng);
 
     // 현재 좌표와 타겟 좌표 사이의 거리 계산
-    if (markerList.current.length > 0) {
+    const length = markerList.current.length;
+    if (markerList.current.length > 0 && markerIndexRef.current < length) {
       console.log('왜없음?:', markerList.current);
       const { latitude, longitude } = markerList.current[markerIndexRef.current];
       const diff = getDistanceCurrentToTarget({ lat, lng }, { latitude, longitude });
       setDiffPosition(diff);
+      if (diff < 5) markerIndexRef.current++;
     }
   };
 
@@ -62,7 +64,7 @@ const RoutingSection = () => {
     //   initNavigationTmap(data.departure, data.arrival, data.markers, data.routes).then((data) => {
     //     console.log('지도데이터 로딩 성공 !', data);
     //     currentMapRef.current = data[0];
-    //     startMarkerRef.current = data[1];
+    //     currentMarkerRef.current = data[1];
     //     markerList.current = data[2];
     //   });
     // });
@@ -73,7 +75,7 @@ const RoutingSection = () => {
       initNavigationTmap(departure, arrival, markers, routes).then((data) => {
         console.log('지도데이터 로딩 성공 !', data);
         currentMapRef.current = data[0];
-        startMarkerRef.current = data[1];
+        currentMarkerRef.current = data[1];
         markerList.current = data[2];
       });
     });
@@ -100,8 +102,9 @@ const RoutingSection = () => {
           <RoutingLeftWrapper>
             <PiArrowBendUpRightBold size={40} />
             <div style={{ fontSize: '60%' }}>
-              {markerList.current.length > 0 &&
-                markerList.current[markerIndexRef.current].description}
+              {(markerList.current.length > 0 &&
+                markerList.current[markerIndexRef.current].description) ||
+                '로딩중...'}
             </div>
           </RoutingLeftWrapper>
           <div>{diffPosition}m</div>
@@ -111,10 +114,17 @@ const RoutingSection = () => {
           <RoutingLeftWrapper>
             <PiArrowBendUpLeftBold size={40} />
             <div style={{ fontSize: '60%' }}>
-              {markerList.current.length > 0 && markerList.current[1].description}
+              {(markerList.current.length > 0 &&
+                markerList.current[markerIndexRef.current + 1].description) ||
+                '로딩중...'}
             </div>
           </RoutingLeftWrapper>
-          <div>{markerList.current.length > 0 && markerList.current[1].distance}m</div>
+          <div>
+            {(markerList.current.length > 0 &&
+              diffPosition + parseInt(markerList.current[markerIndexRef.current + 1].distance)) ||
+              '0'}
+            m
+          </div>
         </RoutingSecondSection>
       </RoutingWrapper>
     </HeaderWrapper>

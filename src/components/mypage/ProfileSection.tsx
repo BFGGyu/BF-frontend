@@ -1,14 +1,18 @@
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
+import { nicknameState } from '@states/user';
 import Image from 'next/image';
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 
 const ProfileSection = () => {
+  const nickname = useRecoilValue(nicknameState);
+
   return (
     <ProfileWrapper>
       <ProfileInfo>
         <Image src='/images/elevator.svg' alt='' width={50} height={50} />
-        <UserIDText style={FONT.HEADLINE2}>사용자 아이디 님</UserIDText>
+        <UserIDText style={FONT.HEADLINE2}>{nickname} 님</UserIDText>
       </ProfileInfo>
       <LogoutText style={FONT.CAPTION}>로그아웃</LogoutText>
     </ProfileWrapper>

@@ -35,28 +35,35 @@ export const initNavigationTmap = async (
   // 출발
   const startMarker = new window.Tmapv2.Marker({
     position: new window.Tmapv2.LatLng(departure.latitude, departure.longitude),
-    icon: `${process.env.NEXT_PUBLIC_AWS_S3}/artGallery.svg`,
+    icon: `/images/departure.svg`,
     iconSize: new window.Tmapv2.Size(24, 38),
     map: CURRENT_MAP
   });
 
   // 도착
   const endMarker = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(arrival.latitude, arrival.latitude),
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png',
+    position: new window.Tmapv2.LatLng(arrival.latitude, arrival.longitude),
+    icon: '/images/arrival.svg',
     iconSize: new window.Tmapv2.Size(24, 38),
     map: CURRENT_MAP
   });
 
-  markerList.map(
-    (marker) =>
-      new window.Tmapv2.Marker({
-        position: new window.Tmapv2.LatLng(marker.latitude, marker.longitude),
-        icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
-        iconSize: new window.Tmapv2.Size(24, 38),
-        map: CURRENT_MAP
-      })
-  );
+  const currentMarker = new window.Tmapv2.Marker({
+    position: new window.Tmapv2.LatLng(departure.latitude, departure.longitude),
+    icon: '/images/currentPosition.svg',
+    iconSize: new window.Tmapv2.Size(30, 45),
+    map: CURRENT_MAP
+  });
+
+  // markerList.map(
+  //   (marker) =>
+  //     new window.Tmapv2.Marker({
+  //       position: new window.Tmapv2.LatLng(marker.latitude, marker.longitude),
+  //       icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
+  //       iconSize: new window.Tmapv2.Size(24, 38),
+  //       map: CURRENT_MAP
+  //     })
+  // );
 
   const drawInfoArray: any[] = [];
   const pointArray: any[] = [];
@@ -144,12 +151,12 @@ export const initNavigationTmap = async (
           const latlon = new window.Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]); // 포인트 객체를 받아 좌표값으로 다시 변환
           const convertPoint = new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlon);
 
-          const routeInfoObj = {
-            markerImage: markerImg,
-            lng: convertPoint._lng,
-            lat: convertPoint._lat,
-            pointType: pType
-          };
+          // const routeInfoObj = {
+          //   markerImage: markerImg,
+          //   lng: convertPoint._lng,
+          //   lat: convertPoint._lat,
+          //   pointType: pType
+          // };
 
           pointArray.push({
             latitude: convertPoint._lat,
@@ -158,12 +165,12 @@ export const initNavigationTmap = async (
           });
 
           // Marker 추가 (흰색 동그라미 마커)
-          const marker_p = new window.Tmapv2.Marker({
-            position: new window.Tmapv2.LatLng(routeInfoObj.lat, routeInfoObj.lng),
-            icon: routeInfoObj.markerImage,
-            iconSize: size,
-            map: CURRENT_MAP
-          });
+          // const marker_p = new window.Tmapv2.Marker({
+          //   position: new window.Tmapv2.LatLng(routeInfoObj.lat, routeInfoObj.lng),
+          //   icon: routeInfoObj.markerImage,
+          //   iconSize: size,
+          //   map: CURRENT_MAP
+          // });
         }
       }
 
@@ -185,5 +192,5 @@ export const initNavigationTmap = async (
       }
     })
     .catch((e) => console.log(e));
-  return [CURRENT_MAP, startMarker, markerArray];
+  return [CURRENT_MAP, currentMarker, markerArray];
 };

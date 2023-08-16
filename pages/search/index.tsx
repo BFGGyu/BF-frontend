@@ -66,7 +66,7 @@ const Search = () => {
   return (
     <SearchWrapper>
       <SearchBar keyword={keyword} setIsSearched={setIsSearched} />
-      {isSearched ? (
+      {Object.keys(searchList).length > 0 ? (
         <>
           {/* 배열로 줄 경우 */}
           {/* {searchList.map((place) => (
@@ -76,18 +76,13 @@ const Search = () => {
         </>
       ) : (
         <>
-          {/* 배열로 줄 경우 */}
+          {/* 최근 검색어 배열로 줄 경우 */}
           {/* {searchList.map((result) => (
             <SearchResult style={FONT.BODY1} key={result.id}>
               {result.name}
               <AiOutlineClose size={20} color={COLOR.GREY} />
             </SearchResult>
           ))} */}
-          {/* 객체로 줄 경우 */}
-          <SearchResult style={FONT.BODY1}>
-            {searchList.name}
-            <AiOutlineClose size={20} color={COLOR.GREY} />
-          </SearchResult>
         </>
       )}
     </SearchWrapper>

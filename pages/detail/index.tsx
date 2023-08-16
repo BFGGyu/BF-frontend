@@ -6,15 +6,18 @@ import { useState } from 'react';
 import { BsArrowLeft } from 'react-icons/bs';
 import { styled } from 'styled-components';
 import { IPlace } from '@@types/facility';
+import { IFacilityMarker } from '@@types/map';
 
 const DetailPage = () => {
-  const [selectedPlace, setSelectedPlace] = useState<IPlace>({
-    id: '0',
-    name: '국립 고궁 박물관',
-    type: 'museum',
-    address: '서울 종로구 세종로',
-    opening_time: '10:00'
-  });
+  // const [selectedPlace, setSelectedPlace] = useState<IPlace>({
+  //   id: '0',
+  //   name: '국립 고궁 박물관',
+  //   type: 'museum',
+  //   address: '서울 종로구 세종로',
+  //   opening_time: '10:00'
+  // });
+
+  const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
 
   const [reviewList, setReviewList] = useState([
     { id: 0, starRate: 5, count: 4, text: '편안하고 안전한 길이였어요.' },
@@ -46,7 +49,7 @@ const DetailPage = () => {
         </RightWrapper>
       </PlaceInfomation>
       <ReviewSection>
-        <ReviewHeader style={FONT.HEADLINE2}>방문자 리뷰 49 명</ReviewHeader>
+        <ReviewHeader style={FONT.HEADLINE2}>방문자 리뷰 {reviewList.length} 명</ReviewHeader>
         {reviewList.map((review) => (
           <ReviewBody key={review.id}>
             <ReviewScore style={FONT.BODY2}>

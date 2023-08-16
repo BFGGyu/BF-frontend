@@ -7,7 +7,7 @@ import axios from 'axios';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
-import { getRoutingCoords } from 'src/apis/map';
+import { getRoutingCoords, getSearchResult } from 'src/apis/map';
 import { styled } from 'styled-components';
 import { IPlace } from '@@types/facility';
 import { IFacilityMarker } from '@@types/map';
@@ -17,7 +17,27 @@ const MapPage: NextPage = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const CURRENT_MAP = useRef(null);
   const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
+  const [station, setStation] = useState({
+    departure: '경복궁역',
+    arrival: '국립고궁박물관'
+  });
 
+  useEffect(() => {
+    const result = router.query.result;
+    if (typeof result === 'string') {
+      // 도착지는 url에서 받아오고, 출발지는 API 에서 받아옴
+      // getSearchResult(result).then((data) => {
+      //   setStation({ departure: data.station, arrival: result });
+      //   setSelectedPlace(data);
+      // });
+      axios.get('/api/map').then((res) => {
+        const { center, arrival, departure, markers, routes } = res.data.data;
+        initRouteMap(center, departure, arrival, markers, routes).then((data) => {
+          console.log('지도데이터 로딩 성공 !', data);
+        });
+      });
+    }
+  }, [router.query.result]);
   useEffect(() => {
     // 서버 연결
     // getRoutingCoords().then((data) => {
@@ -27,14 +47,13 @@ const MapPage: NextPage = () => {
     //     }
     //   );
     // });
-
     // mock data
-    axios.get('/api/map').then((res) => {
-      const { center, arrival, departure, markers, routes } = res.data.data;
-      initRouteMap(center, departure, arrival, markers, routes).then((data) => {
-        console.log('지도데이터 로딩 성공 !', data);
-      });
-    });
+    // axios.get('/api/map').then((res) => {
+    //   const { center, arrival, departure, markers, routes } = res.data.data;
+    //   initRouteMap(center, departure, arrival, markers, routes).then((data) => {
+    //     console.log('지도데이터 로딩 성공 !', data);
+    //   });
+    // });
   }, []);
 
   return (
@@ -42,7 +61,7 @@ const MapPage: NextPage = () => {
       <PlaceSelectBarWrapper>
         <PlaceSelectBar>
           <PlaceLabel style={FONT.BODY2}>출발지</PlaceLabel>
-          <StartPlace style={FONT.BODY1}>경복궁역 3호선</StartPlace>
+          <StartPlace style={FONT.BODY1}>{station.departure}</StartPlace>
         </PlaceSelectBar>
         <PlaceSelectBar>
           <PlaceLabel style={FONT.BODY2}>도착지</PlaceLabel>
@@ -58,7 +77,7 @@ const MapPage: NextPage = () => {
       <FooterInfoSection>
         <InfoWrapper>
           <LeftWrapper>
-            <InfoSection place={selectedPlace} />
+            {Object.keys(selectedPlace).length > 0 && <InfoSection place={selectedPlace} />}
           </LeftWrapper>
           <RightWrapper>
             <Button

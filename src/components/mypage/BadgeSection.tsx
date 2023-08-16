@@ -55,7 +55,10 @@ const BadgeSection = () => {
   );
 };
 
-const BadgeWrapper = styled.div``;
+const BadgeWrapper = styled.div`
+  padding: 20px 0px;
+  border-bottom: 8px solid rgba(239, 241, 255, 0.3);
+`;
 
 const TitleText = styled.div`
   padding: 20px;

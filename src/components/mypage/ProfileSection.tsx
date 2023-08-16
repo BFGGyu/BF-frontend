@@ -20,6 +20,7 @@ const ProfileWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 30px;
+  border-bottom: 8px solid rgba(239, 241, 255, 0.3);
 `;
 
 const ProfileInfo = styled.div`

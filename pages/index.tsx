@@ -10,7 +10,7 @@ const Index: NextPage = () => {
     setTimeout(() => {
       router.push('/main');
     }, 1500);
-  }, []);
+  }, [router]);
 
   return <Splash />;
 };

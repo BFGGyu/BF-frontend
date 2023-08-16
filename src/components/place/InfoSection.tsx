@@ -2,6 +2,8 @@ import { IFacilityMarker } from '@@types/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import Image from 'next/image';
+import { useEffect } from 'react';
+import { useState } from 'react';
 import { styled } from 'styled-components';
 
 interface IInfoSectionProps {
@@ -15,6 +17,20 @@ const PlaceTypeDic = {
 };
 
 const InfoSection = ({ place }: IInfoSectionProps) => {
+  const [isOpened, setIsOpened] = useState(false);
+
+  const currentHour = new Date().getHours();
+  const openHour = parseInt(place.opening_time.slice(0, 2));
+  const closeHour = parseInt(place.closing_time.slice(0, 2));
+
+  useEffect(() => {
+    if (openHour < currentHour && currentHour < closeHour) {
+      setIsOpened(true);
+    } else {
+      setIsOpened(false);
+    }
+  }, [currentHour, openHour, closeHour]);
+
   return (
     <>
       <PlaceHeadWrapper>
@@ -25,8 +41,17 @@ const InfoSection = ({ place }: IInfoSectionProps) => {
       </PlaceHeadWrapper>
       <PlaceLocation style={FONT.BODY2}>{place.address}</PlaceLocation>
       <PlaceTimeWrapper style={FONT.BODY2}>
-        <div style={{ color: COLOR.RED }}>운영종료</div>
-        <div>{place.opening_time} 에 운영시작</div>
+        {isOpened ? (
+          <>
+            <div style={{ color: COLOR.GREEN }}>운영중</div>
+            <div>{place.closing_time} 에 운영종료</div>
+          </>
+        ) : (
+          <>
+            <div style={{ color: COLOR.RED }}>운영종료</div>
+            <div>{place.opening_time} 에 운영시작</div>
+          </>
+        )}
       </PlaceTimeWrapper>
       <IconWrapper>
         <Image src='/images/wheelChair.svg' alt='wheelChair' width={30} height={30} />

@@ -25,11 +25,6 @@ const options = {
   timeout: 50000
 };
 
-const handleError = (err: any) => {
-  console.log('geolocation ERROR: ', err);
-  alert('GPS가 원활하지 않습니다. 새로고침 해주세요.');
-};
-
 const RoutingSection = () => {
   const currentMapRef = useRef(null);
   const currentMarkerRef = useRef(null);
@@ -39,6 +34,20 @@ const RoutingSection = () => {
   const markerList = useRef<INavigationMarker[]>([]);
   const markerIndexRef = useRef<number>(0);
   const [diffPosition, setDiffPosition] = useState<number>(0); // 현재 좌표와 첫번째 경로 사이의 거리
+
+  const handleError = (err: any) => {
+    console.log('geolocation ERROR: ', err);
+    alert('GPS가 원활하지 않습니다. 새로고침 해주세요.');
+    setTimeout(() => {
+      if ('geolocation' in navigator) {
+        /* 위치정보 사용 가능 */
+        watchId.current = navigator.geolocation.watchPosition(handlePosition, handleError, options);
+      } else {
+        /* 위치정보 사용 불가능 */
+        alert('위치 정보를 사용할 수 없는 장소입니다.');
+      }
+    }, 1000);
+  };
 
   // 위치가 바뀔 때마다 첫 번째 경로의 위도, 경도와 거리 계산
   const handlePosition = (position: any) => {

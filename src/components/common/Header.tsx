@@ -4,6 +4,7 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import { nicknameState } from '@states/user';
+import FONT from '@constants/fonts';
 
 interface IHeaderProps {
   bgColor?: string;
@@ -17,13 +18,17 @@ const Header = ({ bgColor, color, type }: IHeaderProps) => {
 
   return (
     <HeaderWrapper $bgColor={bgColor} $color={color}>
-      {type === 'blue' && <Image src='/images/blueHeader.svg' alt='' width={80} height={30} />}
-      {type === 'white' && <Image src='/images/whiteHeader.svg' alt='' width={80} height={30} />}
+      <LogoWrapper onClick={() => router.push('/main')}>
+        {type === 'blue' && <Image src='/images/blueHeader.svg' alt='' width={80} height={30} />}
+        {type === 'white' && <Image src='/images/whiteHeader.svg' alt='' width={80} height={30} />}
+      </LogoWrapper>
       <UserIconButton>
         {nickname ? (
           <AiOutlineUser onClick={() => router.push('/mypage')} size={30} />
         ) : (
-          <LoginText onClick={() => router.push('/login')}>로그인</LoginText>
+          <LoginText style={FONT.BODY1} onClick={() => router.push('/login')}>
+            Login
+          </LoginText>
         )}
       </UserIconButton>
     </HeaderWrapper>
@@ -41,11 +46,14 @@ const HeaderWrapper = styled.div<HeaderType>`
   gap: 5px;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 10px;
+  padding: 20px 15px;
   background-color: ${(props) => props.$bgColor};
   color: ${(props) => props.$color};
 `;
 
+const LogoWrapper = styled.div`
+  cursor: pointer;
+`;
 const UserIconButton = styled.div`
   height: 5vh;
   display: flex;

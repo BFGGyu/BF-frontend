@@ -2,7 +2,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next build && next start",
     "test": "jest --watch",
     "deploy": "serverless"
   },
@@ -10,16 +10,19 @@
     "@googlemaps/react-wrapper": "^1.1.35",
     "axios": "^1.4.0",
     "eslint-config-next": "^13.4.12",
+    "framer-motion": "^10.15.1",
     "next": "12.3.0",
     "next-compose-plugins": "^2.2.1",
     "next-pwa": "^5.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
     "react-icons": "^4.10.1",
     "react-spinners": "^0.13.8",
     "recoil": "^0.7.7",
     "styled-components": "^6.0.5",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -29,6 +32,7 @@
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.7",
     "@types/styled-components": "^5.1.26",
+    "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
     "eslint": "^8.45.0",

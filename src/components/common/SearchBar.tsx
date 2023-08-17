@@ -45,10 +45,10 @@ const SearchBar = ({ keyword, setIsSearched }: ISearchBarProps) => {
     }
   }, [keyword]);
 
-  useEffect(() => {
-    window.addEventListener('popstate', goBackSearch);
-    return () => window.removeEventListener('popstate', goBackSearch);
-  }, [goBackSearch]);
+  // useEffect(() => {
+  //   window.addEventListener('popstate', goBackSearch);
+  //   return () => window.removeEventListener('popstate', goBackSearch);
+  // }, [goBackSearch]);
 
   return (
     <SearchInputWrapper>

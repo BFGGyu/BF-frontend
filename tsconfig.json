@@ -23,12 +23,18 @@
     "paths": {
       "@common/*": ["src/components/common/*"],
       "@main/*": ["src/components/main/*"],
-      "@PlaceItem/*": ["src/components/PlaceItem/*"],
+      "@layout/*": ["src/components/layout/*"],
+      "@place/*": ["src/components/place/*"],
+      "@review/*": ["src/components/review/*"],
+      "@navigation/*": ["src/components/navigation/*"],
+      "@mypage/*": ["src/components/mypage/*"],
       "@pages/*": ["pages/*"],
       "@constants/*": ["src/constants/*"],
       "@styles/*": ["src/styles/*"],
       "@@types/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"],
+      "@apis/*": ["src/apis/*"],
+      "@states/*": ["src/states/*"],
       "@image/*": ["public/image/*"]
     }
   },

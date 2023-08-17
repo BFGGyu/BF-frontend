@@ -1,31 +1,28 @@
 import COLOR from '@constants/colors';
 import { useRouter } from 'next/router';
 import { styled } from 'styled-components';
-import Button from '../common/Button';
+import Button from '@common/Button';
 import InfoSection from './InfoSection';
-
-interface IPlace {
-  id: string;
-  name: string;
-  type: string;
-  location: string;
-  startTimeAt: string;
-}
+import { IFacilityMarker } from '@@types/map';
 
 interface IPlaceItemProps {
-  place: IPlace;
+  place: IFacilityMarker;
 }
 
 const PlaceItem = ({ place }: IPlaceItemProps) => {
   const router = useRouter();
 
   const routeMap = () => {
-    router.push('/map');
+    router.push({
+      pathname: '/map',
+      query: { result: router.query.result }
+    });
   };
+
   return (
     <SearchListWrapper key={place.id}>
       <LeftWrapper>
-        <InfoSection place={place} />
+        <InfoSection />
       </LeftWrapper>
       <RightWrapper>
         <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} onClick={routeMap}>

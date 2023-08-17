@@ -30,12 +30,6 @@
       "purpose": "any"
     },
     {
-      "src": "images/icons/icon-100x100.png",
-      "sizes": "100x100",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
       "src": "images/icons/icon-144x144.png",
       "sizes": "144x144",
       "type": "image/png"

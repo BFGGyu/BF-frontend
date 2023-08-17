@@ -61,6 +61,7 @@ const RoutingSection = () => {
   const router = useRouter();
 
   useEffect(() => {
+    console.log('navigation page:', router);
     if (router.pathname === '/navigation') {
       const query = decodeURIComponent(router.asPath.split('=')[1]);
       speakNavigationGuide('경로안내를 시작합니다');

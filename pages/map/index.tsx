@@ -10,7 +10,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { getRoutingCoords, getSearchResult } from 'src/apis/map';
 import { styled } from 'styled-components';
 import { IPlace } from '@@types/facility';
-import { IFacilityMarker } from '@@types/map';
+import { IFacilityMarker, ITotalRouteResult } from '@@types/map';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 const removeBlank = (query: string) => {
@@ -27,10 +27,19 @@ const MapPage: NextPage = () => {
     arrival: '국립고궁박물관'
   });
 
+  const [routeResult, setRouteResult] = useState<ITotalRouteResult>({
+    distance: '로딩중...',
+    duration: 0
+  });
+
   const [isHeart, setIsHeart] = useState<boolean>(false);
   const handleClickHeart = () => {
     setIsHeart((prev) => !prev);
     // TODO: 찜하기 POST API 연결
+  };
+
+  const handleClickDetail = () => {
+    router.push('/detail');
   };
 
   useEffect(() => {
@@ -58,8 +67,9 @@ const MapPage: NextPage = () => {
     // mock data
     axios.get('/api/map').then((res) => {
       const { center, arrival, departure, markers, routes } = res.data.data;
-      initRouteMap(center, departure, arrival, markers, routes).then((data) => {
-        console.log('지도데이터 로딩 성공 !', data);
+      initRouteMap(center, departure, arrival, markers, routes).then((data: ITotalRouteResult) => {
+        console.log('지도데이터 로딩 성공 !');
+        setRouteResult(data);
       });
     });
   }, []);
@@ -92,15 +102,14 @@ const MapPage: NextPage = () => {
             <HeartWrapper onClick={handleClickHeart}>
               {isHeart ? <FaHeart size={20} color={COLOR.RED} /> : <FaRegHeart size={20} />}
             </HeartWrapper>
-            <Button
-              bgColor={COLOR.WHITE}
-              color={COLOR.BLUE2}
-              onClick={() => router.push('/detail')}
-            >
+            <Button bgColor={COLOR.WHITE} color={COLOR.BLUE2} onClick={handleClickDetail}>
               상세보기
             </Button>
           </InfoRightWrapper>
         </InfoWrapper>
+        <div>{routeResult.distance}</div>
+        <div>{routeResult.duration}</div>
+
         <ButtonWrapper>
           <Button
             bgColor={COLOR.BLUE1}
@@ -108,7 +117,6 @@ const MapPage: NextPage = () => {
             width='90%'
             height='50px'
             onClick={() => router.push('/navigation')}
-            // onClick={() => startNavigation(CURRENT_MAP.current)}
           >
             안내시작
           </Button>

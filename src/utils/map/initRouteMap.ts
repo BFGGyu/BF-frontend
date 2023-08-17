@@ -1,4 +1,4 @@
-import { ICoord, IFacilityMarker, IRoute, IRouteMarker } from '@@types/map';
+import { ICoord, IFacilityMarker, IRoute, IRouteMarker, ITotalRouteResult } from '@@types/map';
 import COLOR from '@constants/colors';
 import axios from 'axios';
 
@@ -10,7 +10,7 @@ export const initRouteMap = async (
   arrival: ICoord,
   markerList: IRouteMarker[],
   routes: IRoute[]
-) => {
+): Promise<ITotalRouteResult> => {
   // map 생성
   // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
   const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
@@ -54,6 +54,9 @@ export const initRouteMap = async (
     map: CURRENT_MAP
   });
 
+  // 도착 장소까지의 거리와 소요시간 담을 객체
+  let totalData: ITotalRouteResult = { distance: '', duration: '' };
+
   // markerList.map(
   //   (marker) =>
   //     new window.Tmapv2.Marker({
@@ -96,6 +99,10 @@ export const initRouteMap = async (
         '총 거리 : ' + (resultData[0].properties.totalDistance / 1000).toFixed(1) + 'km,';
       const tTime = ' 총 시간 : ' + (resultData[0].properties.totalTime / 60).toFixed(0) + '분';
       const resultText = tDistance + tTime;
+      totalData = {
+        distance: resultData[0].properties.totalDistance,
+        duration: Math.ceil((resultData[0].properties.totalTime * 3.3) / 60)
+      };
       console.log(resultText);
       console.log('MAP Route API data: ', resultData);
 
@@ -173,5 +180,5 @@ export const initRouteMap = async (
       }
     })
     .catch((e: any) => console.log(e));
-  return CURRENT_MAP;
+  return totalData;
 };

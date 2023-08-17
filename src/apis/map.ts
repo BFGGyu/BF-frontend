@@ -38,3 +38,10 @@ export const getSearchResult = async (search: string) => {
   const result = await Server.get(`place/facility/${keyword}`);
   return result.data;
 };
+
+export const getDetailFacility = async (search: string) => {
+  const keyword = search.split('-').join('');
+  console.log('getDetailFacility keyword: ', keyword);
+  const result = await Server.get(`place/facility/${keyword}`);
+  return result.data;
+};

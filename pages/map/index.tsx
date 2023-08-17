@@ -13,33 +13,10 @@ import { IPlace } from '@@types/facility';
 import { IFacilityMarker, ITotalRouteResult } from '@@types/map';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
-export interface IPath {
-  path_id: number;
-  departure: {
-    name: string;
-    latitude: string;
-    longitude: string;
-  };
-  arrival: {
-    name: string;
-    latitude: string;
-    longitude: string;
-  };
-  routes: [
-    {
-      id: number;
-      latitude: string;
-      longitude: string;
-      path_id: number;
-    }[]
-  ];
-}
-
 const MapPage: NextPage = () => {
   const router = useRouter();
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const CURRENT_MAP = useRef(null);
-  const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
+  // const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
   const [station, setStation] = useState({
     departure: '경복궁역',
     arrival: '국립고궁박물관'
@@ -85,7 +62,6 @@ const MapPage: NextPage = () => {
         <PlaceSelectBar>
           <PlaceLabel style={FONT.BODY2}>도착지</PlaceLabel>
           <EndPlace style={FONT.BODY1} onClick={() => router.push('/search')}>
-            {/* {selectedPlace.name} */}
             {station.arrival}
           </EndPlace>
         </PlaceSelectBar>
@@ -97,7 +73,7 @@ const MapPage: NextPage = () => {
       <FooterInfoSection>
         <InfoWrapper>
           <InfoLeftWrapper>
-            {Object.keys(selectedPlace).length > 0 && <InfoSection place={selectedPlace} />}
+            <InfoSection />
           </InfoLeftWrapper>
           <InfoRightWrapper>
             <HeartWrapper onClick={handleClickHeart}>
@@ -137,34 +113,6 @@ const MapPage: NextPage = () => {
     </>
   );
 };
-
-const RouteResultWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 20px;
-`;
-
-const DistanceWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 20px;
-`;
-
-const ArriveText = styled.div`
-  color: ${COLOR.BLUE1};
-`;
-
-const DataUnitWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
-
-const TotalDistance = styled.div``;
-
-const ResultUnit = styled.div``;
-
-const TotalDuration = styled.div``;
 
 const PlaceSelectBarWrapper = styled.div`
   display: flex;
@@ -229,7 +177,37 @@ const InfoRightWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  padding: 20px 0px;
 `;
+
+const RouteResultWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 20px;
+  padding-bottom: 10px;
+`;
+
+const DistanceWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
+
+const ArriveText = styled.div`
+  color: ${COLOR.BLUE1};
+`;
+
+const DataUnitWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const TotalDistance = styled.div``;
+
+const ResultUnit = styled.div``;
+
+const TotalDuration = styled.div``;
 
 const HeartWrapper = styled.div``;
 
@@ -237,7 +215,6 @@ const InfoWrapper = styled.div`
   display: flex;
   padding: 10px;
   border-top: 1px solid ${COLOR.BLUE1};
-  flex-basis: 50%;
 `;
 
 const ButtonWrapper = styled.div`

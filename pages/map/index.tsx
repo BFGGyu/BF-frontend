@@ -28,7 +28,7 @@ const MapPage: NextPage = () => {
   });
 
   const [routeResult, setRouteResult] = useState<ITotalRouteResult>({
-    distance: '로딩중...',
+    distance: '-',
     duration: 0
   });
 
@@ -65,13 +65,13 @@ const MapPage: NextPage = () => {
   }, [router.query.result]);
   useEffect(() => {
     // mock data
-    axios.get('/api/map').then((res) => {
-      const { center, arrival, departure, markers, routes } = res.data.data;
-      initRouteMap(center, departure, arrival, markers, routes).then((data: ITotalRouteResult) => {
-        console.log('지도데이터 로딩 성공 !');
-        setRouteResult(data);
-      });
-    });
+    // axios.get('/api/map').then((res) => {
+    //   const { center, arrival, departure, markers, routes } = res.data.data;
+    //   initRouteMap(center, departure, arrival, markers, routes).then((data: ITotalRouteResult) => {
+    //     console.log('지도데이터 로딩 성공 !');
+    //     setRouteResult(data);
+    //   });
+    // });
   }, []);
 
   return (
@@ -107,8 +107,19 @@ const MapPage: NextPage = () => {
             </Button>
           </InfoRightWrapper>
         </InfoWrapper>
-        <div>{routeResult.distance}</div>
-        <div>{routeResult.duration}</div>
+        <RouteResultWrapper>
+          <DistanceWrapper>
+            <ArriveText style={FONT.BODY2}>도착예정</ArriveText>
+            <DataUnitWrapper>
+              <TotalDistance style={FONT.HEADLINE1}>{routeResult.distance} </TotalDistance>
+              <ResultUnit style={FONT.BODY2}>m</ResultUnit>
+            </DataUnitWrapper>
+          </DistanceWrapper>
+          <DataUnitWrapper>
+            <TotalDuration style={FONT.HEADLINE1}>{routeResult.duration}</TotalDuration>
+            <ResultUnit style={FONT.BODY2}>분</ResultUnit>
+          </DataUnitWrapper>
+        </RouteResultWrapper>
 
         <ButtonWrapper>
           <Button
@@ -125,6 +136,34 @@ const MapPage: NextPage = () => {
     </>
   );
 };
+
+const RouteResultWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+`;
+
+const DistanceWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
+
+const ArriveText = styled.div`
+  color: ${COLOR.BLUE1};
+`;
+
+const DataUnitWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const TotalDistance = styled.div``;
+
+const ResultUnit = styled.div``;
+
+const TotalDuration = styled.div``;
 
 const PlaceSelectBarWrapper = styled.div`
   display: flex;

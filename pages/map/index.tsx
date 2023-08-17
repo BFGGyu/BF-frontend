@@ -11,6 +11,7 @@ import { getRoutingCoords, getSearchResult } from 'src/apis/map';
 import { styled } from 'styled-components';
 import { IPlace } from '@@types/facility';
 import { IFacilityMarker } from '@@types/map';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 const removeBlank = (query: string) => {
   return query.split('-').join('');
@@ -26,38 +27,41 @@ const MapPage: NextPage = () => {
     arrival: '국립고궁박물관'
   });
 
+  const [isHeart, setIsHeart] = useState<boolean>(false);
+  const handleClickHeart = () => {
+    setIsHeart((prev) => !prev);
+    // TODO: 찜하기 POST API 연결
+  };
+
   useEffect(() => {
     const result = router.query.result;
     if (typeof result === 'string') {
       // 도착지는 url에서 받아오고, 출발지는 API 에서 받아옴
-      getSearchResult(removeBlank(result)).then((data) => {
-        setStation({ departure: data.station, arrival: removeBlank(result) });
-        setSelectedPlace(data);
-      });
-      axios.get('/api/map').then((res) => {
-        const { center, arrival, departure, markers, routes } = res.data.data;
-        initRouteMap(center, departure, arrival, markers, routes).then((data) => {
-          console.log('지도데이터 로딩 성공 !', data);
-        });
-      });
+      // getSearchResult(removeBlank(result)).then((data) => {
+      //   setStation({ departure: data.station, arrival: removeBlank(result) });
+      //   setSelectedPlace(data);
+      // });
+      // getRoutingCoords(result).then((data) => {
+      //   console.log('mappage:', data);
+      //   setStation({ departure: data.station, arrival: result });
+      //   setSelectedPlace(data);
+      // });
+      // axios.get('/api/map').then((res) => {
+      //   const { center, arrival, departure, markers, routes } = res.data.data;
+      //   initRouteMap(center, departure, arrival, markers, routes).then((data) => {
+      //     console.log('지도데이터 로딩 성공 !', data);
+      //   });
+      // });
     }
   }, [router.query.result]);
   useEffect(() => {
-    // 서버 연결
-    // getRoutingCoords().then((data) => {
-    //   initRouteMap(data.center, data.departure, data.arrival, data.markers, data.routes).then(
-    //     (data) => {
-    //       console.log('지도데이터 로딩 성공 !', data);
-    //     }
-    //   );
-    // });
     // mock data
-    // axios.get('/api/map').then((res) => {
-    //   const { center, arrival, departure, markers, routes } = res.data.data;
-    //   initRouteMap(center, departure, arrival, markers, routes).then((data) => {
-    //     console.log('지도데이터 로딩 성공 !', data);
-    //   });
-    // });
+    axios.get('/api/map').then((res) => {
+      const { center, arrival, departure, markers, routes } = res.data.data;
+      initRouteMap(center, departure, arrival, markers, routes).then((data) => {
+        console.log('지도데이터 로딩 성공 !', data);
+      });
+    });
   }, []);
 
   return (
@@ -70,7 +74,8 @@ const MapPage: NextPage = () => {
         <PlaceSelectBar>
           <PlaceLabel style={FONT.BODY2}>도착지</PlaceLabel>
           <EndPlace style={FONT.BODY1} onClick={() => router.push('/search')}>
-            {selectedPlace.name}
+            {/* {selectedPlace.name} */}
+            {station.arrival}
           </EndPlace>
         </PlaceSelectBar>
       </PlaceSelectBarWrapper>
@@ -80,10 +85,13 @@ const MapPage: NextPage = () => {
 
       <FooterInfoSection>
         <InfoWrapper>
-          <LeftWrapper>
+          <InfoLeftWrapper>
             {Object.keys(selectedPlace).length > 0 && <InfoSection place={selectedPlace} />}
-          </LeftWrapper>
-          <RightWrapper>
+          </InfoLeftWrapper>
+          <InfoRightWrapper>
+            <HeartWrapper onClick={handleClickHeart}>
+              {isHeart ? <FaHeart size={20} color={COLOR.RED} /> : <FaRegHeart size={20} />}
+            </HeartWrapper>
             <Button
               bgColor={COLOR.WHITE}
               color={COLOR.BLUE2}
@@ -91,7 +99,7 @@ const MapPage: NextPage = () => {
             >
               상세보기
             </Button>
-          </RightWrapper>
+          </InfoRightWrapper>
         </InfoWrapper>
         <ButtonWrapper>
           <Button
@@ -160,7 +168,7 @@ const FooterInfoSection = styled.div`
   height: 30vh;
 `;
 
-const LeftWrapper = styled.div`
+const InfoLeftWrapper = styled.div`
   display: flex;
   flex-basis: 75%;
   flex-direction: column;
@@ -168,16 +176,20 @@ const LeftWrapper = styled.div`
   padding: 20px;
 `;
 
-const RightWrapper = styled.div`
+const InfoRightWrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
 `;
+
+const HeartWrapper = styled.div``;
 
 const InfoWrapper = styled.div`
   display: flex;
   padding: 10px;
-  border-top: 1px solid black;
-  border-color: ${COLOR.BLUE1};
+  border-top: 1px solid ${COLOR.BLUE1};
+  flex-basis: 50%;
 `;
 
 const ButtonWrapper = styled.div`

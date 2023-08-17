@@ -13,9 +13,27 @@ import { IPlace } from '@@types/facility';
 import { IFacilityMarker, ITotalRouteResult } from '@@types/map';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
-const removeBlank = (query: string) => {
-  return query.split('-').join('');
-};
+export interface IPath {
+  path_id: number;
+  departure: {
+    name: string;
+    latitude: string;
+    longitude: string;
+  };
+  arrival: {
+    name: string;
+    latitude: string;
+    longitude: string;
+  };
+  routes: [
+    {
+      id: number;
+      latitude: string;
+      longitude: string;
+      path_id: number;
+    }[]
+  ];
+}
 
 const MapPage: NextPage = () => {
   const router = useRouter();
@@ -45,34 +63,17 @@ const MapPage: NextPage = () => {
   useEffect(() => {
     const result = router.query.result;
     if (typeof result === 'string') {
-      // 도착지는 url에서 받아오고, 출발지는 API 에서 받아옴
-      // getSearchResult(removeBlank(result)).then((data) => {
-      //   setStation({ departure: data.station, arrival: removeBlank(result) });
-      //   setSelectedPlace(data);
-      // });
-      // getRoutingCoords(result).then((data) => {
-      //   console.log('mappage:', data);
-      //   setStation({ departure: data.station, arrival: result });
-      //   setSelectedPlace(data);
-      // });
-      // axios.get('/api/map').then((res) => {
-      //   const { center, arrival, departure, markers, routes } = res.data.data;
-      //   initRouteMap(center, departure, arrival, markers, routes).then((data) => {
-      //     console.log('지도데이터 로딩 성공 !', data);
-      //   });
-      // });
+      getRoutingCoords(result).then((data) => {
+        const { departure, arrival, routes } = data;
+        setStation({ departure: departure.name, arrival: arrival.name });
+        initRouteMap(departure, arrival, routes).then((data) => {
+          console.log('지도데이터 로딩 성공 !');
+          const { distance, duration } = data;
+          setRouteResult({ distance, duration });
+        });
+      });
     }
   }, [router.query.result]);
-  useEffect(() => {
-    // mock data
-    // axios.get('/api/map').then((res) => {
-    //   const { center, arrival, departure, markers, routes } = res.data.data;
-    //   initRouteMap(center, departure, arrival, markers, routes).then((data: ITotalRouteResult) => {
-    //     console.log('지도데이터 로딩 성공 !');
-    //     setRouteResult(data);
-    //   });
-    // });
-  }, []);
 
   return (
     <>

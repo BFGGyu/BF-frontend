@@ -35,6 +35,26 @@ export interface IRouteReturnType {
   };
 }
 
+export interface IPathReturnType {
+  path_id: number;
+  departure: {
+    name: string;
+    latitude: string;
+    longitude: string;
+  };
+  arrival: {
+    name: string;
+    latitude: string;
+    longitude: string;
+  };
+  routes: {
+    id: number;
+    latitude: string;
+    longitude: string;
+    path_id: number;
+  }[];
+}
+
 export interface LoginReturnType {
   nickname: string;
   access_token: string;

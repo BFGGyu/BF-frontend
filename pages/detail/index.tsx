@@ -8,6 +8,7 @@ import { styled } from 'styled-components';
 import { IPlace } from '@@types/facility';
 import { IFacilityMarker } from '@@types/map';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 const DetailPage = () => {
   const router = useRouter();
@@ -42,7 +43,9 @@ const DetailPage = () => {
         <BsArrowLeft color={COLOR.GREY} size={25} />
         <div style={FONT.BODY1}>{selectedPlace.name}</div>
       </HeaderWrapper>
-      <ImageSection></ImageSection>
+      <ImageSection>
+        <Image src={selectedPlace.imageSrc} alt='시설 이미지' width={390} height={170} />
+      </ImageSection>
       <PlaceInfomation>
         <LeftWrapper>
           <InfoSection selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace} />
@@ -89,7 +92,6 @@ const HeaderWrapper = styled.div`
 
 const ImageSection = styled.div`
   height: 20vh;
-  background-color: ${COLOR.GREY};
 `;
 
 const PlaceInfomation = styled.div`

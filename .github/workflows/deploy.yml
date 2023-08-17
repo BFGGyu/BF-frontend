@@ -30,7 +30,7 @@ jobs:
           NEXT_PUBLIC_TMAP_KEY: ${{ secrets.NEXT_PUBLIC_TMAP_KEY }}
           NEXT_PUBLIC_AWS_S3: ${{ secrets.NEXT_PUBLIC_AWS_S3 }}
           NEXT_PUBLIC_SERVER_URL: ${{ secrets.NEXT_PUBLIC_SERVER_URL }}
-          NEXT_NEXT_PUBLIC_KAKAO_APP_KEY: ${{ secrets.NEXT_NEXT_PUBLIC_KAKAO_APP_KEY }}
+          NEXT_NEXT_PUBLIC_KAKAO_APP_KEY: ${{ secrets.NEXT_PUBLIC_KAKAO_APP_KEY }}
           NEXT_PUBLIC_KAKAO_REDIRECT_URI: ${{ secrets.NEXT_PUBLIC_KAKAO_REDIRECT_URI }}
 
       - name: Configure AWS Credentials

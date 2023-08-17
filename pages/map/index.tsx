@@ -28,6 +28,12 @@ const MapPage: NextPage = () => {
     duration: 0
   });
 
+  const handleClickNavigation = () => {
+    router.push('/navigation', {
+      query: { result: router.query.result }
+    });
+  };
+
   useEffect(() => {
     const result = router.query.result;
     if (typeof result === 'string') {
@@ -63,19 +69,6 @@ const MapPage: NextPage = () => {
 
       <FooterInfoSection>
         <MapInfoSection arrival={station.arrival} />
-        {/* <InfoWrapper>
-          <InfoLeftWrapper>
-            <InfoSection />
-          </InfoLeftWrapper>
-          <InfoRightWrapper>
-            <HeartWrapper onClick={handleClickHeart}>
-              {isHeart ? <FaHeart size={20} color={COLOR.RED} /> : <FaRegHeart size={20} />}
-            </HeartWrapper>
-            <Button bgColor={COLOR.WHITE} color={COLOR.BLUE2} onClick={handleClickDetail}>
-              상세보기
-            </Button>
-          </InfoRightWrapper>
-        </InfoWrapper> */}
         <RouteResultWrapper>
           <DistanceWrapper>
             <ArriveText style={FONT.BODY2}>도착예정</ArriveText>
@@ -96,7 +89,7 @@ const MapPage: NextPage = () => {
             color={COLOR.WHITE}
             width='90%'
             height='50px'
-            onClick={() => router.push('/navigation')}
+            onClick={handleClickNavigation}
           >
             안내시작
           </Button>

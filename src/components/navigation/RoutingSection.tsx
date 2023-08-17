@@ -1,3 +1,4 @@
+import { getNavigationCoords } from '@apis/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import {
@@ -6,7 +7,7 @@ import {
   initNavigationTmap,
   speakNavigationGuide
 } from '@utils/map';
-import axios from 'axios';
+import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import { PiArrowBendUpLeftBold, PiArrowBendUpRightBold } from 'react-icons/pi';
 import { styled } from 'styled-components';
@@ -57,29 +58,23 @@ const RoutingSection = () => {
     }
   };
 
-  useEffect(() => {
-    speakNavigationGuide('경로안내를 시작합니다');
-    // // 서버 연결
-    // getNavigationCoords().then((data) => {
-    //   initNavigationTmap(data.departure, data.arrival, data.markers, data.routes).then((data) => {
-    //     console.log('지도데이터 로딩 성공 !', data);
-    //     currentMapRef.current = data[0];
-    //     currentMarkerRef.current = data[1];
-    //     markerList.current = data[2];
-    //   });
-    // });
+  const router = useRouter();
 
-    // mock data
-    axios.get('/api/path').then((res) => {
-      const { arrival, departure, markers, routes } = res.data.data;
-      initNavigationTmap(departure, arrival, markers, routes).then((data) => {
-        console.log('지도데이터 로딩 성공 !', data);
-        currentMapRef.current = data[0];
-        currentMarkerRef.current = data[1];
-        markerList.current = data[2];
+  useEffect(() => {
+    if (router.pathname === '/navigation') {
+      const query = decodeURIComponent(router.asPath.split('=')[1]);
+      speakNavigationGuide('경로안내를 시작합니다');
+      // // 서버 연결
+      getNavigationCoords(query).then((data) => {
+        initNavigationTmap(data.departure, data.arrival, data.routes).then((data) => {
+          console.log('지도데이터 로딩 성공 !', data);
+          currentMapRef.current = data[0];
+          currentMarkerRef.current = data[1];
+          markerList.current = data[2];
+        });
       });
-    });
-  }, []);
+    }
+  }, [router]);
 
   useEffect(() => {
     if ('geolocation' in navigator) {

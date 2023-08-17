@@ -27,9 +27,12 @@ export const getRoutingCoords = async (search: string): Promise<IPathReturnType>
   return result.data;
 };
 
-export const getNavigationCoords = async () => {
-  const result = await Server.get<IRouteReturnType>('api/path');
-  return result.data.data;
+export const getNavigationCoords = async (search: string): Promise<IPathReturnType> => {
+  const keyword = search.split('-').join('');
+  console.log('getNavigationCoords keyword:', keyword);
+  const result = await Server.get(`path/${keyword}`);
+  console.log('getNavigationCoords result:', result);
+  return result.data;
 };
 
 export const getSearchResult = async (search: string) => {

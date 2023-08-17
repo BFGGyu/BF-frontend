@@ -7,14 +7,14 @@ declare global {
   }
 }
 
-export const initTmap = async (markerData: IFacilityMarker[], centerLat: any, centerLng: any) => {
+export const initTmap = async (markerData: IFacilityMarker[], centerLat?: any, centerLng?: any) => {
   console.log('initTmap markerData:', markerData);
   let markers: any[] = [];
 
   // map 생성
   // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
   const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
-    center: new window.Tmapv2.LatLng(centerLat, centerLng), // 지도 초기 좌표
+    center: new window.Tmapv2.LatLng(37.5, 126.9), // 지도 초기 좌표
     width: '390px',
     height: '588px',
     zoom: 8,
@@ -41,10 +41,10 @@ export const initTmap = async (markerData: IFacilityMarker[], centerLat: any, ce
   });
 
   const margin = {
-    left: 20,
-    top: 20,
-    right: 20,
-    bottom: 150
+    left: 150,
+    top: 150,
+    right: 150,
+    bottom: 300
   };
   CURRENT_MAP.fitBounds(latlngBounds, margin);
 
@@ -68,7 +68,8 @@ export const initTmap = async (markerData: IFacilityMarker[], centerLat: any, ce
 
     infoWindowArray.push(
       new window.Tmapv2.InfoWindow({
-        position: new window.Tmapv2.LatLng(lat + 0.031, lng - 0.03), //Popup 이 표출될 맵 좌표
+        position: new window.Tmapv2.LatLng(lat, lng), //Popup 이 표출될 맵 좌표
+        align: 18,
         content: content, //Popup 표시될 text
         type: 2,
         map: CURRENT_MAP,

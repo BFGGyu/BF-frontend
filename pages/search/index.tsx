@@ -1,4 +1,5 @@
 import { FacilityType, IPlace } from '@@types/facility';
+import { IFacilityMarker } from '@@types/map';
 import { getSearchResult } from '@apis/map';
 import SearchBar from '@common/SearchBar';
 import COLOR from '@constants/colors';
@@ -13,29 +14,31 @@ const Search = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState<string>('');
   const [isSearched, setIsSearched] = useState<boolean>(false);
-  const [searchList, setSearchList] = useState<IPlace[]>([
-    {
-      id: '0',
-      name: '국립 고궁 박물관',
-      type: 'museum',
-      address: '서울 종로구 세종로',
-      opening_time: '10:00'
-    },
-    {
-      id: '1',
-      name: '국립 현대 미술관',
-      type: 'artGallery',
-      address: '서울 종로구 소격동',
-      opening_time: '9:30'
-    },
-    {
-      id: '2',
-      name: '진격의 거인전',
-      type: 'exhibition',
-      address: '서울 마포구 서교동',
-      opening_time: '10:30'
-    }
-  ]);
+  // const [searchList, setSearchList] = useState<IFacilityMarker[]>([
+  // {
+  //   id: '0',
+  //   name: '국립 고궁 박물관',
+  //   type: 'museum',
+  //   address: '서울 종로구 세종로',
+  //   opening_time: '10:00'
+  // },
+  // {
+  //   id: '1',
+  //   name: '국립 현대 미술관',
+  //   type: 'artGallery',
+  //   address: '서울 종로구 소격동',
+  //   opening_time: '9:30'
+  // },
+  // {
+  //   id: '2',
+  //   name: '진격의 거인전',
+  //   type: 'exhibition',
+  //   address: '서울 마포구 서교동',
+  //   opening_time: '10:30'
+  // }
+  // ]);
+
+  const [searchList, setSearchList] = useState<IFacilityMarker>({} as IFacilityMarker);
 
   useEffect(() => {
     if (typeof router.query.result === 'string') {
@@ -53,9 +56,9 @@ const Search = () => {
       // });
 
       // 잘 줄 경우
-      // getSearchResult(router.query.result).then((data) => {
-      //   setSearchList(data);
-      // });
+      getSearchResult(router.query.result).then((data) => {
+        setSearchList(data);
+      });
       setKeyword(router.query.result);
     }
   }, [router.query.result]);
@@ -63,20 +66,23 @@ const Search = () => {
   return (
     <SearchWrapper>
       <SearchBar keyword={keyword} setIsSearched={setIsSearched} />
-      {isSearched ? (
+      {Object.keys(searchList).length > 0 ? (
         <>
-          {searchList.map((place) => (
+          {/* 배열로 줄 경우 */}
+          {/* {searchList.map((place) => (
             <PlaceItem key={place.id} place={place} />
-          ))}
+          ))} */}
+          <PlaceItem place={searchList} />
         </>
       ) : (
         <>
-          {searchList.map((result) => (
+          {/* 최근 검색어 배열로 줄 경우 */}
+          {/* {searchList.map((result) => (
             <SearchResult style={FONT.BODY1} key={result.id}>
               {result.name}
               <AiOutlineClose size={20} color={COLOR.GREY} />
             </SearchResult>
-          ))}
+          ))} */}
         </>
       )}
     </SearchWrapper>

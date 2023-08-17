@@ -7,52 +7,59 @@ import axios from 'axios';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
-import { getRoutingCoords } from 'src/apis/map';
+import { getRoutingCoords, getSearchResult } from 'src/apis/map';
 import { styled } from 'styled-components';
 import { IPlace } from '@@types/facility';
+import { IFacilityMarker, ITotalRouteResult } from '@@types/map';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import MapInfoSection from 'src/components/map/MapInfoSection';
 
 const MapPage: NextPage = () => {
   const router = useRouter();
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const CURRENT_MAP = useRef(null);
-  const [selectedPlace, setSelectedPlace] = useState<IPlace>({
-    id: '0',
-    name: '국립 고궁 박물관',
-    type: 'museum',
-    address: '서울 종로구 세종로',
-    opening_time: '10:00'
+  // const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
+  const [station, setStation] = useState({
+    departure: '로딩중...',
+    arrival: '로딩중...'
   });
 
-  useEffect(() => {
-    // 서버 연결
-    // getRoutingCoords().then((data) => {
-    //   initRouteMap(data.center, data.departure, data.arrival, data.markers, data.routes).then(
-    //     (data) => {
-    //       console.log('지도데이터 로딩 성공 !', data);
-    //     }
-    //   );
-    // });
+  const [routeResult, setRouteResult] = useState<ITotalRouteResult>({
+    distance: '-',
+    duration: 0
+  });
 
-    // mock data
-    axios.get('/api/map').then((res) => {
-      const { center, arrival, departure, markers, routes } = res.data.data;
-      initRouteMap(center, departure, arrival, markers, routes).then((data) => {
-        console.log('지도데이터 로딩 성공 !', data);
-      });
+  const handleClickNavigation = () => {
+    router.push('/navigation', {
+      query: { result: router.query.result }
     });
-  }, []);
+  };
+
+  useEffect(() => {
+    const result = router.query.result;
+    if (typeof result === 'string') {
+      getRoutingCoords(result).then((data) => {
+        const { departure, arrival, routes } = data;
+        setStation({ departure: departure.name, arrival: arrival.name });
+        initRouteMap(departure, arrival, routes).then((data) => {
+          console.log('지도데이터 로딩 성공 !');
+          const { distance, duration } = data;
+          setRouteResult({ distance, duration });
+        });
+      });
+    }
+  }, [router.query]);
 
   return (
     <>
       <PlaceSelectBarWrapper>
         <PlaceSelectBar>
           <PlaceLabel style={FONT.BODY2}>출발지</PlaceLabel>
-          <StartPlace style={FONT.BODY1}>경복궁역 3호선</StartPlace>
+          <StartPlace style={FONT.BODY1}>{station.departure}</StartPlace>
         </PlaceSelectBar>
         <PlaceSelectBar>
           <PlaceLabel style={FONT.BODY2}>도착지</PlaceLabel>
           <EndPlace style={FONT.BODY1} onClick={() => router.push('/search')}>
-            {selectedPlace.name}
+            {station.arrival}
           </EndPlace>
         </PlaceSelectBar>
       </PlaceSelectBarWrapper>
@@ -61,28 +68,28 @@ const MapPage: NextPage = () => {
       </MapWrapper>
 
       <FooterInfoSection>
-        <InfoWrapper>
-          <LeftWrapper>
-            <InfoSection place={selectedPlace} />
-          </LeftWrapper>
-          <RightWrapper>
-            <Button
-              bgColor={COLOR.WHITE}
-              color={COLOR.BLUE2}
-              onClick={() => router.push('/detail')}
-            >
-              상세보기
-            </Button>
-          </RightWrapper>
-        </InfoWrapper>
+        <MapInfoSection arrival={station.arrival} />
+        <RouteResultWrapper>
+          <DistanceWrapper>
+            <ArriveText style={FONT.BODY2}>도착예정</ArriveText>
+            <DataUnitWrapper>
+              <TotalDistance style={FONT.HEADLINE1}>{routeResult.distance} </TotalDistance>
+              <ResultUnit style={FONT.BODY2}>m</ResultUnit>
+            </DataUnitWrapper>
+          </DistanceWrapper>
+          <DataUnitWrapper>
+            <TotalDuration style={FONT.HEADLINE1}>{routeResult.duration}</TotalDuration>
+            <ResultUnit style={FONT.BODY2}>분</ResultUnit>
+          </DataUnitWrapper>
+        </RouteResultWrapper>
+
         <ButtonWrapper>
           <Button
             bgColor={COLOR.BLUE1}
             color={COLOR.WHITE}
             width='90%'
             height='50px'
-            onClick={() => router.push('/navigation')}
-            // onClick={() => startNavigation(CURRENT_MAP.current)}
+            onClick={handleClickNavigation}
           >
             안내시작
           </Button>
@@ -142,25 +149,58 @@ const FooterInfoSection = styled.div`
   height: 30vh;
 `;
 
-const LeftWrapper = styled.div`
+// const InfoLeftWrapper = styled.div`
+//   display: flex;
+//   flex-basis: 75%;
+//   flex-direction: column;
+//   gap: 10px;
+//   padding: 20px;
+// `;
+
+// const InfoRightWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 20px 0px;
+// `;
+
+// const HeartWrapper = styled.div``;
+
+// const InfoWrapper = styled.div`
+//   display: flex;
+//   padding: 10px;
+//   border-top: 1px solid ${COLOR.BLUE1};
+// `;
+
+const RouteResultWrapper = styled.div`
   display: flex;
-  flex-basis: 75%;
-  flex-direction: column;
-  gap: 10px;
-  padding: 20px;
+  justify-content: space-between;
+  padding: 0px 20px;
+  padding-bottom: 10px;
 `;
 
-const RightWrapper = styled.div`
+const DistanceWrapper = styled.div`
   display: flex;
   align-items: center;
+  gap: 20px;
 `;
 
-const InfoWrapper = styled.div`
-  display: flex;
-  padding: 10px;
-  border-top: 1px solid black;
-  border-color: ${COLOR.BLUE1};
+const ArriveText = styled.div`
+  color: ${COLOR.BLUE1};
 `;
+
+const DataUnitWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const TotalDistance = styled.div``;
+
+const ResultUnit = styled.div``;
+
+const TotalDuration = styled.div``;
 
 const ButtonWrapper = styled.div`
   display: flex;

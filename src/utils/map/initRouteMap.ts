@@ -1,20 +1,18 @@
-import { ICoord, IFacilityMarker, IRoute, IRouteMarker } from '@@types/map';
+import { ICoord, IFacilityMarker, IRoute, IRouteMarker, ITotalRouteResult } from '@@types/map';
 import COLOR from '@constants/colors';
 import axios from 'axios';
 
 const APP_KEY = process.env.NEXT_PUBLIC_TMAP_KEY;
 
 export const initRouteMap = async (
-  center: ICoord,
   departure: ICoord,
   arrival: ICoord,
-  markerList: IRouteMarker[],
   routes: IRoute[]
-) => {
+): Promise<ITotalRouteResult> => {
   // map 생성
   // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
   const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
-    center: new window.Tmapv2.LatLng(center.latitude, center.longitude), // 지도 초기 좌표
+    center: new window.Tmapv2.LatLng(37.5, 126.9),
     width: '390px',
     height: '570px',
     zoom: 15,
@@ -24,9 +22,9 @@ export const initRouteMap = async (
 
   // markerList 에 맞게 zoom level 설정
   const latlngBounds = new window.Tmapv2.LatLngBounds(
-    new window.Tmapv2.LatLng(markerList[0].latitude, markerList[0].longitude)
+    new window.Tmapv2.LatLng(routes[0].latitude, routes[0].longitude)
   );
-  markerList.map((marker) =>
+  routes.map((marker) =>
     latlngBounds.extend(new window.Tmapv2.LatLng(marker.latitude, marker.longitude))
   );
 
@@ -54,7 +52,10 @@ export const initRouteMap = async (
     map: CURRENT_MAP
   });
 
-  // markerList.map(
+  // 도착 장소까지의 거리와 소요시간 담을 객체
+  let totalData: ITotalRouteResult = { distance: '', duration: 0 };
+
+  // routes.map(
   //   (marker) =>
   //     new window.Tmapv2.Marker({
   //       position: new window.Tmapv2.LatLng(marker.latitude, marker.longitude),
@@ -96,6 +97,10 @@ export const initRouteMap = async (
         '총 거리 : ' + (resultData[0].properties.totalDistance / 1000).toFixed(1) + 'km,';
       const tTime = ' 총 시간 : ' + (resultData[0].properties.totalTime / 60).toFixed(0) + '분';
       const resultText = tDistance + tTime;
+      totalData = {
+        distance: resultData[0].properties.totalDistance,
+        duration: Math.ceil((resultData[0].properties.totalTime * 3.3) / 60)
+      };
       console.log(resultText);
       console.log('MAP Route API data: ', resultData);
 
@@ -173,5 +178,5 @@ export const initRouteMap = async (
       }
     })
     .catch((e: any) => console.log(e));
-  return CURRENT_MAP;
+  return totalData;
 };

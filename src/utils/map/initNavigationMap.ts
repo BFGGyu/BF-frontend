@@ -16,12 +16,7 @@ const APP_KEY = process.env.NEXT_PUBLIC_TMAP_KEY;
 // const pathList = [PATH1, PATH2, PATH3, PATH4, PATH5]; // 최대 5개
 // const markerList = [PATH1, PATH2, PATH3, PATH4, PATH5, PATH6];
 
-export const initNavigationTmap = async (
-  departure: ICoord,
-  arrival: ICoord,
-  markerList: IRouteMarker[],
-  routes: IRoute[]
-) => {
+export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, routes: IRoute[]) => {
   const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
     center: new window.Tmapv2.LatLng(departure.latitude, departure.longitude), // 지도 초기 좌표
     width: '390px',

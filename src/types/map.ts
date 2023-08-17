@@ -1,9 +1,16 @@
+import { FacilityType } from './facility';
+
 export interface IFacilityMarker {
   id: number;
+  name: string;
+  contact: string;
+  address: string;
+  opening_time: string;
+  closing_time: string;
   latitude: string;
   longitude: string;
-  name: string;
-  type: 'artGallery' | 'museum' | 'exhibition';
+  imageSrc: string;
+  type: FacilityType;
 }
 
 export interface IRouteMarker {
@@ -23,4 +30,9 @@ export interface IRoute {
   latitude: string;
   longitude: string;
   path_id: number;
+}
+
+export interface ITotalRouteResult {
+  distance: string;
+  duration: number;
 }

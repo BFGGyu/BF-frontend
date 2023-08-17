@@ -1,12 +1,12 @@
-import { IPlace } from '@@types/facility';
+import { IFacilityMarker } from '@@types/map';
+import { getDetailFacility, getSearchResult } from '@apis/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useState } from 'react';
 import { styled } from 'styled-components';
-
-interface IInfoSectionProps {
-  place: IPlace;
-}
 
 const PlaceTypeDic = {
   museum: '박물관',
@@ -14,19 +14,59 @@ const PlaceTypeDic = {
   exhibition: '전시회'
 };
 
-const InfoSection = ({ place }: IInfoSectionProps) => {
+const InfoSection = () => {
+  const router = useRouter();
+
+  const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
+  const [isOpened, setIsOpened] = useState(false);
+
+  useEffect(() => {
+    if (Object.keys(selectedPlace).length > 0) {
+      const currentHour = new Date().getHours();
+      const openHour = parseInt(selectedPlace.opening_time.slice(0, 2));
+      const closeHour = parseInt(selectedPlace.closing_time.slice(0, 2));
+      if (openHour < currentHour && currentHour < closeHour) setIsOpened(true);
+      else setIsOpened(false);
+    }
+  }, [selectedPlace]);
+
+  useEffect(() => {
+    if (router.pathname === '/detail') {
+      const query = decodeURIComponent(router.asPath.split('=')[1]);
+      getDetailFacility(query).then((data) => {
+        setSelectedPlace(data);
+      });
+    }
+
+    const result = router.query.result;
+    if (typeof result === 'string') {
+      getDetailFacility(result).then((data) => {
+        setSelectedPlace(data);
+      });
+    }
+  }, [router]);
+
   return (
     <>
       <PlaceHeadWrapper>
-        <PlaceName style={FONT.HEADLINE2}>{place.name}</PlaceName>
-        <PlaceType style={FONT.BODY2} $type={place.type}>
-          {PlaceTypeDic[place.type]}
+        <PlaceName style={FONT.HEADLINE2}>{selectedPlace.name}</PlaceName>
+        <PlaceType style={FONT.BODY2} $type={selectedPlace.type}>
+          {PlaceTypeDic[selectedPlace.type]}
         </PlaceType>
       </PlaceHeadWrapper>
-      <PlaceLocation style={FONT.BODY2}>{place.address}</PlaceLocation>
+      <PlaceLocation style={FONT.BODY2}>{selectedPlace.address}</PlaceLocation>
       <PlaceTimeWrapper style={FONT.BODY2}>
-        <div style={{ color: COLOR.RED }}>운영종료</div>
-        <div>{place.opening_time} 에 운영시작</div>
+        {isOpened ? (
+          <>
+            <div style={{ color: COLOR.GREEN }}>운영중</div>
+            <div>{selectedPlace.closing_time} 에 운영종료</div>
+          </>
+        ) : (
+          <>
+            <div style={{ color: COLOR.RED }}>운영종료</div>
+            <div>{selectedPlace.opening_time} 에 운영시작</div>
+          </>
+        )}
       </PlaceTimeWrapper>
       <IconWrapper>
         <Image src='/images/wheelChair.svg' alt='wheelChair' width={30} height={30} />

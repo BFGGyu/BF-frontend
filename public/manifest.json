@@ -27,6 +27,12 @@
       "src": "images/icons/icon-100x100.png",
       "sizes": "100x100",
       "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/icons/icon-100x100.png",
+      "sizes": "100x100",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {

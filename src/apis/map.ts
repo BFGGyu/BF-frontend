@@ -14,6 +14,16 @@ export const getFacilityCoordList = async () => {
   return result.data;
 };
 
+export const getRecommendPlace = async () => {
+  const result = await getFacilityCoordList();
+  const recommendPlaceList = [];
+  for (let i = 0; i < 2; i++) {
+    const movenum = result.splice(Math.floor(Math.random() * result.length), 1)[0];
+    recommendPlaceList.push(movenum);
+  }
+  return recommendPlaceList;
+};
+
 // export const getRoutingCoords = async () => {
 //   const result = await Server.get<IRouteReturnType>('api/map');
 //   return result.data.data;

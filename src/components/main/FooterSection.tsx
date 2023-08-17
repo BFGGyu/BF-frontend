@@ -1,25 +1,27 @@
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '@common/Button';
+import { getRecommendPlace } from '@apis/map';
+import { IFacilityMarker } from '@@types/map';
+
+const PlaceTypeDic = {
+  museum: '박물관',
+  artGallery: '미술관',
+  exhibition: '전시회'
+};
 
 const FooterSection = () => {
-  const [recommendPlaces, setRecommendPlaces] = useState([
-    {
-      id: '0',
-      name: '국립 고궁 박물관',
-      type: '박물관',
-      location: '서울 종로구 세종로'
-    },
-    {
-      id: 1,
-      name: '국립 현대 미술관',
-      type: '미술관',
-      location: '서울 종로구 소격동'
-    }
-  ]);
+  const [recommendPlaces, setRecommendPlaces] = useState<IFacilityMarker[]>([]);
+
+  useEffect(() => {
+    getRecommendPlace().then((data) => {
+      console.log('FooterSection: ', data);
+      setRecommendPlaces(data);
+    });
+  }, []);
 
   return (
     <FooterWrapper>
@@ -34,9 +36,9 @@ const FooterSection = () => {
             <TextWrapper>
               <PlaceName style={FONT.HEADLINE2}>{place.name}</PlaceName>
               <PlaceType style={FONT.BODY2} type={place.type}>
-                {place.type}
+                {PlaceTypeDic[place.type]}
               </PlaceType>
-              <PlaceLocation style={FONT.BODY2}>{place.location}</PlaceLocation>
+              <PlaceLocation style={FONT.BODY2}>{place.address}</PlaceLocation>
             </TextWrapper>
             <Button width='60%' bgColor={COLOR.BLUE1} color={COLOR.WHITE}>
               길찾기
@@ -102,9 +104,9 @@ type ObjType = {
 };
 
 const TYPE_TO_COLOR: ObjType = {
-  박물관: COLOR.ORANGE,
-  미술관: COLOR.GREEN,
-  전시회: COLOR.RED
+  museum: COLOR.ORANGE,
+  artGallery: COLOR.GREEN,
+  exhibition: COLOR.RED
 };
 
 const PlaceType = styled.div<PlaceTypeProps>`

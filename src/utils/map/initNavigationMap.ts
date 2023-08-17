@@ -125,22 +125,22 @@ export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, rou
           let pType = '';
           let size;
 
-          if (properties.pointType == 'S') {
-            //출발지 마커
-            markerImg = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
-            pType = 'S';
-            size = new window.Tmapv2.Size(24, 38);
-          } else if (properties.pointType == 'E') {
-            //도착지 마커
-            markerImg = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png';
-            pType = 'E';
-            size = new window.Tmapv2.Size(24, 38);
-          } else {
-            //각 포인트 마커
-            markerImg = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png';
-            pType = 'P';
-            size = new window.Tmapv2.Size(24, 38);
-          }
+          // if (properties.pointType == 'S') {
+          //   //출발지 마커
+          //   markerImg = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
+          //   pType = 'S';
+          //   size = new window.Tmapv2.Size(24, 38);
+          // } else if (properties.pointType == 'E') {
+          //   //도착지 마커
+          //   markerImg = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png';
+          //   pType = 'E';
+          //   size = new window.Tmapv2.Size(24, 38);
+          // } else {
+          //   //각 포인트 마커
+          //   markerImg = '';
+          //   pType = 'P';
+          //   size = new window.Tmapv2.Size(24, 38);
+          // }
 
           // 경로들의 결과값들을 포인트 객체로 변환
           const latlon = new window.Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]); // 포인트 객체를 받아 좌표값으로 다시 변환

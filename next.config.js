@@ -12,5 +12,8 @@ const withPWA = require('next-pwa')({
 
 const nextConfig = withPWA({
   // next config
+  images: {
+    domains: ['wheelpass.s3.ap-northeast-2.amazonaws.com']
+  }
 });
 module.exports = nextConfig;

@@ -36,7 +36,7 @@ const InfoSection = ({ selectedPlace, setSelectedPlace }: IInfoSectionProps) => 
   }, [selectedPlace]);
 
   useEffect(() => {
-    if (router.asPath.includes('/navigation')) {
+    if (router.asPath.includes('/navigation') || router.asPath.includes('/main')) {
       const query = decodeURIComponent(router.asPath.split('=')[1]);
       getDetailFacility(query).then((data) => {
         setSelectedPlace(data);

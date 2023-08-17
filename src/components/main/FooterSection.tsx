@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Button from '@common/Button';
 import { getRecommendPlace } from '@apis/map';
 import { IFacilityMarker } from '@@types/map';
+import { useRouter } from 'next/router';
 
 const PlaceTypeDic = {
   museum: '박물관',
@@ -14,7 +15,14 @@ const PlaceTypeDic = {
 };
 
 const FooterSection = () => {
+  const router = useRouter();
   const [recommendPlaces, setRecommendPlaces] = useState<IFacilityMarker[]>([]);
+
+  const handleClickRoute = (name: string) => {
+    router.push('map', {
+      query: { result: name }
+    });
+  };
 
   useEffect(() => {
     getRecommendPlace().then((data) => {
@@ -40,7 +48,12 @@ const FooterSection = () => {
               </PlaceType>
               <PlaceLocation style={FONT.BODY2}>{place.address}</PlaceLocation>
             </TextWrapper>
-            <Button width='60%' bgColor={COLOR.BLUE1} color={COLOR.WHITE}>
+            <Button
+              width='60%'
+              bgColor={COLOR.BLUE1}
+              color={COLOR.WHITE}
+              onClick={() => handleClickRoute(place.name)}
+            >
               길찾기
             </Button>
           </PlaceItem>

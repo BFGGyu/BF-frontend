@@ -39,7 +39,7 @@ export const initRouteMap = async (
   // 출발
   const startMarker = new window.Tmapv2.Marker({
     position: new window.Tmapv2.LatLng(departure.latitude, departure.longitude),
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png',
+    icon: `/images/departure.svg`,
     iconSize: new window.Tmapv2.Size(24, 38),
     map: CURRENT_MAP
   });
@@ -47,7 +47,7 @@ export const initRouteMap = async (
   // 도착
   const endMarker = new window.Tmapv2.Marker({
     position: new window.Tmapv2.LatLng(arrival.latitude, arrival.longitude),
-    icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png',
+    icon: `/images/arrival.svg`,
     iconSize: new window.Tmapv2.Size(24, 38),
     map: CURRENT_MAP
   });

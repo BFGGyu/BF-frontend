@@ -12,30 +12,21 @@ import { styled } from 'styled-components';
 import { IPlace } from '@@types/facility';
 import { IFacilityMarker, ITotalRouteResult } from '@@types/map';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import MapInfoSection from 'src/components/map/MapInfoSection';
 
 const MapPage: NextPage = () => {
   const router = useRouter();
   const mapRef = useRef<HTMLDivElement | null>(null);
   // const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
   const [station, setStation] = useState({
-    departure: '경복궁역',
-    arrival: '국립고궁박물관'
+    departure: '로딩중...',
+    arrival: '로딩중...'
   });
 
   const [routeResult, setRouteResult] = useState<ITotalRouteResult>({
     distance: '-',
     duration: 0
   });
-
-  const [isHeart, setIsHeart] = useState<boolean>(false);
-  const handleClickHeart = () => {
-    setIsHeart((prev) => !prev);
-    // TODO: 찜하기 POST API 연결
-  };
-
-  const handleClickDetail = () => {
-    router.push('/detail');
-  };
 
   useEffect(() => {
     const result = router.query.result;
@@ -50,7 +41,7 @@ const MapPage: NextPage = () => {
         });
       });
     }
-  }, [router.query.result]);
+  }, [router.query]);
 
   return (
     <>
@@ -71,7 +62,8 @@ const MapPage: NextPage = () => {
       </MapWrapper>
 
       <FooterInfoSection>
-        <InfoWrapper>
+        <MapInfoSection arrival={station.arrival} />
+        {/* <InfoWrapper>
           <InfoLeftWrapper>
             <InfoSection />
           </InfoLeftWrapper>
@@ -83,7 +75,7 @@ const MapPage: NextPage = () => {
               상세보기
             </Button>
           </InfoRightWrapper>
-        </InfoWrapper>
+        </InfoWrapper> */}
         <RouteResultWrapper>
           <DistanceWrapper>
             <ArriveText style={FONT.BODY2}>도착예정</ArriveText>
@@ -164,21 +156,29 @@ const FooterInfoSection = styled.div`
   height: 30vh;
 `;
 
-const InfoLeftWrapper = styled.div`
-  display: flex;
-  flex-basis: 75%;
-  flex-direction: column;
-  gap: 10px;
-  padding: 20px;
-`;
+// const InfoLeftWrapper = styled.div`
+//   display: flex;
+//   flex-basis: 75%;
+//   flex-direction: column;
+//   gap: 10px;
+//   padding: 20px;
+// `;
 
-const InfoRightWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0px;
-`;
+// const InfoRightWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   align-items: center;
+//   padding: 20px 0px;
+// `;
+
+// const HeartWrapper = styled.div``;
+
+// const InfoWrapper = styled.div`
+//   display: flex;
+//   padding: 10px;
+//   border-top: 1px solid ${COLOR.BLUE1};
+// `;
 
 const RouteResultWrapper = styled.div`
   display: flex;
@@ -208,14 +208,6 @@ const TotalDistance = styled.div``;
 const ResultUnit = styled.div``;
 
 const TotalDuration = styled.div``;
-
-const HeartWrapper = styled.div``;
-
-const InfoWrapper = styled.div`
-  display: flex;
-  padding: 10px;
-  border-top: 1px solid ${COLOR.BLUE1};
-`;
 
 const ButtonWrapper = styled.div`
   display: flex;

@@ -8,19 +8,16 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { styled } from 'styled-components';
 
-interface IInfoSectionProps {
-  place?: IFacilityMarker;
-}
-
 const PlaceTypeDic = {
   museum: '박물관',
   artGallery: '미술관',
   exhibition: '전시회'
 };
 
-const InfoSection = ({ place }: IInfoSectionProps) => {
-  const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
+const InfoSection = () => {
+  const router = useRouter();
 
+  const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
   const [isOpened, setIsOpened] = useState(false);
 
   useEffect(() => {
@@ -33,16 +30,21 @@ const InfoSection = ({ place }: IInfoSectionProps) => {
     }
   }, [selectedPlace]);
 
-  const router = useRouter();
-
   useEffect(() => {
+    if (router.pathname === '/detail') {
+      const query = decodeURIComponent(router.asPath.split('=')[1]);
+      getDetailFacility(query).then((data) => {
+        setSelectedPlace(data);
+      });
+    }
+
     const result = router.query.result;
     if (typeof result === 'string') {
       getDetailFacility(result).then((data) => {
         setSelectedPlace(data);
       });
     }
-  }, [router.query.result]);
+  }, [router]);
 
   return (
     <>

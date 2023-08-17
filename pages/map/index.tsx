@@ -37,8 +37,10 @@ const MapPage: NextPage = () => {
   };
 
   useEffect(() => {
+    const queryData = router.query.result;
+
     console.log('map router:', router);
-    if (router.asPath.includes('/navigation')) {
+    if (router.asPath.includes('/navigation') || router.asPath.includes('/main')) {
       const query = decodeURIComponent(router.asPath.split('=')[1]);
       console.log('map query:', query);
       setResult(query);
@@ -51,13 +53,10 @@ const MapPage: NextPage = () => {
           setRouteResult({ distance, duration });
         });
       });
-    }
-
-    const query = router.query.result;
-    if (typeof query === 'string') {
-      getRoutingCoords(query).then((data) => {
+    } else if (typeof queryData === 'string') {
+      getRoutingCoords(queryData).then((data) => {
         const { departure, arrival, routes } = data;
-        setResult(query);
+        setResult(queryData);
         setStation({ departure: departure.name, arrival: arrival.name });
         initRouteMap(departure, arrival, routes).then((data) => {
           console.log('지도데이터 로딩 성공 !');

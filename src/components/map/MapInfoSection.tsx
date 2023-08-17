@@ -12,6 +12,7 @@ const MapInfoSection = ({ arrival }: { arrival: string }) => {
   const [isHeart, setIsHeart] = useState<boolean>(false);
   const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
 
+  console.log('MapInfoSection:', arrival);
   const handleClickHeart = () => {
     setIsHeart((prev) => !prev);
     // TODO: 찜하기 POST API 연결

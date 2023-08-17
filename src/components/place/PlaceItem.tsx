@@ -4,13 +4,17 @@ import { styled } from 'styled-components';
 import Button from '@common/Button';
 import InfoSection from './InfoSection';
 import { IFacilityMarker } from '@@types/map';
+import React, { useEffect, useState } from 'react';
+import { getRecommendPlace } from '@apis/map';
 
 interface IPlaceItemProps {
   place: IFacilityMarker;
+  setSearchList: React.Dispatch<React.SetStateAction<IFacilityMarker>>;
 }
 
-const PlaceItem = ({ place }: IPlaceItemProps) => {
+const PlaceItem = ({ place, setSearchList }: IPlaceItemProps) => {
   const router = useRouter();
+  // const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker[]>([]);
 
   const routeMap = () => {
     router.push({
@@ -22,7 +26,7 @@ const PlaceItem = ({ place }: IPlaceItemProps) => {
   return (
     <SearchListWrapper key={place.id}>
       <LeftWrapper>
-        <InfoSection />
+        <InfoSection selectedPlace={place} setSelectedPlace={setSearchList} />
       </LeftWrapper>
       <RightWrapper>
         <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} onClick={routeMap}>

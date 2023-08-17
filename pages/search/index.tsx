@@ -72,7 +72,7 @@ const Search = () => {
           {/* {searchList.map((place) => (
             <PlaceItem key={place.id} place={place} />
           ))} */}
-          <PlaceItem place={searchList} />
+          <PlaceItem place={searchList} setSearchList={setSearchList} />
         </>
       ) : (
         <>

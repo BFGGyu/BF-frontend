@@ -31,6 +31,13 @@ const InfoSection = () => {
   }, [selectedPlace]);
 
   useEffect(() => {
+    if (router.asPath.includes('/navigation')) {
+      const query = decodeURIComponent(router.asPath.split('=')[1]);
+      getDetailFacility(query).then((data) => {
+        setSelectedPlace(data);
+      });
+    }
+
     if (router.pathname === '/detail') {
       const query = decodeURIComponent(router.asPath.split('=')[1]);
       getDetailFacility(query).then((data) => {

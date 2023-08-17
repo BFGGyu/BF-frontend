@@ -57,6 +57,7 @@ const MapPage: NextPage = () => {
     if (typeof query === 'string') {
       getRoutingCoords(query).then((data) => {
         const { departure, arrival, routes } = data;
+        setResult(query);
         setStation({ departure: departure.name, arrival: arrival.name });
         initRouteMap(departure, arrival, routes).then((data) => {
           console.log('지도데이터 로딩 성공 !');

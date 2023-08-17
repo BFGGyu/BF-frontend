@@ -28,16 +28,21 @@ const MapPage: NextPage = () => {
     duration: 0
   });
 
+  const [result, setResult] = useState('');
+
   const handleClickNavigation = () => {
     router.push('/navigation', {
-      query: { result: router.query.result }
+      query: { result }
     });
   };
 
   useEffect(() => {
-    const result = router.query.result;
-    if (typeof result === 'string') {
-      getRoutingCoords(result).then((data) => {
+    console.log('map router:', router);
+    if (router.asPath.includes('/navigation')) {
+      const query = decodeURIComponent(router.asPath.split('=')[1]);
+      console.log('map query:', query);
+      setResult(query);
+      getRoutingCoords(query).then((data) => {
         const { departure, arrival, routes } = data;
         setStation({ departure: departure.name, arrival: arrival.name });
         initRouteMap(departure, arrival, routes).then((data) => {
@@ -47,7 +52,21 @@ const MapPage: NextPage = () => {
         });
       });
     }
-  }, [router.query]);
+
+    const query = router.query.result;
+    if (typeof query === 'string') {
+      getRoutingCoords(query).then((data) => {
+        const { departure, arrival, routes } = data;
+        setResult(query);
+        setStation({ departure: departure.name, arrival: arrival.name });
+        initRouteMap(departure, arrival, routes).then((data) => {
+          console.log('지도데이터 로딩 성공 !');
+          const { distance, duration } = data;
+          setRouteResult({ distance, duration });
+        });
+      });
+    }
+  }, [router]);
 
   return (
     <>

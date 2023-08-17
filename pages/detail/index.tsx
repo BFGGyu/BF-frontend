@@ -2,13 +2,17 @@ import Button from '@common/Button';
 import InfoSection from 'src/components/place/InfoSection';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BsArrowLeft } from 'react-icons/bs';
 import { styled } from 'styled-components';
 import { IPlace } from '@@types/facility';
 import { IFacilityMarker } from '@@types/map';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 const DetailPage = () => {
+  const router = useRouter();
+  const [result, setResult] = useState('');
   const [reviewList, setReviewList] = useState([
     { id: 0, starRate: 5, count: 4, text: '편안하고 안전한 길이였어요.' },
     { id: 1, starRate: 1, count: 3, text: '불편한 길이였어요.' },
@@ -20,20 +24,34 @@ const DetailPage = () => {
       text: '편안하고 안전한 길이였어요. 근데 만약에 텍스트가 길어지면 자를지 그냥 보여줄지?'
     }
   ]);
+  const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
+
+  const handleClickNavigation = () => {
+    router.push('/navigation', {
+      query: { result }
+    });
+  };
+
+  useEffect(() => {
+    const query = decodeURIComponent(router.asPath.split('=')[1]);
+    setResult(query);
+  }, [router]);
 
   return (
     <DetailWrapper>
       <HeaderWrapper>
         <BsArrowLeft color={COLOR.GREY} size={25} />
-        <div style={FONT.BODY1}>고궁 박물관</div>
+        <div style={FONT.BODY1}>{selectedPlace.name}</div>
       </HeaderWrapper>
-      <ImageSection></ImageSection>
+      <ImageSection>
+        <Image src={selectedPlace.imageSrc} alt='시설 이미지' width={390} height={170} />
+      </ImageSection>
       <PlaceInfomation>
         <LeftWrapper>
-          <InfoSection />
+          <InfoSection selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace} />
         </LeftWrapper>
         <RightWrapper>
-          <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE}>
+          <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} onClick={handleClickNavigation}>
             길찾기
           </Button>
         </RightWrapper>
@@ -74,7 +92,6 @@ const HeaderWrapper = styled.div`
 
 const ImageSection = styled.div`
   height: 20vh;
-  background-color: ${COLOR.GREY};
 `;
 
 const PlaceInfomation = styled.div`

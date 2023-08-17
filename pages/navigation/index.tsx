@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BiMapAlt } from 'react-icons/bi';
 import styled from 'styled-components';
 import RoutingSection from '@navigation/RoutingSection';
@@ -11,6 +11,20 @@ import { useRouter } from 'next/router';
 const NavigationPage = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
+  const [result, setResult] = useState('');
+
+  const handleClickMap = () => {
+    router.push('/map', {
+      query: { result }
+    });
+  };
+
+  useEffect(() => {
+    console.log('navigation router:', router);
+    const query = decodeURIComponent(router.asPath.split('=')[1]);
+    console.log('navigation query:', query);
+    setResult(query);
+  }, [router]);
 
   return (
     <div>
@@ -20,7 +34,7 @@ const NavigationPage = () => {
       </MapWrapper>
       <FooterWrapper>
         <MapIconWrapper>
-          <BiMapAlt color={COLOR.BLUE1} size={30} />
+          <BiMapAlt color={COLOR.BLUE1} size={30} onClick={handleClickMap} />
         </MapIconWrapper>
         <ButtonWrapper onClick={() => router.push('/review')}>
           <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} height='50px'>

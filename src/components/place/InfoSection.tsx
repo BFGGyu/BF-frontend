@@ -4,7 +4,7 @@ import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { styled } from 'styled-components';
 
@@ -14,10 +14,15 @@ const PlaceTypeDic = {
   exhibition: '전시회'
 };
 
-const InfoSection = () => {
+interface IInfoSectionProps {
+  selectedPlace: IFacilityMarker;
+  setSelectedPlace: React.Dispatch<React.SetStateAction<IFacilityMarker>>;
+}
+
+const InfoSection = ({ selectedPlace, setSelectedPlace }: IInfoSectionProps) => {
   const router = useRouter();
 
-  const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
+  // const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
   const [isOpened, setIsOpened] = useState(false);
 
   useEffect(() => {

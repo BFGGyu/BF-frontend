@@ -1,3 +1,4 @@
+import { IFacilityMarker } from '@@types/map';
 import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import InfoSection from '@place/InfoSection';
@@ -9,6 +10,8 @@ import { styled } from 'styled-components';
 const MapInfoSection = ({ arrival }: { arrival: string }) => {
   const router = useRouter();
   const [isHeart, setIsHeart] = useState<boolean>(false);
+  const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
+
   const handleClickHeart = () => {
     setIsHeart((prev) => !prev);
     // TODO: 찜하기 POST API 연결
@@ -23,7 +26,7 @@ const MapInfoSection = ({ arrival }: { arrival: string }) => {
   return (
     <InfoWrapper>
       <InfoLeftWrapper>
-        <InfoSection />
+        <InfoSection selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace} />
       </InfoLeftWrapper>
       <InfoRightWrapper>
         <HeartWrapper onClick={handleClickHeart}>

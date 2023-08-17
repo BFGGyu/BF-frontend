@@ -23,6 +23,7 @@ const DetailPage = () => {
       text: '편안하고 안전한 길이였어요. 근데 만약에 텍스트가 길어지면 자를지 그냥 보여줄지?'
     }
   ]);
+  const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
 
   const handleClickNavigation = () => {
     router.push('/navigation', {
@@ -39,12 +40,12 @@ const DetailPage = () => {
     <DetailWrapper>
       <HeaderWrapper>
         <BsArrowLeft color={COLOR.GREY} size={25} />
-        <div style={FONT.BODY1}>고궁 박물관</div>
+        <div style={FONT.BODY1}>{selectedPlace.name}</div>
       </HeaderWrapper>
       <ImageSection></ImageSection>
       <PlaceInfomation>
         <LeftWrapper>
-          <InfoSection />
+          <InfoSection selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace} />
         </LeftWrapper>
         <RightWrapper>
           <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} onClick={handleClickNavigation}>

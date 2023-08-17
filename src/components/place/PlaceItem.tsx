@@ -22,7 +22,7 @@ const PlaceItem = ({ place }: IPlaceItemProps) => {
   return (
     <SearchListWrapper key={place.id}>
       <LeftWrapper>
-        <InfoSection place={place} />
+        <InfoSection />
       </LeftWrapper>
       <RightWrapper>
         <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} onClick={routeMap}>

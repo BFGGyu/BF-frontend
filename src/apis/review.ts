@@ -13,7 +13,7 @@ export const submitReview = async (
   rating: number,
   comment: string
 ) => {
-  const result = await Server.post<IReviewReturnType>(`review/${place}`, {
+  const result = await Server.post<IReviewReturnType>(`review/${place}/`, {
     writer,
     rating,
     comment

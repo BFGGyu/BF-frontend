@@ -7,3 +7,14 @@ export const Server = axios.create({
     'Content-Type': 'application/json'
   }
 });
+
+Server.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    if (error.response && error.response.status) {
+      console.log('axios error 발생:', error);
+    }
+  }
+);

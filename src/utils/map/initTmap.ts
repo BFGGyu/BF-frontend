@@ -28,11 +28,11 @@ export const initTmap = async (markerData: IFacilityMarker[], centerLat?: any, c
     new window.Tmapv2.LatLng(markerData[0].latitude, markerData[0].longitude)
   );
 
-  markerData.map((data) => {
+  markerData.map((data, idx) => {
     const newMarker = new window.Tmapv2.Marker({
       position: new window.Tmapv2.LatLng(data.latitude, data.longitude),
       icon: `/images/${data.type}.svg`,
-      iconSize: new window.Tmapv2.Size(40, 40),
+      iconSize: new window.Tmapv2.Size(30, 30),
       title: data.name,
       map: CURRENT_MAP,
       id: data.type,
@@ -53,7 +53,7 @@ export const initTmap = async (markerData: IFacilityMarker[], centerLat?: any, c
 
   const infoWindowArray: any[] = [];
 
-  markers.map((currentMarker) => {
+  markers.map((currentMarker, idx) => {
     const lat = currentMarker._marker_data.options.position._lat;
     const lng = currentMarker._marker_data.options.position._lng;
     console.log('lat lng:', lat, lng);
@@ -88,22 +88,30 @@ export const initTmap = async (markerData: IFacilityMarker[], centerLat?: any, c
       const lng = marker._marker_data.options.position._lng;
       CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
 
+      console.log('marker touch:', markers);
+
+      if (marker._status.mouse.isMouseDown) marker.setVisible(false);
       infoWindowArray[idx].setVisible(true);
     }),
       marker.addListener('click', () => {
+        console.log('marker click:', marker);
+
         const lat = marker._marker_data.options.position._lat;
         const lng = marker._marker_data.options.position._lng;
         CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
 
+        if (marker._status.mouse.mouseClickFlag) marker.setVisible(false);
         infoWindowArray[idx].setVisible(true);
       });
   });
 
   CURRENT_MAP.addListener('touchend', () => {
+    markers.map((marker) => marker.setVisible(true));
     infoWindowArray.map((info) => info.setVisible(false));
   });
 
   CURRENT_MAP.addListener('click', () => {
+    markers.map((marker) => marker.setVisible(true));
     infoWindowArray.map((info) => info.setVisible(false));
   });
 

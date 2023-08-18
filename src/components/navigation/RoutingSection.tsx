@@ -125,6 +125,7 @@ const RoutingSection = () => {
                 '로딩중...'}
             </div>
           </RoutingLeftWrapper>
+
           <div>
             {(markerList.current.length > 0 &&
               diffPosition + parseInt(markerList.current[markerIndexRef.current + 1].distance)) ||

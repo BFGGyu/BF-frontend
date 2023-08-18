@@ -1,18 +1,38 @@
 import Header from '@common/Header';
 import { NextPage } from 'next';
 import { styled } from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReviewFooterSection from '@review/ReviewFooterSection';
 import ReviewMainSection from '@review/ReviewMainSection';
+import { useRouter } from 'next/router';
+
+interface IPostReview {
+  place: string;
+  writer: string;
+  rating: number;
+  comment: string;
+}
 
 const ReviewPage: NextPage = () => {
-  const [starCount, setStarCount] = useState<number>(5);
+  const [rating, setRating] = useState<number>(5);
+  const router = useRouter();
+
+  const [facility, setFacility] = useState('');
+
+  useEffect(() => {
+    console.log('review router:', router);
+    const query = decodeURIComponent(router.asPath.split('=')[1]);
+    console.log('review query:', query);
+    setFacility(query);
+  }, [router]);
+
+  const [comment, setComment] = useState('');
 
   return (
     <ReviewMainWrapper>
       <Header type='blue' />
-      <ReviewMainSection setStarCount={setStarCount} />
-      <ReviewFooterSection starCount={starCount} />
+      <ReviewMainSection setRating={setRating} setComment={setComment} comment={comment} />
+      <ReviewFooterSection place={facility} rating={rating} comment={comment} />
     </ReviewMainWrapper>
   );
 };

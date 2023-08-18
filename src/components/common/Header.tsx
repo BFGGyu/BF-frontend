@@ -26,7 +26,7 @@ const Header = ({ bgColor, color, type }: IHeaderProps) => {
         {nickname ? (
           <AiOutlineUser onClick={() => router.push('/mypage')} size={30} />
         ) : (
-          <LoginText style={FONT.BODY1} onClick={() => router.push('/login')}>
+          <LoginText style={FONT.HEADLINE2} onClick={() => router.push('/login')}>
             Login
           </LoginText>
         )}

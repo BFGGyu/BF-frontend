@@ -19,6 +19,12 @@ const NavigationPage = () => {
     });
   };
 
+  const handleClickEndNavigation = () => {
+    router.push('/review', {
+      query: { result }
+    });
+  };
+
   useEffect(() => {
     console.log('navigation router:', router);
     const query = decodeURIComponent(router.asPath.split('=')[1]);
@@ -36,7 +42,7 @@ const NavigationPage = () => {
         <MapIconWrapper>
           <BiMapAlt color={COLOR.BLUE1} size={30} onClick={handleClickMap} />
         </MapIconWrapper>
-        <ButtonWrapper onClick={() => router.push('/review')}>
+        <ButtonWrapper onClick={handleClickEndNavigation}>
           <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} height='50px'>
             경로안내 마치기
           </Button>

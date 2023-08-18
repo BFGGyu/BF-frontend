@@ -27,7 +27,7 @@ const FooterSection = () => {
   useEffect(() => {
     getRecommendPlace().then((data) => {
       console.log('FooterSection: ', data);
-      setRecommendPlaces(data);
+      // setRecommendPlaces(data);
     });
   }, []);
 

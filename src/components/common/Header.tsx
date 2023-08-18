@@ -9,7 +9,7 @@ import FONT from '@constants/fonts';
 interface IHeaderProps {
   bgColor?: string;
   color?: string;
-  type: string;
+  type?: string;
 }
 
 const Header = ({ bgColor, color, type }: IHeaderProps) => {
@@ -18,9 +18,15 @@ const Header = ({ bgColor, color, type }: IHeaderProps) => {
 
   return (
     <HeaderWrapper $bgColor={bgColor} $color={color}>
-      <LogoWrapper onClick={() => router.push('/main')}>
-        {type === 'blue' && <Image src='/images/blueHeader.svg' alt='' width={80} height={30} />}
-        {type === 'white' && <Image src='/images/whiteHeader.svg' alt='' width={80} height={30} />}
+      <LogoWrapper>
+        <Image
+          src='/images/whiteHeader.svg'
+          alt=''
+          width={100}
+          height={40}
+          onClick={() => router.push('/main')}
+        />
+        <SubText style={FONT.BODY1}>휠체어 이용자를 위한 안전한 경로 안내</SubText>
       </LogoWrapper>
       <UserIconButton>
         {nickname ? (
@@ -42,18 +48,24 @@ interface HeaderType {
 
 const HeaderWrapper = styled.div<HeaderType>`
   display: flex;
-  height: 5vh;
+  height: 6vh;
   gap: 5px;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 15px;
+  padding: 20px 20px;
   background-color: ${(props) => props.$bgColor};
   color: ${(props) => props.$color};
 `;
 
 const LogoWrapper = styled.div`
+  display: flex;
   cursor: pointer;
+  align-items: center;
+  gap: 20px;
 `;
+
+const SubText = styled.div``;
+
 const UserIconButton = styled.div`
   height: 5vh;
   display: flex;

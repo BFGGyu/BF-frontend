@@ -27,7 +27,7 @@ const FooterSection = () => {
   useEffect(() => {
     getRecommendPlace().then((data) => {
       console.log('FooterSection: ', data);
-      // setRecommendPlaces(data);
+      setRecommendPlaces(data);
     });
   }, []);
 
@@ -65,7 +65,7 @@ const FooterSection = () => {
 
 const FooterWrapper = styled.div`
   height: 35vh;
-  width: 100%;
+  width: 30vw;
   display: flex;
   justify-content: center;
   margin-bottom: 5vh;

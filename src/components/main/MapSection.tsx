@@ -7,8 +7,6 @@ import { useEffect, useRef, useState } from 'react';
 import { getFacilityCoordList } from 'src/apis/map';
 import styled from 'styled-components';
 
-const CENTER = { LAT: '37.53084364186228', LNG: '127.081908811749' };
-
 const MapSection = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const markersRef = useRef<IFacilityMarker[]>([]);
@@ -86,16 +84,6 @@ const MapSection = () => {
         markersRef.current = markers;
       });
     });
-
-    // mock data
-    // axios.get('/api/center').then((res) => {
-    //   const { latitude, longitude } = res.data.data.center;
-    //   const markers: IFacilityMarker[] = res.data.data.markers;
-    //   console.log(markers);
-    //   initTmap(markers, latitude, longitude).then((markers: any) => {
-    //     markersRef.current = markers;
-    //   });
-    // });
   }, []);
 
   return (

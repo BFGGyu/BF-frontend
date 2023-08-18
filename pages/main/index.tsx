@@ -1,22 +1,21 @@
 import FooterSection from '@main/FooterSection';
-import HeaderSection from '@main/HeaderSection';
+import LeftSection from '@main/LeftSection';
 import MapSection from '@main/MapSection';
 import { styled } from 'styled-components';
 
 const MainPage = () => {
   return (
     <SectionWrapper>
-      <HeaderSection />
+      <LeftSection />
       <MapSection />
-      <FooterSection />
+      {/* <FooterSection /> */}
     </SectionWrapper>
   );
 };
 
 const SectionWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  height: 100%;
+  height: 100vh;
 `;
 
 export default MainPage;

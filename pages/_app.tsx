@@ -21,18 +21,16 @@ const Reactproject: NextPage<AppProps> = ({ Component, pageProps }: AppProps) =>
       </Head>
       <RecoilRoot>
         <GlobalStyle />
-        <MainLayout>
-          <Component {...pageProps} />
-        </MainLayout>
+        <Component {...pageProps} />
       </RecoilRoot>
     </>
   );
 };
 
-const MainLayout = styled.div`
-  width: ${SCREEN_SIZE.WIDTH};
-  height: ${SCREEN_SIZE.HEIGHT};
-  margin: 0 auto;
-`;
+// const MainLayout = styled.div`
+//   width: ${SCREEN_SIZE.WIDTH};
+//   height: ${SCREEN_SIZE.HEIGHT};
+//   margin: 0 auto;
+// `;
 
 export default Reactproject;

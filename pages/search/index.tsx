@@ -14,48 +14,50 @@ const Search = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState<string>('');
   const [isSearched, setIsSearched] = useState<boolean>(false);
-  // const [searchList, setSearchList] = useState<IFacilityMarker[]>([
-  // {
-  //   id: '0',
-  //   name: '국립 고궁 박물관',
-  //   type: 'museum',
-  //   address: '서울 종로구 세종로',
-  //   opening_time: '10:00'
-  // },
-  // {
-  //   id: '1',
-  //   name: '국립 현대 미술관',
-  //   type: 'artGallery',
-  //   address: '서울 종로구 소격동',
-  //   opening_time: '9:30'
-  // },
-  // {
-  //   id: '2',
-  //   name: '진격의 거인전',
-  //   type: 'exhibition',
-  //   address: '서울 마포구 서교동',
-  //   opening_time: '10:30'
-  // }
-  // ]);
+  const [searchList, setSearchList] = useState<IFacilityMarker[]>([
+    {
+      id: 0,
+      name: '국립 고궁 박물관',
+      type: 'museum',
+      contact: '1',
+      closing_time: '1',
+      latitude: '1',
+      longitude: '1',
+      imageSrc: '1',
+      address: '서울 종로구 세종로',
+      opening_time: '10:00'
+    },
+    {
+      id: 1,
+      name: '국립 현대 미술관',
+      type: 'artGallery',
+      address: '서울 종로구 소격동',
+      opening_time: '9:30',
+      contact: '1',
+      closing_time: '1',
+      latitude: '1',
+      longitude: '1',
+      imageSrc: '1'
+    },
+    {
+      id: 2,
+      name: '진격의 거인전',
+      type: 'exhibition',
+      address: '서울 마포구 서교동',
+      opening_time: '10:30',
+      contact: '1',
+      closing_time: '1',
+      latitude: '1',
+      longitude: '1',
+      imageSrc: '1'
+    }
+  ]);
 
-  const [searchList, setSearchList] = useState<IFacilityMarker>({} as IFacilityMarker);
+  // const [searchList, setSearchList] = useState<IFacilityMarker>({} as IFacilityMarker);
 
   useEffect(() => {
     if (typeof router.query.result === 'string') {
       setIsSearched(true);
-      // 배열로 줄 경우 & 가공해야 하는 경우
-      // getSearchResult(router.query.result).then((res) => {
-      //   const result = res.map((data:IPlace) => ({
-      //     id: data.id,
-      //     name: data.name,
-      //     type: data.type,
-      //     address: data.address,
-      //     opening_time: data.opening_time
-      //   }))
-      //   setSearchList(result);
-      // });
-
-      // 잘 줄 경우
       getSearchResult(router.query.result).then((data) => {
         setSearchList(data);
       });
@@ -72,7 +74,7 @@ const Search = () => {
           {/* {searchList.map((place) => (
             <PlaceItem key={place.id} place={place} />
           ))} */}
-          <PlaceItem place={searchList} setSearchList={setSearchList} />
+          {/* <PlaceItem place={searchList} setSearchList={setSearchList} /> */}
         </>
       ) : (
         <>

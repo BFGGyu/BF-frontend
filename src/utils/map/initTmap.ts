@@ -15,11 +15,10 @@ export const initTmap = async (markerData: IFacilityMarker[], centerLat?: any, c
   // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
   const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
     center: new window.Tmapv2.LatLng(37.5, 126.9), // 지도 초기 좌표
-    width: '390px',
-    height: '588px',
+    width: '100%',
+    height: '100%',
     zoom: 8,
-    pinchZoom: true,
-    scrollwheel: false
+    scrollwheel: true
   });
 
   // markerList 에 맞게 zoom level 설정
@@ -40,13 +39,13 @@ export const initTmap = async (markerData: IFacilityMarker[], centerLat?: any, c
     markers.push(newMarker);
   });
 
-  const margin = {
-    left: 150,
-    top: 150,
-    right: 150,
-    bottom: 300
-  };
-  CURRENT_MAP.fitBounds(latlngBounds, margin);
+  // const margin = {
+  //   left: 0,
+  //   top: 0,
+  //   right: 0,
+  //   bottom: 0
+  // };
+  // CURRENT_MAP.fitBounds(latlngBounds, margin);
 
   const infoWindowArray: any[] = [];
 

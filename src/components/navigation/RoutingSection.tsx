@@ -21,8 +21,8 @@ interface INavigationMarker {
 
 const options = {
   enableHighAccuracy: false,
-  maximumAge: 50000,
-  timeout: 50000
+  maximumAge: 100000,
+  timeout: 100000
 };
 
 const RoutingSection = () => {

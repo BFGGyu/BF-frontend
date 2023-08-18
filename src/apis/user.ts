@@ -32,7 +32,7 @@ export const getRefresh = async () => {
   const headers = { Authorization: `Bearer ${accessToken}` };
   // TODO: return 값으로 받아온 access token 으로 재요청
   try {
-    return await Server.post('/refresh', { refresh_token: refreshToken }, { headers });
+    return await Server.post('/refresh/', { refresh_token: refreshToken }, { headers });
   } catch (error) {
     console.log('액세스 토큰 갱신 실패: ', error);
   }
@@ -42,7 +42,7 @@ export const logout = async () => {
   const refreshToken = getItemWithExpireTime('refresh');
   try {
     localStorage.clear();
-    return await Server.post('/logout', {
+    return await Server.post('/logout/', {
       refresh_token: refreshToken
     });
   } catch (error) {

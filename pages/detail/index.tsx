@@ -129,7 +129,7 @@ const HeaderWrapper = styled.div`
 `;
 
 const ImageSection = styled.div`
-  height: 20vh;
+  height: 22vh;
 `;
 
 const PlaceInfomation = styled.div`

@@ -61,7 +61,7 @@ const HeartWrapper = styled.div``;
 
 const InfoWrapper = styled.div`
   display: flex;
-  padding: 10px;
+  padding: 0px 10px;
   border-top: 1px solid ${COLOR.BLUE1};
 `;
 

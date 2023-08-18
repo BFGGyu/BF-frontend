@@ -61,7 +61,7 @@ const MainTextWrapper = styled.div`
 `;
 
 const MainText = styled.div`
-  width: 50%;
+  width: 50vw;
 `;
 
 const SubText = styled.div``;

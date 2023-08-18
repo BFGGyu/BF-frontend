@@ -15,7 +15,7 @@ export const initRouteMap = async (
   const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
     center: new window.Tmapv2.LatLng(37.5, 126.9),
     width: SCREEN_SIZE.WIDTH,
-    height: '570px',
+    height: '530px',
     zoom: 15,
     pinchZoom: true,
     zoomControl: false

@@ -111,7 +111,7 @@ const MapPage: NextPage = () => {
             bgColor={COLOR.BLUE1}
             color={COLOR.WHITE}
             width='90%'
-            height='50px'
+            height='40px'
             onClick={handleClickNavigation}
           >
             안내시작
@@ -159,7 +159,7 @@ const PlaceLabel = styled.div`
 `;
 
 const MapWrapper = styled.div`
-  height: 570px;
+  height: 530px;
 `;
 
 const MapDiv = styled.div`
@@ -169,7 +169,7 @@ const MapDiv = styled.div`
 const FooterInfoSection = styled.div`
   display: flex;
   flex-direction: column;
-  height: 30vh;
+  height: 15vh;
 `;
 
 // const InfoLeftWrapper = styled.div`

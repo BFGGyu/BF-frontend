@@ -42,7 +42,7 @@ const FooterSection = () => {
               <Image src='/images/slope.svg' alt='slope' width={30} height={30} />
             </IconWrapper>
             <TextWrapper>
-              <PlaceName style={FONT.HEADLINE2}>{place.name}</PlaceName>
+              <PlaceName>{place.name}</PlaceName>
               <PlaceType style={FONT.BODY2} type={place.type}>
                 {PlaceTypeDic[place.type]}
               </PlaceType>
@@ -107,7 +107,9 @@ const TextWrapper = styled.div`
 `;
 
 const PlaceName = styled.div`
-  font-size: 5vw;
+  // font-size: 5vw;
+  fontsize: 12px;
+  font-weight: 700;
 `;
 
 interface PlaceTypeProps {

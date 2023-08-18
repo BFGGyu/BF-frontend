@@ -25,6 +25,8 @@ export const initRouteMap = async (
   const latlngBounds = new window.Tmapv2.LatLngBounds(
     new window.Tmapv2.LatLng(routes[0].latitude, routes[0].longitude)
   );
+  latlngBounds.extend(new window.Tmapv2.LatLng(departure.latitude, departure.longitude));
+  latlngBounds.extend(new window.Tmapv2.LatLng(arrival.latitude, arrival.longitude));
   routes.map((marker) =>
     latlngBounds.extend(new window.Tmapv2.LatLng(marker.latitude, marker.longitude))
   );

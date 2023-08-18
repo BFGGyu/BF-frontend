@@ -55,7 +55,7 @@ const ReviewText = styled.textarea`
 `;
 
 const TextWrapper = styled.div`
-  height: 80vh;
+  height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

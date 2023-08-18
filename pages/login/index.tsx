@@ -34,10 +34,10 @@ const LoginPage = () => {
     <LoginWrapper>
       <Header type='blue' />
       <TextWrapper>
-        <LoginText style={FONT.HEADLINE1}>로그인</LoginText>
+        <Image src='/images/splash.svg' alt='' width={200} height={100} />
         <SubText style={FONT.HEADLINE2}>소셜로그인으로 가입할 수 있습니다.</SubText>
         <LoginButton onClick={handleClickLogin}>
-          <Image src='/images/kakaoLogin.png' alt='' width={300} height={50} />
+          <Image src='/images/kakaoLogin.png' alt='' width={300} height={45} />
         </LoginButton>
       </TextWrapper>
     </LoginWrapper>

@@ -5,6 +5,9 @@ import React from 'react';
 import { styled } from 'styled-components';
 import toast, { Toaster } from 'react-hot-toast';
 import FONT from '@constants/fonts';
+import { submitReview } from '@apis/review';
+import { useRecoilValue } from 'recoil';
+import { nicknameState } from '@states/user';
 
 const notifySubmitReview = () =>
   toast.success('제출이 완료되었습니다. 감사합니다 😎', {
@@ -21,12 +24,20 @@ const notifySubmitReview = () =>
     }
   });
 
-const ReviewFooterSection = ({ starCount }: { starCount: number }) => {
+interface IReviewFooterSectionProps {
+  place: string;
+  rating: number;
+  comment: string;
+}
+
+const ReviewFooterSection = ({ place, rating, comment }: IReviewFooterSectionProps) => {
   const router = useRouter();
+  const writer = useRecoilValue(nicknameState);
 
   const handleSubmitReview = () => {
     // TODO: 리뷰 제출 API 연동
     notifySubmitReview();
+    submitReview(place, writer, rating, comment);
     setTimeout(() => router.push('/main'), 1000);
   };
 

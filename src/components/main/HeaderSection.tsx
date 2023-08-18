@@ -18,12 +18,12 @@ const HeaderSection = () => {
       <BodyWrapper>
         <MainTextWrapper>
           <MainText style={FONT.HEADLINE1}>
-            원하는 문화시설을 <br />
-            검색해보세요!
+            <span style={{ lineHeight: 1.5 }}>원하는 문화시설을</span>
+            <span>검색해보세요!</span>
           </MainText>
-          <SubText style={FONT.BODY1}>휠체어 이용자를 위한 안전한 경로 안내</SubText>
         </MainTextWrapper>
-        <GuideButton>아이콘</GuideButton>
+
+        <SubText style={FONT.BODY1}>휠체어 이용자를 위한 안전한 경로 안내</SubText>
       </BodyWrapper>
       <SearchWrapper onClick={handleClickSearch}>
         <SearchDiv>검색어를 입력하세요.</SearchDiv>
@@ -46,7 +46,8 @@ const Wrapper = styled.div`
 const BodyWrapper = styled.div`
   display: flex;
   flex-basis: 60%;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: space-between;
   padding-left: 1rem;
   padding-right: 1rem;
 `;
@@ -59,7 +60,9 @@ const MainTextWrapper = styled.div`
   gap: 0px;
 `;
 
-const MainText = styled.div``;
+const MainText = styled.div`
+  width: 50vw;
+`;
 
 const SubText = styled.div``;
 

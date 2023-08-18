@@ -13,6 +13,7 @@ import { IPlace } from '@@types/facility';
 import { IFacilityMarker, ITotalRouteResult } from '@@types/map';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import MapInfoSection from 'src/components/map/MapInfoSection';
+import SCREEN_SIZE from '@constants/sizes';
 
 const MapPage: NextPage = () => {
   const router = useRouter();
@@ -40,7 +41,11 @@ const MapPage: NextPage = () => {
     const queryData = router.query.result;
 
     console.log('map router:', router);
-    if (router.asPath.includes('/navigation') || router.asPath.includes('/main')) {
+    if (
+      router.asPath.includes('/navigation') ||
+      router.asPath.includes('/main') ||
+      router.asPath.includes('/search')
+    ) {
       const query = decodeURIComponent(router.asPath.split('=')[1]);
       console.log('map query:', query);
       setResult(query);
@@ -106,7 +111,7 @@ const MapPage: NextPage = () => {
             bgColor={COLOR.BLUE1}
             color={COLOR.WHITE}
             width='90%'
-            height='50px'
+            height='40px'
             onClick={handleClickNavigation}
           >
             안내시작
@@ -123,7 +128,7 @@ const PlaceSelectBarWrapper = styled.div`
   align-items: center;
   justify-content: center;
   gap: 10px;
-  width: 390px;
+  width: ${SCREEN_SIZE.WIDTH};
   padding: 10px;
   position: absolute;
   z-index: 1;
@@ -154,7 +159,7 @@ const PlaceLabel = styled.div`
 `;
 
 const MapWrapper = styled.div`
-  height: 570px;
+  height: 530px;
 `;
 
 const MapDiv = styled.div`
@@ -164,7 +169,7 @@ const MapDiv = styled.div`
 const FooterInfoSection = styled.div`
   display: flex;
   flex-direction: column;
-  height: 30vh;
+  height: 15vh;
 `;
 
 // const InfoLeftWrapper = styled.div`

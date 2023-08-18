@@ -9,21 +9,37 @@ import { IPlace } from '@@types/facility';
 import { IFacilityMarker } from '@@types/map';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { getReviewList } from '@apis/review';
+import { AiFillStar } from 'react-icons/ai';
+import SCREEN_SIZE from '@constants/sizes';
+
+export interface IReview {
+  id: number;
+  departure: string;
+  arrival: string;
+  writer: string;
+  rating: number;
+  comment: string;
+  created_at: Date;
+  updated_at: Date;
+  path_id: number;
+}
 
 const DetailPage = () => {
   const router = useRouter();
   const [result, setResult] = useState('');
-  const [reviewList, setReviewList] = useState([
-    { id: 0, starRate: 5, count: 4, text: '편안하고 안전한 길이였어요.' },
-    { id: 1, starRate: 1, count: 3, text: '불편한 길이였어요.' },
-    { id: 2, starRate: 4, count: 2, text: '좋은데요?' },
-    {
-      id: 3,
-      starRate: 5,
-      count: 1,
-      text: '편안하고 안전한 길이였어요. 근데 만약에 텍스트가 길어지면 자를지 그냥 보여줄지?'
-    }
-  ]);
+  // const [reviewList, setReviewList] = useState([
+  //   { id: 0, starRate: 5, count: 4, text: '편안하고 안전한 길이였어요.' },
+  //   { id: 1, starRate: 1, count: 3, text: '불편한 길이였어요.' },
+  //   { id: 2, starRate: 4, count: 2, text: '좋은데요?' },
+  //   {
+  //     id: 3,
+  //     starRate: 5,
+  //     count: 1,
+  //     text: '편안하고 안전한 길이였어요. 근데 만약에 텍스트가 길어지면 자를지 그냥 보여줄지?'
+  //   }
+  // ]);
+  const [reviewList, setReviewList] = useState<IReview[]>([]);
   const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
 
   const handleClickNavigation = () => {
@@ -34,8 +50,18 @@ const DetailPage = () => {
 
   useEffect(() => {
     const query = decodeURIComponent(router.asPath.split('=')[1]);
+    getReviewList(query).then((data) => {
+      setReviewList(data);
+    });
     setResult(query);
   }, [router]);
+
+  const convertStar = (rating: number) => {
+    const result = [false, false, false, false, false].map((data, idx) =>
+      idx <= rating ? true : false
+    );
+    return result;
+  };
 
   return (
     <DetailWrapper>
@@ -44,7 +70,14 @@ const DetailPage = () => {
         <div style={FONT.BODY1}>{selectedPlace.name}</div>
       </HeaderWrapper>
       <ImageSection>
-        <Image src={selectedPlace.imageSrc} alt='시설 이미지' width={390} height={170} />
+        {selectedPlace.imageSrc && (
+          <Image
+            src={selectedPlace.imageSrc}
+            alt='시설 이미지'
+            width={SCREEN_SIZE.WIDTH}
+            height={170}
+          />
+        )}
       </ImageSection>
       <PlaceInfomation>
         <LeftWrapper>
@@ -61,13 +94,18 @@ const DetailPage = () => {
         {reviewList.map((review) => (
           <ReviewBody key={review.id}>
             <ReviewScore style={FONT.BODY2}>
-              <StarRating>
-                {'⭐️'.repeat(review.starRate)}
-                {'🍎'.repeat(5 - review.starRate)}
+              <StarRating style={FONT.HEADLINE1}>
+                {convertStar(review.rating).map((star, idx) => (
+                  <AiFillStar
+                    key={idx}
+                    size={20}
+                    style={star ? { color: '#FFE455' } : { color: '#EBEBEB' }}
+                  />
+                ))}
               </StarRating>
-              <ReviewCount>{review.count}번째 방문자</ReviewCount>
+              <ReviewCount>{review.writer}</ReviewCount>
             </ReviewScore>
-            <ReviewText style={FONT.BODY2}>{review.text}</ReviewText>
+            <ReviewText style={FONT.BODY2}>{review.comment}</ReviewText>
           </ReviewBody>
         ))}
       </ReviewSection>
@@ -91,7 +129,7 @@ const HeaderWrapper = styled.div`
 `;
 
 const ImageSection = styled.div`
-  height: 20vh;
+  height: 22vh;
 `;
 
 const PlaceInfomation = styled.div`

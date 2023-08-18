@@ -6,10 +6,12 @@ import { AiFillStar } from 'react-icons/ai';
 import { styled } from 'styled-components';
 
 interface IReviewSectionProps {
-  setStarCount: React.Dispatch<React.SetStateAction<number>>;
+  setRating: React.Dispatch<React.SetStateAction<number>>;
+  setComment: React.Dispatch<React.SetStateAction<string>>;
+  comment: string;
 }
 
-const ReviewMainSection = ({ setStarCount }: IReviewSectionProps) => {
+const ReviewMainSection = ({ setRating, setComment, comment }: IReviewSectionProps) => {
   const [starRatingList, setStarRatingList] = useState([true, true, true, true, true]);
 
   const handleClickStar = (rating: number) => {
@@ -17,7 +19,7 @@ const ReviewMainSection = ({ setStarCount }: IReviewSectionProps) => {
       idx <= rating ? true : false
     );
     setStarRatingList(result);
-    setStarCount(result.filter((data) => data === true).length);
+    setRating(result.filter((data) => data === true).length);
   };
 
   return (
@@ -33,7 +35,11 @@ const ReviewMainSection = ({ setStarCount }: IReviewSectionProps) => {
           />
         ))}
       </StarRating>
-      <ReviewText placeholder='자유롭게 의견을 적어주세요.' />
+      <ReviewText
+        placeholder='자유롭게 의견을 적어주세요.'
+        value={comment}
+        onChange={(e: any) => setComment(e.target.value)}
+      />
       <Image src='/images/reviewImage.svg' alt='' width={300} height={100} />
     </TextWrapper>
   );

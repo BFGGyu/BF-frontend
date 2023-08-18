@@ -49,7 +49,7 @@ const FooterSection = () => {
               <PlaceLocation style={FONT.BODY2}>{place.address.slice(0, 10)}</PlaceLocation>
             </TextWrapper>
             <Button
-              width='60%'
+              width='80%'
               // height='20%'
               bgColor={COLOR.BLUE1}
               color={COLOR.WHITE}

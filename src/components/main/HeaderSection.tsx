@@ -19,6 +19,7 @@ const HeaderSection = () => {
         <MainTextWrapper>
           <MainText style={FONT.HEADLINE1}>
             <span style={{ lineHeight: 1.5 }}>원하는 문화시설을</span>
+            <br />
             <span>검색해보세요!</span>
           </MainText>
         </MainTextWrapper>

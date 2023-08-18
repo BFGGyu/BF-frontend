@@ -18,7 +18,7 @@ export const initTmap = async (markerData: IFacilityMarker[], centerLat?: any, c
     width: '100%',
     height: '100%',
     zoom: 8,
-    scrollwheel: true
+    scrollwheel: false
   });
 
   // markerList 에 맞게 zoom level 설정
@@ -39,13 +39,13 @@ export const initTmap = async (markerData: IFacilityMarker[], centerLat?: any, c
     markers.push(newMarker);
   });
 
-  // const margin = {
-  //   left: 0,
-  //   top: 0,
-  //   right: 0,
-  //   bottom: 0
-  // };
-  // CURRENT_MAP.fitBounds(latlngBounds, margin);
+  const margin = {
+    left: 150,
+    top: 150,
+    right: 500,
+    bottom: 150
+  };
+  CURRENT_MAP.fitBounds(latlngBounds, margin);
 
   const infoWindowArray: any[] = [];
 

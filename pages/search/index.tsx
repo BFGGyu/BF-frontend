@@ -14,46 +14,46 @@ const Search = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState<string>('');
   const [isSearched, setIsSearched] = useState<boolean>(false);
-  const [searchList, setSearchList] = useState<IFacilityMarker[]>([
-    {
-      id: 0,
-      name: '국립 고궁 박물관',
-      type: 'museum',
-      contact: '1',
-      closing_time: '1',
-      latitude: '1',
-      longitude: '1',
-      imageSrc: '1',
-      address: '서울 종로구 세종로',
-      opening_time: '10:00'
-    },
-    {
-      id: 1,
-      name: '국립 현대 미술관',
-      type: 'artGallery',
-      address: '서울 종로구 소격동',
-      opening_time: '9:30',
-      contact: '1',
-      closing_time: '1',
-      latitude: '1',
-      longitude: '1',
-      imageSrc: '1'
-    },
-    {
-      id: 2,
-      name: '진격의 거인전',
-      type: 'exhibition',
-      address: '서울 마포구 서교동',
-      opening_time: '10:30',
-      contact: '1',
-      closing_time: '1',
-      latitude: '1',
-      longitude: '1',
-      imageSrc: '1'
-    }
-  ]);
+  // const [searchList, setSearchList] = useState<IFacilityMarker[]>([
+  //   {
+  //     id: 0,
+  //     name: '국립 고궁 박물관',
+  //     type: 'museum',
+  //     contact: '1',
+  //     closing_time: '1',
+  //     latitude: '1',
+  //     longitude: '1',
+  //     imageSrc: '1',
+  //     address: '서울 종로구 세종로',
+  //     opening_time: '10:00'
+  //   },
+  //   {
+  //     id: 1,
+  //     name: '국립 현대 미술관',
+  //     type: 'artGallery',
+  //     address: '서울 종로구 소격동',
+  //     opening_time: '9:30',
+  //     contact: '1',
+  //     closing_time: '1',
+  //     latitude: '1',
+  //     longitude: '1',
+  //     imageSrc: '1'
+  //   },
+  //   {
+  //     id: 2,
+  //     name: '진격의 거인전',
+  //     type: 'exhibition',
+  //     address: '서울 마포구 서교동',
+  //     opening_time: '10:30',
+  //     contact: '1',
+  //     closing_time: '1',
+  //     latitude: '1',
+  //     longitude: '1',
+  //     imageSrc: '1'
+  //   }
+  // ]);
 
-  // const [searchList, setSearchList] = useState<IFacilityMarker>({} as IFacilityMarker);
+  const [searchList, setSearchList] = useState<IFacilityMarker>({} as IFacilityMarker);
 
   useEffect(() => {
     if (typeof router.query.result === 'string') {
@@ -61,20 +61,15 @@ const Search = () => {
       getSearchResult(router.query.result).then((data) => {
         setSearchList(data);
       });
-      setKeyword(router.query.result);
     }
   }, [router.query.result]);
 
   return (
     <SearchWrapper>
-      <SearchBar keyword={keyword} setIsSearched={setIsSearched} />
+      <SearchBar setIsSearched={setIsSearched} />
       {Object.keys(searchList).length > 0 ? (
         <>
-          {/* 배열로 줄 경우 */}
-          {/* {searchList.map((place) => (
-            <PlaceItem key={place.id} place={place} />
-          ))} */}
-          {/* <PlaceItem place={searchList} setSearchList={setSearchList} /> */}
+          <PlaceItem place={searchList} setSearchList={setSearchList} />
         </>
       ) : (
         <>

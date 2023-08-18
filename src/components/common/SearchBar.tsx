@@ -7,10 +7,10 @@ import { BsArrowLeft } from 'react-icons/bs';
 
 interface ISearchBarProps {
   keyword?: string | string[];
-  setIsSearched: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSearched?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SearchBar = ({ keyword, setIsSearched }: ISearchBarProps) => {
+const SearchBar = ({ setIsSearched }: ISearchBarProps) => {
   const router = useRouter();
   const [inputText, setInputText] = useState<string>('');
 
@@ -30,20 +30,20 @@ const SearchBar = ({ keyword, setIsSearched }: ISearchBarProps) => {
     });
   };
 
-  const goBackSearch = useCallback(() => {
-    router.push({
-      pathname: '/search'
-    });
-    setInputText('');
-    setIsSearched(false);
-  }, [router, setInputText, setIsSearched]);
+  // const goBackSearch = useCallback(() => {
+  //   router.push({
+  //     pathname: '/search'
+  //   });
+  //   setInputText('');
+  //   setIsSearched(false);
+  // }, [router, setInputText, setIsSearched]);
 
-  useEffect(() => {
-    if (typeof keyword === 'string') {
-      const keywords = keyword.split('-').join(' ');
-      setInputText(keywords);
-    }
-  }, [keyword]);
+  // useEffect(() => {
+  //   if (typeof keyword === 'string') {
+  //     const keywords = keyword.split('-').join(' ');
+  //     setInputText(keywords);
+  //   }
+  // }, [keyword]);
 
   // useEffect(() => {
   //   window.addEventListener('popstate', goBackSearch);
@@ -54,7 +54,7 @@ const SearchBar = ({ keyword, setIsSearched }: ISearchBarProps) => {
     <SearchInputWrapper>
       <LeftSection>
         <CursorWrapper>
-          <BsArrowLeft color={COLOR.GREY} size={25} onClick={goBackSearch} />
+          {/* <BsArrowLeft color={COLOR.GREY} size={25} onClick={goBackSearch} /> */}
         </CursorWrapper>
         <SearchInput
           placeholder='검색어를 입력하세요.'
@@ -68,7 +68,7 @@ const SearchBar = ({ keyword, setIsSearched }: ISearchBarProps) => {
             <AiFillCloseCircle size={20} color={COLOR.GREY} onClick={() => setInputText('')} />
           </CursorWrapper>
         ) : (
-          <AiFillCloseCircle size={20} color={COLOR.WHITE} />
+          <AiFillCloseCircle size={20} style={{ color: 'rgba(239, 241, 255, 0.4)' }} />
         )}
         <SearchButtonWrapper onClick={handleClickSearchBtn}>
           <AiOutlineSearch size={30} color={COLOR.GREY} />
@@ -83,7 +83,7 @@ const SearchInputWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 10vh;
+  // height: 20vh;
   padding: 10px;
   border-bottom: 1px solid black;
   border-color: ${COLOR.LINE};
@@ -101,6 +101,7 @@ const SearchInput = styled.input`
   border: 0;
   font-size: 16px;
   width: 100%;
+  background-color: rgba(239, 241, 255, 0.4);
   &::placeholder {
     color: ${COLOR.GREY};
   }

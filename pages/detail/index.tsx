@@ -10,6 +10,7 @@ import { IFacilityMarker } from '@@types/map';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { getReviewList } from '@apis/review';
+import { AiFillStar } from 'react-icons/ai';
 
 export interface IReview {
   id: number;
@@ -54,6 +55,13 @@ const DetailPage = () => {
     setResult(query);
   }, [router]);
 
+  const convertStar = (rating: number) => {
+    const result = [false, false, false, false, false].map((data, idx) =>
+      idx <= rating ? true : false
+    );
+    return result;
+  };
+
   return (
     <DetailWrapper>
       <HeaderWrapper>
@@ -80,9 +88,14 @@ const DetailPage = () => {
         {reviewList.map((review) => (
           <ReviewBody key={review.id}>
             <ReviewScore style={FONT.BODY2}>
-              <StarRating>
-                {'⭐️'.repeat(review.rating)}
-                {'🍎'.repeat(5 - review.rating)}
+              <StarRating style={FONT.HEADLINE1}>
+                {convertStar(review.rating).map((star, idx) => (
+                  <AiFillStar
+                    key={idx}
+                    size={20}
+                    style={star ? { color: '#FFE455' } : { color: '#EBEBEB' }}
+                  />
+                ))}
               </StarRating>
               <ReviewCount>{review.writer}</ReviewCount>
             </ReviewScore>

@@ -33,7 +33,7 @@ const MapInfoSection = ({ arrival }: { arrival: string }) => {
         <HeartWrapper onClick={handleClickHeart}>
           {isHeart ? <FaHeart size={20} color={COLOR.RED} /> : <FaRegHeart size={20} />}
         </HeartWrapper>
-        <Button bgColor={COLOR.WHITE} color={COLOR.BLUE2} onClick={handleClickDetail}>
+        <Button bgColor={COLOR.WHITE} color={COLOR.BLUE2} onClick={handleClickDetail} width='100%'>
           상세보기
         </Button>
       </InfoRightWrapper>
@@ -43,7 +43,7 @@ const MapInfoSection = ({ arrival }: { arrival: string }) => {
 
 const InfoLeftWrapper = styled.div`
   display: flex;
-  flex-basis: 75%;
+  flex-basis: 70%;
   flex-direction: column;
   gap: 10px;
   padding: 20px;
@@ -52,6 +52,7 @@ const InfoLeftWrapper = styled.div`
 const InfoRightWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  flex-basis: 30%;
   justify-content: space-between;
   align-items: center;
   padding: 20px 0px;

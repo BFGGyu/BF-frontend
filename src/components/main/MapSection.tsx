@@ -1,3 +1,4 @@
+import { FacilityType } from '@@types/facility';
 import { IFacilityMarker } from '@@types/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
@@ -7,43 +8,19 @@ import { useEffect, useRef, useState } from 'react';
 import { getFacilityCoordList } from 'src/apis/map';
 import styled from 'styled-components';
 
-const CENTER = { LAT: '37.53084364186228', LNG: '127.081908811749' };
+interface ITag {
+  id: number;
+  type: FacilityType;
+  name: string;
+  clicked: boolean;
+}
 
 const MapSection = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const markersRef = useRef<IFacilityMarker[]>([]);
-  // const [markerList, setMarkerList] = useState<IMarker[]>([
-  //   {
-  //     id: 0,
-  //     latitude: '37.519892712436906',
-  //     longitude: '127.02810900563199',
-  //     name: '고궁1',
-  //     type: 'artGallery'
-  //   },
-  //   {
-  //     id: 1,
-  //     latitude: '37.53288934463672',
-  //     longitude: '127.11971717230388',
-  //     name: '고궁2',
-  //     type: 'artGallery'
-  //   },
-  //   {
-  //     id: 2,
-  //     latitude: '37.52127761904626',
-  //     longitude: '127.13346617572014',
-  //     name: '국립고궁박물관',
-  //     type: 'museum'
-  //   },
-  //   {
-  //     id: 3,
-  //     latitude: '37.5591696189164',
-  //     longitude: '127.07389565460413',
-  //     name: '국립현대미술관',
-  //     type: 'exhibition'
-  //   }
-  // ]);
+  const tagRef = useRef<FacilityType>();
 
-  const [tags, setTags] = useState([
+  const [tags, setTags] = useState<ITag[]>([
     {
       id: 0,
       type: 'museum',
@@ -74,7 +51,8 @@ const MapSection = () => {
     const tag = tags.filter((tag) => tag.clicked === true);
     if (tag.length) {
       console.log('markersRef:', markersRef);
-      changeMarker(tag[0].type, markersRef.current);
+      tagRef.current = tag[0].type;
+      changeMarker(tagRef.current, markersRef.current);
     }
   }, [tags]);
 
@@ -82,7 +60,7 @@ const MapSection = () => {
     // 서버 연결
     getFacilityCoordList().then((data) => {
       console.log('MapSection 연결:', data);
-      initTmap(data).then((markers: IFacilityMarker[]) => {
+      initTmap(data, tags, setTags).then((markers: IFacilityMarker[]) => {
         markersRef.current = markers;
       });
     });

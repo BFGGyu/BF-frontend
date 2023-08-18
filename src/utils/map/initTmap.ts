@@ -1,3 +1,4 @@
+import { FacilityType } from '@@types/facility';
 import { IFacilityMarker } from '@@types/map';
 import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
@@ -8,7 +9,14 @@ declare global {
   }
 }
 
-export const initTmap = async (markerData: IFacilityMarker[], centerLat?: any, centerLng?: any) => {
+interface ITag {
+  id: number;
+  type: FacilityType;
+  name: string;
+  clicked: boolean;
+}
+
+export const initTmap = async (markerData: IFacilityMarker[], tags: ITag[], setTags: any) => {
   console.log('initTmap markerData:', markerData);
   let markers: any[] = [];
 
@@ -112,6 +120,13 @@ export const initTmap = async (markerData: IFacilityMarker[], centerLat?: any, c
 
   CURRENT_MAP.addListener('click', () => {
     markers.map((marker) => marker.setVisible(true));
+    setTags(tags.map((tag) => ({ ...tag, clicked: false })));
+    infoWindowArray.map((info) => info.setVisible(false));
+  });
+
+  CURRENT_MAP.addListener('touchend', () => {
+    markers.map((marker) => marker.setVisible(true));
+    setTags(tags.map((tag) => ({ ...tag, clicked: false })));
     infoWindowArray.map((info) => info.setVisible(false));
   });
 

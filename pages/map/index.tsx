@@ -40,7 +40,11 @@ const MapPage: NextPage = () => {
     const queryData = router.query.result;
 
     console.log('map router:', router);
-    if (router.asPath.includes('/navigation') || router.asPath.includes('/main')) {
+    if (
+      router.asPath.includes('/navigation') ||
+      router.asPath.includes('/main') ||
+      router.asPath.includes('/search')
+    ) {
       const query = decodeURIComponent(router.asPath.split('=')[1]);
       console.log('map query:', query);
       setResult(query);

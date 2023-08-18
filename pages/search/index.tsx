@@ -32,18 +32,17 @@ const Search = () => {
 
   const [searchList, setSearchList] = useState<IFacilityMarker>({} as IFacilityMarker);
 
+  const handleClickSearchList = (name: string) => {
+    router.push('/map', {
+      query: { result: name }
+    });
+  };
+
   useEffect(() => {
     if (typeof router.query.result === 'string') {
       setIsSearched(true);
       // 배열로 줄 경우 & 가공해야 하는 경우
       // getSearchResult(router.query.result).then((res) => {
-      //   const result = res.map((data:IPlace) => ({
-      //     id: data.id,
-      //     name: data.name,
-      //     type: data.type,
-      //     address: data.address,
-      //     opening_time: data.opening_time
-      //   }))
       //   setSearchList(result);
       // });
 
@@ -78,7 +77,11 @@ const Search = () => {
         <>
           {/* 최근 검색어 배열로 줄 경우 */}
           {recentSearchList.map((recent) => (
-            <SearchResult style={FONT.BODY1} key={recent.id}>
+            <SearchResult
+              style={FONT.BODY1}
+              key={recent.id}
+              onClick={() => handleClickSearchList(recent.name)}
+            >
               {recent.name}
               <AiOutlineClose size={20} color={COLOR.GREY} />
             </SearchResult>
@@ -99,6 +102,7 @@ const SearchResult = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 20px 15px;
+  cursor: pointer;
 `;
 
 const NoSearchResult = styled.div`

@@ -48,8 +48,12 @@ export const getNavigationCoords = async (search: string): Promise<IPathReturnTy
 export const getSearchResult = async (search: string) => {
   const keyword = search.split('-').join('');
   console.log('getSearchResult keyword: ', keyword);
-  const result = await Server.get(`place/facility/${keyword}`);
-  return result.data;
+  try {
+    const result = await Server.get(`place/facility/${keyword}`);
+    return result.data;
+  } catch (error) {
+    console.log('검색결과가 없으면?', error);
+  }
 };
 
 export const getDetailFacility = async (search: string) => {

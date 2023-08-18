@@ -34,7 +34,9 @@ export const initTmap = async (markerData: IFacilityMarker[], centerLat?: any, c
       iconSize: new window.Tmapv2.Size(40, 40),
       title: data.name,
       map: CURRENT_MAP,
-      id: data.type
+      id: data.type,
+      animation: window.Tmapv2.MarkerOptions.ANIMATE_BOUNCE_ONCE,
+      animationLength: 500
     });
     latlngBounds.extend(new window.Tmapv2.LatLng(data.latitude, data.longitude));
     markers.push(newMarker);

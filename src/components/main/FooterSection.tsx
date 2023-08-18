@@ -46,10 +46,11 @@ const FooterSection = () => {
               <PlaceType style={FONT.BODY2} type={place.type}>
                 {PlaceTypeDic[place.type]}
               </PlaceType>
-              <PlaceLocation style={FONT.BODY2}>{place.address}</PlaceLocation>
+              <PlaceLocation style={FONT.BODY2}>{place.address.slice(0, 10)}</PlaceLocation>
             </TextWrapper>
             <Button
               width='60%'
+              // height='20%'
               bgColor={COLOR.BLUE1}
               color={COLOR.WHITE}
               onClick={() => handleClickRoute(place.name)}
@@ -105,7 +106,9 @@ const TextWrapper = styled.div`
   gap: 5px;
 `;
 
-const PlaceName = styled.div``;
+const PlaceName = styled.div`
+  font-size: 5vw;
+`;
 
 interface PlaceTypeProps {
   type: string;
@@ -125,6 +128,8 @@ const PlaceType = styled.div<PlaceTypeProps>`
   color: ${(props) => TYPE_TO_COLOR[props.type]};
 `;
 
-const PlaceLocation = styled.div``;
+const PlaceLocation = styled.div`
+  font-size: 20%;
+`;
 
 export default FooterSection;

@@ -18,7 +18,8 @@ export const initRouteMap = async (
     height: '530px',
     zoom: 15,
     pinchZoom: true,
-    zoomControl: false
+    zoomControl: false,
+    scrollwheel: false
   });
 
   // markerList 에 맞게 zoom level 설정

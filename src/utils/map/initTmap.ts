@@ -28,7 +28,8 @@ export const initTmap = async (markerData: IFacilityMarker[], tags: ITag[], setT
     height: '588px',
     zoom: 8,
     pinchZoom: true,
-    scrollwheel: false
+    scrollwheel: true,
+    zoomControl: true
   });
 
   // markerList 에 맞게 zoom level 설정

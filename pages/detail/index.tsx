@@ -65,7 +65,7 @@ const DetailPage = () => {
 
   return (
     <DetailWrapper>
-      <HeaderWrapper>
+      <HeaderWrapper onClick={() => window.history.back()}>
         <BsArrowLeft color={COLOR.GREY} size={25} />
         <div style={FONT.BODY1}>{selectedPlace.name}</div>
       </HeaderWrapper>
@@ -126,6 +126,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
   gap: 10px;
   height: 10vh;
+  cursor: pointer;
 `;
 
 const ImageSection = styled.div`

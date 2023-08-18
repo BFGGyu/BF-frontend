@@ -24,8 +24,8 @@ export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, rou
     height: '100%',
     zoom: 19,
     pinchZoom: true,
-    // scrollwheel: false,
-    zoomControl: false
+    scrollwheel: true,
+    zoomControl: true
   });
 
   // 출발

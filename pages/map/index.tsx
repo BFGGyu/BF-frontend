@@ -13,6 +13,7 @@ import { IPlace } from '@@types/facility';
 import { IFacilityMarker, ITotalRouteResult } from '@@types/map';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import MapInfoSection from 'src/components/map/MapInfoSection';
+import SCREEN_SIZE from '@constants/sizes';
 
 const MapPage: NextPage = () => {
   const router = useRouter();
@@ -127,7 +128,7 @@ const PlaceSelectBarWrapper = styled.div`
   align-items: center;
   justify-content: center;
   gap: 10px;
-  width: 390px;
+  width: ${SCREEN_SIZE.WIDTH};
   padding: 10px;
   position: absolute;
   z-index: 1;

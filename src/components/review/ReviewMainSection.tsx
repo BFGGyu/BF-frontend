@@ -22,8 +22,6 @@ const ReviewMainSection = ({ setRating, setComment, comment }: IReviewSectionPro
     setRating(result.filter((data) => data === true).length);
   };
 
-  console.log(comment);
-
   return (
     <TextWrapper>
       <ReviewTitle style={FONT.HEADLINE1}>이용한 경로에 대한 평가를 부탁드립니다.</ReviewTitle>
@@ -57,7 +55,7 @@ const ReviewText = styled.textarea`
 `;
 
 const TextWrapper = styled.div`
-  height: 85vh;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

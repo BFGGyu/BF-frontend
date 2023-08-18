@@ -1,6 +1,7 @@
 import { getNavigationCoords } from '@apis/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
+import SCREEN_SIZE from '@constants/sizes';
 import {
   changeCurrentPostion,
   getDistanceCurrentToTarget,
@@ -140,7 +141,7 @@ const HeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 20vh;
-  width: 390px;
+  width: ${SCREEN_SIZE.WIDTH};
   position: absolute;
   z-index: 1;
 `;

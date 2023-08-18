@@ -81,7 +81,7 @@ const MapIconWrapper = styled.div`
 const FooterWrapper = styled.div`
   display: flex;
   gap: 10px;
-  width: 390px;
+  width: ${SCREEN_SIZE.WIDTH};
   padding: 30px 20px;
   position: absolute;
   z-index: 1;

@@ -1,5 +1,6 @@
 import { IFacilityMarker } from '@@types/map';
 import COLOR from '@constants/colors';
+import SCREEN_SIZE from '@constants/sizes';
 
 declare global {
   interface Window {
@@ -15,7 +16,7 @@ export const initTmap = async (markerData: IFacilityMarker[], centerLat?: any, c
   // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
   const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
     center: new window.Tmapv2.LatLng(37.5, 126.9), // 지도 초기 좌표
-    width: '390px',
+    width: SCREEN_SIZE.WIDTH,
     height: '588px',
     zoom: 8,
     pinchZoom: true,

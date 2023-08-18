@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { getReviewList } from '@apis/review';
 import { AiFillStar } from 'react-icons/ai';
+import SCREEN_SIZE from '@constants/sizes';
 
 export interface IReview {
   id: number;
@@ -70,7 +71,12 @@ const DetailPage = () => {
       </HeaderWrapper>
       <ImageSection>
         {selectedPlace.imageSrc && (
-          <Image src={selectedPlace.imageSrc} alt='시설 이미지' width={390} height={170} />
+          <Image
+            src={selectedPlace.imageSrc}
+            alt='시설 이미지'
+            width={SCREEN_SIZE.WIDTH}
+            height={170}
+          />
         )}
       </ImageSection>
       <PlaceInfomation>

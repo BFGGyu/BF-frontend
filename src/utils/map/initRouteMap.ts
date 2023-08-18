@@ -1,5 +1,6 @@
 import { ICoord, IFacilityMarker, IRoute, IRouteMarker, ITotalRouteResult } from '@@types/map';
 import COLOR from '@constants/colors';
+import SCREEN_SIZE from '@constants/sizes';
 import axios from 'axios';
 
 const APP_KEY = process.env.NEXT_PUBLIC_TMAP_KEY;
@@ -13,7 +14,7 @@ export const initRouteMap = async (
   // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
   const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
     center: new window.Tmapv2.LatLng(37.5, 126.9),
-    width: '390px',
+    width: SCREEN_SIZE.WIDTH,
     height: '570px',
     zoom: 15,
     pinchZoom: true,

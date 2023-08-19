@@ -38,7 +38,6 @@ const ReviewPage: NextPage = () => {
 };
 
 const ReviewMainWrapper = styled.div`
-  border: 1px solid black;
   height: 100%;
 `;
 

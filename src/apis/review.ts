@@ -13,10 +13,9 @@ export const submitReview = async (
   rating: number,
   comment: string
 ) => {
-  const result = await Server.post<IReviewReturnType>(`review/${place}/`, {
+  await Server.post<IReviewReturnType>(`review/${place}/`, {
     writer,
     rating,
     comment
   });
-  console.log('submitReview result.data:', result.data);
 };

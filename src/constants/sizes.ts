@@ -1,6 +1,6 @@
 export const SCREEN_SIZE = {
-  WIDTH: '360px',
-  HEIGHT: '780px'
+  WIDTH: '414px',
+  HEIGHT: '896px'
 } as const;
 
 export default SCREEN_SIZE;

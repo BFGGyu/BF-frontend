@@ -35,6 +35,8 @@ class MyDocument extends Document {
             name='description'
             content='A service that provides a safe route for wheelchair users to enjoy cultural life.'
           ></meta>
+          <meta httpEquiv='Content-Security-Policy' content='upgrade-insecure-requests' />
+
           <link rel='manifest' href='/manifest.json' />
           <link
             href='https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/variable/woff2/SUIT-Variable.css'

@@ -159,7 +159,7 @@ const PlaceLabel = styled.div`
 `;
 
 const MapWrapper = styled.div`
-  height: 530px;
+  height: 650px;
 `;
 
 const MapDiv = styled.div`

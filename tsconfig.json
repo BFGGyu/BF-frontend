@@ -28,6 +28,7 @@
       "@review/*": ["src/components/review/*"],
       "@navigation/*": ["src/components/navigation/*"],
       "@mypage/*": ["src/components/mypage/*"],
+      "@map/*": ["src/components/map/*"],
       "@pages/*": ["pages/*"],
       "@constants/*": ["src/constants/*"],
       "@styles/*": ["src/styles/*"],

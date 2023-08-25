@@ -1,25 +1,21 @@
 import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
-import InfoSection from 'src/components/place/InfoSection';
 import { initRouteMap } from '@utils/map';
-import axios from 'axios';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
-import { getRoutingCoords, getSearchResult } from 'src/apis/map';
+import { getRoutingCoords } from 'src/apis/map';
 import { styled } from 'styled-components';
-import { IPlace } from '@@types/facility';
-import { IFacilityMarker, IStation, ITotalRouteResult } from '@@types/map';
-import { FaHeart, FaRegHeart } from 'react-icons/fa';
+
+import { IStation, ITotalRouteResult } from '@@types/map';
 import MapInfoSection from 'src/components/map/MapInfoSection';
-import SCREEN_SIZE from '@constants/sizes';
-import PlaceSelectSection from 'src/components/map/PlaceSelectSection';
+import PlaceSelectSection from '@map/PlaceSelectSection';
 
 const MapPage: NextPage = () => {
   const router = useRouter();
   const mapRef = useRef<HTMLDivElement | null>(null);
-  // const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
+
   const [station, setStation] = useState<IStation>({
     departure: '로딩중...',
     arrival: '로딩중...'
@@ -126,30 +122,6 @@ const FooterInfoSection = styled.div`
   flex-direction: column;
   height: 15vh;
 `;
-
-// const InfoLeftWrapper = styled.div`
-//   display: flex;
-//   flex-basis: 75%;
-//   flex-direction: column;
-//   gap: 10px;
-//   padding: 20px;
-// `;
-
-// const InfoRightWrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-between;
-//   align-items: center;
-//   padding: 20px 0px;
-// `;
-
-// const HeartWrapper = styled.div``;
-
-// const InfoWrapper = styled.div`
-//   display: flex;
-//   padding: 10px;
-//   border-top: 1px solid ${COLOR.BLUE1};
-// `;
 
 const RouteResultWrapper = styled.div`
   display: flex;

@@ -5,44 +5,37 @@ import FONT from '@constants/fonts';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FaHeart, FaRegThumbsUp } from 'react-icons/fa';
+import { FaRegThumbsUp } from 'react-icons/fa';
 import PlaceItem from 'src/components/place/PlaceItem';
 import styled from 'styled-components';
 
-const Search = () => {
+const SearchPage = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState<string>('');
   const [isSearched, setIsSearched] = useState<boolean>(false);
   const [recentSearchList, setRecentSearchList] = useState<IFacilityMarker[]>([]);
-
-  useEffect(() => {
-    getRecommendPlace(5).then((data) => {
-      console.log('FooterSection: ', data);
-      setRecentSearchList(data);
-    });
-  }, []);
-
   const [searchList, setSearchList] = useState<IFacilityMarker>({} as IFacilityMarker);
 
-  const handleClickSearchList = (name: string) => {
+  const handleClickSearchList = (searchResult: string) => {
     router.push('/map', {
-      query: { result: name }
+      query: { result: searchResult }
     });
   };
 
   useEffect(() => {
-    if (typeof router.query.result === 'string') {
-      setIsSearched(true);
-      // 배열로 줄 경우 & 가공해야 하는 경우
-      // getSearchResult(router.query.result).then((res) => {
-      //   setSearchList(result);
-      // });
+    getRecommendPlace(5).then((data) => {
+      setRecentSearchList(data);
+    });
+  }, []);
 
-      // 잘 줄 경우
-      getSearchResult(router.query.result).then((data) => {
+  useEffect(() => {
+    const result = router.query.result;
+    if (typeof result === 'string') {
+      setIsSearched(true);
+      getSearchResult(result).then((data) => {
         if (data !== undefined) setSearchList(data);
       });
-      setKeyword(router.query.result);
+      setKeyword(result);
     }
   }, [router.query.result]);
 
@@ -50,15 +43,10 @@ const Search = () => {
     <SearchWrapper>
       <SearchBar keyword={keyword} setIsSearched={setIsSearched} />
 
+      {/* 검색을 한 경우 검색결과가 있으면 검색결과, 없으면 텍스트와 팬더이미지 띄우기 */}
       {isSearched ? (
         Object.keys(searchList).length > 0 ? (
-          <>
-            {/* 배열로 줄 경우 */}
-            {/* {searchList.map((place) => (
-            <PlaceItem key={place.id} place={place} />
-          ))} */}
-            <PlaceItem place={searchList} setSearchList={setSearchList} />
-          </>
+          <PlaceItem place={searchList} setSearchList={setSearchList} />
         ) : (
           <NoSearchResult>
             <NoSearchText style={FONT.BODY1}>검색결과가 없습니다.</NoSearchText>
@@ -67,7 +55,7 @@ const Search = () => {
         )
       ) : (
         <>
-          {/* 최근 검색어 배열로 줄 경우 */}
+          {/* 검색을 안한 경우 최근검색어 띄워주기 */}
           {recentSearchList.map((recent) => (
             <SearchResult
               style={FONT.BODY1}
@@ -107,4 +95,4 @@ const NoSearchResult = styled.div`
 
 const NoSearchText = styled.div``;
 
-export default Search;
+export default SearchPage;

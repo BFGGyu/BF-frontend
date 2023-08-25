@@ -73,7 +73,8 @@ export const initTmap = async (markerData: IFacilityMarker[], tags: ITag[], setT
     width: 220px; border-radius: 100px;'>
       <div style='font-size: 16px; font-weight: 500; width: 150px;'>${name}</div>
       <div style='background-color: ${COLOR.BLUE1}; color: ${COLOR.WHITE}; width: 100px; height: 40px;
-      border-radius: 100px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700'>
+      border-radius: 100px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700';
+      ontouchend="function hi(){window.location.href='/map?result=${name}'};hi()">
           <a href='/map?result=${name}'>길찾기</a>
         </div>
       </div>`;
@@ -112,11 +113,6 @@ export const initTmap = async (markerData: IFacilityMarker[], tags: ITag[], setT
         if (marker._status.mouse.mouseClickFlag) marker.setVisible(false);
         infoWindowArray[idx].setVisible(true);
       });
-  });
-
-  CURRENT_MAP.addListener('touchend', () => {
-    markers.map((marker) => marker.setVisible(true));
-    infoWindowArray.map((info) => info.setVisible(false));
   });
 
   CURRENT_MAP.addListener('click', () => {

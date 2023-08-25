@@ -1,4 +1,4 @@
-import { ICoord, IRoute } from '@@types/map';
+import { ICoord, IRoute } from 'types/map';
 import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
 import axios from 'axios';

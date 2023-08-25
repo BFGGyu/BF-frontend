@@ -1,7 +1,7 @@
-import { FacilityType } from '@@types/facility';
-import { IFacilityMarker } from '@@types/map';
 import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
+import { FacilityType } from 'types/facility';
+import { IFacilityMarker } from 'types/map';
 
 declare global {
   interface Window {

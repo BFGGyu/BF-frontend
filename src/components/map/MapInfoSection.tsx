@@ -1,4 +1,4 @@
-import { IFacilityMarker } from '@@types/map';
+import { IFacilityMarker } from 'types/map';
 import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import InfoSection from '@place/InfoSection';

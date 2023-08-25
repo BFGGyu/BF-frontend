@@ -32,11 +32,11 @@
       "@pages/*": ["pages/*"],
       "@constants/*": ["src/constants/*"],
       "@styles/*": ["src/styles/*"],
-      "@@types/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"],
       "@apis/*": ["src/apis/*"],
       "@states/*": ["src/states/*"],
-      "@image/*": ["public/image/*"]
+      "@image/*": ["public/image/*"],
+      "types/*": ["src/types/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.js", "**/*.ts", "**/*.tsx", "jest.setup.js", "jest.config.js"],

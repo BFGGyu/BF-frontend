@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '@common/Button';
 import { getRecommendPlace } from '@apis/map';
-import { IFacilityMarker } from '@@types/map';
+import { IFacilityMarker } from 'types/map';
 import { useRouter } from 'next/router';
 
 const PlaceTypeDic = {

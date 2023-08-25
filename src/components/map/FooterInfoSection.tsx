@@ -1,4 +1,4 @@
-import { IStation, ITotalRouteResult } from '@@types/map';
+import { IStation, ITotalRouteResult } from 'types/map';
 import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import { useRouter } from 'next/router';

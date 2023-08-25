@@ -1,4 +1,4 @@
-import { ITotalRouteResult } from '@@types/map';
+import { ITotalRouteResult } from 'types/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import React from 'react';

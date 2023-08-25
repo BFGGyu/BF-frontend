@@ -1,4 +1,4 @@
-import { ICoord, IFacilityMarker, IRoute, IRouteMarker, ITotalRouteResult } from '@@types/map';
+import { ICoord, IFacilityMarker, IRoute, IRouteMarker, ITotalRouteResult } from 'types/map';
 import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
 import axios from 'axios';

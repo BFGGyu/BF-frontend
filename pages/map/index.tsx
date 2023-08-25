@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import { getRoutingCoords } from 'src/apis/map';
 import { styled } from 'styled-components';
-import { IStation, ITotalRouteResult } from '@@types/map';
+import { IStation, ITotalRouteResult } from 'types/map';
 import PlaceSelectSection from '@map/PlaceSelectSection';
 import FooterInfoSection from '@map/FooterInfoSection';
 

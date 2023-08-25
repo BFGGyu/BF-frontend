@@ -1,13 +1,10 @@
-import { FacilityType, IPlace } from '@@types/facility';
-import { IFacilityMarker } from '@@types/map';
+import { IFacilityMarker } from 'types/map';
 import { getRecommendPlace, getSearchResult } from '@apis/map';
 import SearchBar from '@common/SearchBar';
-import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
 import { FaHeart, FaRegThumbsUp } from 'react-icons/fa';
 import PlaceItem from 'src/components/place/PlaceItem';
 import styled from 'styled-components';

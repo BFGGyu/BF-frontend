@@ -1,4 +1,4 @@
-import { IStation } from '@@types/map';
+import { IStation } from 'types/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import SCREEN_SIZE from '@constants/sizes';

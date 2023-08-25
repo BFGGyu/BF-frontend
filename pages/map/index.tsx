@@ -11,6 +11,7 @@ import { styled } from 'styled-components';
 import { IStation, ITotalRouteResult } from '@@types/map';
 import MapInfoSection from 'src/components/map/MapInfoSection';
 import PlaceSelectSection from '@map/PlaceSelectSection';
+import RouteResultSection from '@map/RouteResultSection';
 
 const MapPage: NextPage = () => {
   const router = useRouter();
@@ -72,27 +73,12 @@ const MapPage: NextPage = () => {
   return (
     <>
       <PlaceSelectSection station={station} />
-
       <MapWrapper>
         <MapDiv ref={mapRef} id='map_div'></MapDiv>
       </MapWrapper>
-
-      <FooterInfoSection>
+      <FooterInfoWrapper>
         <MapInfoSection arrival={station.arrival} />
-        <RouteResultWrapper>
-          <DistanceWrapper>
-            <ArriveText style={FONT.BODY2}>도착예정</ArriveText>
-            <DataUnitWrapper>
-              <TotalDistance style={FONT.HEADLINE1}>{routeResult.distance} </TotalDistance>
-              <ResultUnit style={FONT.BODY2}>m</ResultUnit>
-            </DataUnitWrapper>
-          </DistanceWrapper>
-          <DataUnitWrapper>
-            <TotalDuration style={FONT.HEADLINE1}>{routeResult.duration}</TotalDuration>
-            <ResultUnit style={FONT.BODY2}>분</ResultUnit>
-          </DataUnitWrapper>
-        </RouteResultWrapper>
-
+        <RouteResultSection routeResult={routeResult} />
         <ButtonWrapper>
           <Button
             bgColor={COLOR.BLUE1}
@@ -104,7 +90,7 @@ const MapPage: NextPage = () => {
             안내시작
           </Button>
         </ButtonWrapper>
-      </FooterInfoSection>
+      </FooterInfoWrapper>
     </>
   );
 };
@@ -117,40 +103,11 @@ const MapDiv = styled.div`
   position: absolute;
 `;
 
-const FooterInfoSection = styled.div`
+const FooterInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 15vh;
 `;
-
-const RouteResultWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 0px 20px;
-  padding-bottom: 10px;
-`;
-
-const DistanceWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 20px;
-`;
-
-const ArriveText = styled.div`
-  color: ${COLOR.BLUE1};
-`;
-
-const DataUnitWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
-
-const TotalDistance = styled.div``;
-
-const ResultUnit = styled.div``;
-
-const TotalDuration = styled.div``;
 
 const ButtonWrapper = styled.div`
   display: flex;

@@ -1,17 +1,12 @@
-import Button from '@common/Button';
-import COLOR from '@constants/colors';
-import FONT from '@constants/fonts';
 import { initRouteMap } from '@utils/map';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import { getRoutingCoords } from 'src/apis/map';
 import { styled } from 'styled-components';
-
 import { IStation, ITotalRouteResult } from '@@types/map';
-import MapInfoSection from 'src/components/map/MapInfoSection';
 import PlaceSelectSection from '@map/PlaceSelectSection';
-import RouteResultSection from '@map/RouteResultSection';
+import FooterInfoSection from '@map/FooterInfoSection';
 
 const MapPage: NextPage = () => {
   const router = useRouter();
@@ -21,19 +16,11 @@ const MapPage: NextPage = () => {
     departure: '로딩중...',
     arrival: '로딩중...'
   });
-
   const [routeResult, setRouteResult] = useState<ITotalRouteResult>({
     distance: '-',
     duration: 0
   });
-
-  const [result, setResult] = useState('');
-
-  const handleClickNavigation = () => {
-    router.push('/navigation', {
-      query: { result }
-    });
-  };
+  const [searchResult, setSearchResult] = useState('');
 
   useEffect(() => {
     const queryData = router.query.result;
@@ -46,7 +33,7 @@ const MapPage: NextPage = () => {
     ) {
       const query = decodeURIComponent(router.asPath.split('=')[1]);
       console.log('map query:', query);
-      setResult(query);
+      setSearchResult(query);
       getRoutingCoords(query).then((data) => {
         const { departure, arrival, routes } = data;
         setStation({ departure: departure.name, arrival: arrival.name });
@@ -59,7 +46,7 @@ const MapPage: NextPage = () => {
     } else if (typeof queryData === 'string') {
       getRoutingCoords(queryData).then((data) => {
         const { departure, arrival, routes } = data;
-        setResult(queryData);
+        setSearchResult(queryData);
         setStation({ departure: departure.name, arrival: arrival.name });
         initRouteMap(departure, arrival, routes).then((data) => {
           console.log('지도데이터 로딩 성공 !');
@@ -76,21 +63,7 @@ const MapPage: NextPage = () => {
       <MapWrapper>
         <MapDiv ref={mapRef} id='map_div'></MapDiv>
       </MapWrapper>
-      <FooterInfoWrapper>
-        <MapInfoSection arrival={station.arrival} />
-        <RouteResultSection routeResult={routeResult} />
-        <ButtonWrapper>
-          <Button
-            bgColor={COLOR.BLUE1}
-            color={COLOR.WHITE}
-            width='90%'
-            height='40px'
-            onClick={handleClickNavigation}
-          >
-            안내시작
-          </Button>
-        </ButtonWrapper>
-      </FooterInfoWrapper>
+      <FooterInfoSection station={station} routeResult={routeResult} searchResult={searchResult} />
     </>
   );
 };
@@ -101,17 +74,6 @@ const MapWrapper = styled.div`
 
 const MapDiv = styled.div`
   position: absolute;
-`;
-
-const FooterInfoWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 15vh;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
 `;
 
 export default MapPage;

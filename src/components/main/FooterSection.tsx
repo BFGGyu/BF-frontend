@@ -65,7 +65,7 @@ const FooterSection = () => {
 };
 
 const FooterWrapper = styled.div`
-  height: 35vh;
+  height: 30vh;
   width: 100%;
   display: flex;
   justify-content: center;

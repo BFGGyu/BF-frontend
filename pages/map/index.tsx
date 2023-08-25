@@ -69,7 +69,7 @@ const MapPage: NextPage = () => {
 };
 
 const MapWrapper = styled.div`
-  height: 650px;
+  height: 606px;
 `;
 
 const MapDiv = styled.div`

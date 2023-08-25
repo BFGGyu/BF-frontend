@@ -1,4 +1,4 @@
-import { IPlace } from '@@types/facility';
+import { IPlace } from 'types/facility';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import Image from 'next/image';

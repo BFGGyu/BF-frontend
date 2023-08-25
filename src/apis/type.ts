@@ -1,4 +1,4 @@
-import { ICoord, IFacilityMarker, IRouteMarker } from '@@types/map';
+import { ICoord, IFacilityMarker, IRouteMarker } from 'types/map';
 
 export interface IFailityReturnType {
   id: number;

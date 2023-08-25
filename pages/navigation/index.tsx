@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import { BiMapAlt } from 'react-icons/bi';
 import styled from 'styled-components';
@@ -26,9 +25,7 @@ const NavigationPage = () => {
   };
 
   useEffect(() => {
-    console.log('navigation router:', router);
     const query = decodeURIComponent(router.asPath.split('=')[1]);
-    console.log('navigation query:', query);
     setResult(query);
   }, [router]);
 

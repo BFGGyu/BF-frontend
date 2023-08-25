@@ -6,13 +6,6 @@ import ReviewFooterSection from '@review/ReviewFooterSection';
 import ReviewMainSection from '@review/ReviewMainSection';
 import { useRouter } from 'next/router';
 
-interface IPostReview {
-  place: string;
-  writer: string;
-  rating: number;
-  comment: string;
-}
-
 const ReviewPage: NextPage = () => {
   const [rating, setRating] = useState<number>(5);
   const router = useRouter();
@@ -20,9 +13,7 @@ const ReviewPage: NextPage = () => {
   const [facility, setFacility] = useState('');
 
   useEffect(() => {
-    console.log('review router:', router);
     const query = decodeURIComponent(router.asPath.split('=')[1]);
-    console.log('review query:', query);
     setFacility(query);
   }, [router]);
 

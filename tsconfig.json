@@ -30,6 +30,7 @@
       "@mypage/*": ["src/components/mypage/*"],
       "@map/*": ["src/components/map/*"],
       "@search/*": ["src/components/search/*"],
+      "@detail/*": ["src/components/detail/*"],
       "@pages/*": ["pages/*"],
       "@constants/*": ["src/constants/*"],
       "@styles/*": ["src/styles/*"],

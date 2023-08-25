@@ -25,6 +25,7 @@ const customJestConfig = {
     '@mypage/(.*)': '<rootDir>/src/components/mypage/$1',
     '@map/(.*)': '<rootDir>/src/components/map/$1',
     '@search/(.*)': '<rootDir>/src/components/search/$1',
+    '@detail/(.*)': '<rootDir>/src/components/detail/$1',
     '@pages/(.*)': '<rootDir>/pages/$1',
     '@utils/(.*)': '<rootDir>/src/components/utils/$1',
     '@styles/(.*)': '<rootDir>/src/components/styles/$1',

@@ -36,3 +36,8 @@ export interface ITotalRouteResult {
   distance: string;
   duration: number;
 }
+
+export interface IStation {
+  departure: string;
+  arrival: string;
+}

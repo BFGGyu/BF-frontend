@@ -10,16 +10,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { getRoutingCoords, getSearchResult } from 'src/apis/map';
 import { styled } from 'styled-components';
 import { IPlace } from '@@types/facility';
-import { IFacilityMarker, ITotalRouteResult } from '@@types/map';
+import { IFacilityMarker, IStation, ITotalRouteResult } from '@@types/map';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import MapInfoSection from 'src/components/map/MapInfoSection';
 import SCREEN_SIZE from '@constants/sizes';
+import PlaceSelectSection from 'src/components/map/PlaceSelectSection';
 
 const MapPage: NextPage = () => {
   const router = useRouter();
   const mapRef = useRef<HTMLDivElement | null>(null);
   // const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
-  const [station, setStation] = useState({
+  const [station, setStation] = useState<IStation>({
     departure: '로딩중...',
     arrival: '로딩중...'
   });
@@ -74,18 +75,8 @@ const MapPage: NextPage = () => {
 
   return (
     <>
-      <PlaceSelectBarWrapper>
-        <PlaceSelectBar>
-          <PlaceLabel style={FONT.BODY2}>출발지</PlaceLabel>
-          <StartPlace style={FONT.BODY1}>{station.departure}</StartPlace>
-        </PlaceSelectBar>
-        <PlaceSelectBar>
-          <PlaceLabel style={FONT.BODY2}>도착지</PlaceLabel>
-          <EndPlace style={FONT.BODY1} onClick={() => router.push('/search')}>
-            {station.arrival}
-          </EndPlace>
-        </PlaceSelectBar>
-      </PlaceSelectBarWrapper>
+      <PlaceSelectSection station={station} />
+
       <MapWrapper>
         <MapDiv ref={mapRef} id='map_div'></MapDiv>
       </MapWrapper>
@@ -121,42 +112,6 @@ const MapPage: NextPage = () => {
     </>
   );
 };
-
-const PlaceSelectBarWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: ${SCREEN_SIZE.WIDTH};
-  padding: 10px;
-  position: absolute;
-  z-index: 1;
-`;
-
-const PlaceSelectBar = styled.div`
-  display: flex;
-  align-items: center;
-
-  gap: 20px;
-  width: 95%;
-  background-color: rgba(255, 255, 255, 0.6);
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 4px 4px 16px 0px rgba(0, 0, 0, 0.16);
-  cursor: pointer;
-  @supports (backdrop-filter: blur(10px)) {
-    backdrop-filter: blur(10px);
-  }
-`;
-
-const StartPlace = styled.div``;
-
-const EndPlace = styled.div``;
-
-const PlaceLabel = styled.div`
-  color: ${COLOR.BLUE1};
-`;
 
 const MapWrapper = styled.div`
   height: 650px;

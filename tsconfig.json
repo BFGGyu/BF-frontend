@@ -29,6 +29,7 @@
       "@navigation/*": ["src/components/navigation/*"],
       "@mypage/*": ["src/components/mypage/*"],
       "@map/*": ["src/components/map/*"],
+      "@search/*": ["src/components/search/*"],
       "@pages/*": ["pages/*"],
       "@constants/*": ["src/constants/*"],
       "@styles/*": ["src/styles/*"],

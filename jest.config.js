@@ -24,12 +24,13 @@ const customJestConfig = {
     '@navigation/(.*)': '<rootDir>/src/components/navigation/$1',
     '@mypage/(.*)': '<rootDir>/src/components/mypage/$1',
     '@map/(.*)': '<rootDir>/src/components/map/$1',
+    '@search/(.*)': '<rootDir>/src/components/search/$1',
     '@pages/(.*)': '<rootDir>/pages/$1',
     '@utils/(.*)': '<rootDir>/src/components/utils/$1',
-    '@types/(.*)': '<rootDir>/src/components/types/$1',
     '@styles/(.*)': '<rootDir>/src/components/styles/$1',
     '@layout/(.*)': '<rootDir>/src/components/layout/$1',
-    '@images/(.*)': '<rootDir>/public/images/$1'
+    '@images/(.*)': '<rootDir>/public/images/$1',
+    'types/(.*)': '<rootDir>/src/components/types/$1'
   }
 };
 

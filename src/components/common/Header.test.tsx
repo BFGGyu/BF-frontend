@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 
 describe('contentList test', () => {
   it('renders content', () => {
-    const { getByText } = render(<Header />);
+    const { getByText } = render(<Header type={''} />);
     const mainTitle = getByText('서비스명');
     expect(mainTitle).toBeInTheDocument();
   });

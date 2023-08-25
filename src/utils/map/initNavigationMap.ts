@@ -1,21 +1,9 @@
-import { ICoord, IRoute, IRouteMarker } from '@@types/map';
+import { ICoord, IRoute } from '@@types/map';
 import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
 import axios from 'axios';
 
 const APP_KEY = process.env.NEXT_PUBLIC_TMAP_KEY;
-
-// const START1 = { LAT: '37.5759848', LNG: '126.9740679' };
-// const PATH1 = { LAT: '37.5760863', LNG: '126.9741329' };
-// const PATH2 = { LAT: '37.5771287', LNG: '126.9740089' };
-// const PATH3 = { LAT: '37.5771646', LNG: '126.9742312' };
-// const PATH4 = { LAT: '37.5770251', LNG: '126.9743039' };
-// const PATH5 = { LAT: '37.5770498', LNG: '126.9757761' };
-// const PATH6 = { LAT: '37.5765595', LNG: '126.9757996' };
-// const END1 = { LAT: '37.5765513', LNG: '126.9756893' };
-
-// const pathList = [PATH1, PATH2, PATH3, PATH4, PATH5]; // 최대 5개
-// const markerList = [PATH1, PATH2, PATH3, PATH4, PATH5, PATH6];
 
 export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, routes: IRoute[]) => {
   const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
@@ -50,16 +38,6 @@ export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, rou
     iconSize: new window.Tmapv2.Size(30, 45),
     map: CURRENT_MAP
   });
-
-  // markerList.map(
-  //   (marker) =>
-  //     new window.Tmapv2.Marker({
-  //       position: new window.Tmapv2.LatLng(marker.latitude, marker.longitude),
-  //       icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
-  //       iconSize: new window.Tmapv2.Size(24, 38),
-  //       map: CURRENT_MAP
-  //     })
-  // );
 
   const drawInfoArray: any[] = [];
   const pointArray: any[] = [];
@@ -122,51 +100,15 @@ export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, rou
             drawInfoArray.push(convertChange);
           }
         } else {
-          let markerImg = '';
-          let pType = '';
-          let size;
-
-          // if (properties.pointType == 'S') {
-          //   //출발지 마커
-          //   markerImg = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
-          //   pType = 'S';
-          //   size = new window.Tmapv2.Size(24, 38);
-          // } else if (properties.pointType == 'E') {
-          //   //도착지 마커
-          //   markerImg = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png';
-          //   pType = 'E';
-          //   size = new window.Tmapv2.Size(24, 38);
-          // } else {
-          //   //각 포인트 마커
-          //   markerImg = '';
-          //   pType = 'P';
-          //   size = new window.Tmapv2.Size(24, 38);
-          // }
-
           // 경로들의 결과값들을 포인트 객체로 변환
           const latlon = new window.Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]); // 포인트 객체를 받아 좌표값으로 다시 변환
           const convertPoint = new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlon);
-
-          // const routeInfoObj = {
-          //   markerImage: markerImg,
-          //   lng: convertPoint._lng,
-          //   lat: convertPoint._lat,
-          //   pointType: pType
-          // };
 
           pointArray.push({
             latitude: convertPoint._lat,
             longitude: convertPoint._lng,
             description: properties.description
           });
-
-          // Marker 추가 (흰색 동그라미 마커)
-          // const marker_p = new window.Tmapv2.Marker({
-          //   position: new window.Tmapv2.LatLng(routeInfoObj.lat, routeInfoObj.lng),
-          //   icon: routeInfoObj.markerImage,
-          //   iconSize: size,
-          //   map: CURRENT_MAP
-          // });
         }
       }
 

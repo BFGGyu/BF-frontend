@@ -33,10 +33,10 @@ export const initRouteMap = async (
   );
 
   const margin = {
-    left: 20,
-    top: 20,
-    right: 20,
-    bottom: 20
+    left: 100,
+    top: 100,
+    right: 100,
+    bottom: 100
   };
   CURRENT_MAP.fitBounds(latlngBounds, margin);
 
@@ -58,16 +58,6 @@ export const initRouteMap = async (
 
   // 도착 장소까지의 거리와 소요시간 담을 객체
   let totalData: ITotalRouteResult = { distance: '', duration: 0 };
-
-  // routes.map(
-  //   (marker) =>
-  //     new window.Tmapv2.Marker({
-  //       position: new window.Tmapv2.LatLng(marker.latitude, marker.longitude),
-  //       icon: 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png',
-  //       iconSize: new window.Tmapv2.Size(24, 38),
-  //       map: CURRENT_MAP
-  //     })
-  // );
 
   let text: string[] = [];
   routes.map((path) => text.push(`${path.longitude},${path.latitude}`));
@@ -130,42 +120,6 @@ export const initRouteMap = async (
             // 배열에 담기
             drawInfoArr.push(convertChange);
           }
-        } else {
-          // let markerImg = '';
-          // let pType = '';
-          // let size;
-          // if (properties.pointType == 'S') {
-          //   //출발지 마커
-          //   markerImg = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png';
-          //   pType = 'S';
-          //   size = new window.Tmapv2.Size(24, 38);
-          // } else if (properties.pointType == 'E') {
-          //   //도착지 마커
-          //   markerImg = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png';
-          //   pType = 'E';
-          //   size = new window.Tmapv2.Size(24, 38);
-          // } else {
-          //   //각 포인트 마커
-          //   markerImg = 'http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_p.png';
-          //   pType = 'P';
-          //   size = new window.Tmapv2.Size(24, 38);
-          // }
-          // 경로들의 결과값들을 포인트 객체로 변환
-          // const latlon = new window.Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]); // 포인트 객체를 받아 좌표값으로 다시 변환
-          // const convertPoint = new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlon);
-          // const routeInfoObj = {
-          //   markerImage: markerImg,
-          //   lng: convertPoint._lng,
-          //   lat: convertPoint._lat,
-          //   pointType: pType
-          // };
-          // Marker 추가 (흰색 동그라미 마커)
-          // const marker_p = new window.Tmapv2.Marker({
-          //   position: new window.Tmapv2.LatLng(routeInfoObj.lat, routeInfoObj.lng),
-          //   icon: routeInfoObj.markerImage,
-          //   iconSize: size,
-          //   map: CURRENT_MAP
-          // });
         }
       }
 

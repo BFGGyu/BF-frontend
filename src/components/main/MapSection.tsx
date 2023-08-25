@@ -1,5 +1,5 @@
-import { FacilityType } from '@@types/facility';
-import { IFacilityMarker } from '@@types/map';
+import { FacilityType } from 'types/facility';
+import { IFacilityMarker } from 'types/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import { changeMarker, initTmap } from '@utils/map';

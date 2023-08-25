@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import Splash from './Splash';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 const Index: NextPage = () => {
   const router = useRouter();

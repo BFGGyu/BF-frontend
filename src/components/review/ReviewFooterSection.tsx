@@ -1,7 +1,7 @@
 import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import toast, { Toaster } from 'react-hot-toast';
 import FONT from '@constants/fonts';
@@ -25,21 +25,25 @@ const notifySubmitReview = () =>
   });
 
 interface IReviewFooterSectionProps {
-  place: string;
   rating: number;
   comment: string;
 }
 
-const ReviewFooterSection = ({ place, rating, comment }: IReviewFooterSectionProps) => {
+const ReviewFooterSection = ({ rating, comment }: IReviewFooterSectionProps) => {
   const router = useRouter();
   const writer = useRecoilValue(nicknameState);
+  const [facility, setFacility] = useState<string>('');
 
   const handleSubmitReview = () => {
-    // TODO: 리뷰 제출 API 연동
     notifySubmitReview();
-    submitReview(place, writer, rating, comment);
+    submitReview(facility, writer, rating, comment);
     setTimeout(() => router.push('/main'), 1000);
   };
+
+  useEffect(() => {
+    const query = decodeURIComponent(router.asPath.split('=')[1]);
+    setFacility(query);
+  }, [router]);
 
   return (
     <FooterButtonWrapper>

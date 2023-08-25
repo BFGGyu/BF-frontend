@@ -28,14 +28,17 @@
       "@review/*": ["src/components/review/*"],
       "@navigation/*": ["src/components/navigation/*"],
       "@mypage/*": ["src/components/mypage/*"],
+      "@map/*": ["src/components/map/*"],
+      "@search/*": ["src/components/search/*"],
+      "@detail/*": ["src/components/detail/*"],
       "@pages/*": ["pages/*"],
       "@constants/*": ["src/constants/*"],
       "@styles/*": ["src/styles/*"],
-      "@@types/*": ["src/types/*"],
       "@utils/*": ["src/utils/*"],
       "@apis/*": ["src/apis/*"],
       "@states/*": ["src/states/*"],
-      "@image/*": ["public/image/*"]
+      "@image/*": ["public/image/*"],
+      "types/*": ["src/types/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.js", "**/*.ts", "**/*.tsx", "jest.setup.js", "jest.config.js"],

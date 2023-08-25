@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { styled } from 'styled-components';
 import Button from '@common/Button';
 import InfoSection from './InfoSection';
-import { IFacilityMarker } from '@@types/map';
+import { IFacilityMarker } from 'types/map';
 import React, { useEffect, useState } from 'react';
 import { getRecommendPlace } from '@apis/map';
 

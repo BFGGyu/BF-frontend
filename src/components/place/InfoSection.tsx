@@ -1,4 +1,4 @@
-import { IFacilityMarker } from '@@types/map';
+import { IFacilityMarker } from 'types/map';
 import { getDetailFacility, getSearchResult } from '@apis/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';

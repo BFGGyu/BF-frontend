@@ -9,16 +9,14 @@ const PlaceSelectSection = ({ station }: { station: IStation }) => {
   const router = useRouter();
 
   return (
-    <PlaceSelectBarWrapper>
+    <PlaceSelectBarWrapper onClick={() => router.push('/search')}>
       <PlaceSelectBar>
         <PlaceLabel style={FONT.BODY2}>출발지</PlaceLabel>
         <StartPlace style={FONT.BODY1}>{station.departure}</StartPlace>
       </PlaceSelectBar>
       <PlaceSelectBar>
         <PlaceLabel style={FONT.BODY2}>도착지</PlaceLabel>
-        <EndPlace style={FONT.BODY1} onClick={() => router.push('/search')}>
-          {station.arrival}
-        </EndPlace>
+        <EndPlace style={FONT.BODY1}>{station.arrival}</EndPlace>
       </PlaceSelectBar>
     </PlaceSelectBarWrapper>
   );

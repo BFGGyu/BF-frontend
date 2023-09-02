@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { BsArrowLeft } from 'react-icons/bs';
 import { styled } from 'styled-components';
 import { IFacilityMarker } from 'types/map';
-import PlaceInformationSection from '@detail/PlaceInformationSection';
+import PlaceInformationSection from '@detail/PlaceInfoSection';
 import ReviewSection from '@detail/ReviewSection';
 
 const DetailPage = () => {

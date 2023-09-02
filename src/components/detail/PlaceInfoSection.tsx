@@ -5,11 +5,13 @@ import InfoSection from '@place/InfoSection';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import useQueryString from 'src/hooks/useQueryString';
 import { styled } from 'styled-components';
 
-const PlaceInformationSection = ({ selectedPlace, setSelectedPlace }: any) => {
+const PlaceInfoSection = ({ selectedPlace, setSelectedPlace }: any) => {
   const router = useRouter();
-  const [result, setResult] = useState<string>('');
+  // const [result, setResult] = useState<string>('');
+  const result = useQueryString();
 
   const handleClickNavigation = () => {
     router.push('/navigation', {
@@ -17,10 +19,10 @@ const PlaceInformationSection = ({ selectedPlace, setSelectedPlace }: any) => {
     });
   };
 
-  useEffect(() => {
-    const query = decodeURIComponent(router.asPath.split('=')[1]);
-    setResult(query);
-  }, [router]);
+  // useEffect(() => {
+  //   const query = decodeURIComponent(router.asPath.split('=')[1]);
+  //   setResult(query);
+  // }, [router]);
 
   return (
     <>
@@ -70,4 +72,4 @@ const RightWrapper = styled.div`
   margin-top: 20px;
 `;
 
-export default PlaceInformationSection;
+export default PlaceInfoSection;

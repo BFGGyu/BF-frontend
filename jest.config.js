@@ -29,6 +29,8 @@ const customJestConfig = {
     '@pages/(.*)': '<rootDir>/pages/$1',
     '@utils/(.*)': '<rootDir>/src/components/utils/$1',
     '@styles/(.*)': '<rootDir>/src/components/styles/$1',
+    '@states/(.*)': '<rootDir>/src/states/$1',
+    '@constants/(.*)': '<rootDir>/src/constants/$1',
     '@layout/(.*)': '<rootDir>/src/components/layout/$1',
     '@images/(.*)': '<rootDir>/public/images/$1',
     'types/(.*)': '<rootDir>/src/components/types/$1'

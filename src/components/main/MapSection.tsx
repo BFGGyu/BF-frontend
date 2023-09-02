@@ -1,19 +1,11 @@
 import { FacilityType } from 'types/facility';
-import { IFacilityMarker } from 'types/map';
+import { IFacilityMarker, ITag } from 'types/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import { changeMarker, initTmap } from '@utils/map';
-import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { getFacilityCoordList } from 'src/apis/map';
 import styled from 'styled-components';
-
-interface ITag {
-  id: number;
-  type: FacilityType;
-  name: string;
-  clicked: boolean;
-}
 
 const MapSection = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -57,24 +49,13 @@ const MapSection = () => {
   }, [tags]);
 
   useEffect(() => {
-    // 서버 연결
     getFacilityCoordList().then((data) => {
       console.log('MapSection 연결:', data);
       initTmap(data, tags, setTags).then((markers: IFacilityMarker[]) => {
         markersRef.current = markers;
       });
     });
-
-    // mock data
-    // axios.get('/api/center').then((res) => {
-    //   const { latitude, longitude } = res.data.data.center;
-    //   const markers: IFacilityMarker[] = res.data.data.markers;
-    //   console.log(markers);
-    //   initTmap(markers, latitude, longitude).then((markers: any) => {
-    //     markersRef.current = markers;
-    //   });
-    // });
-  }, [tags]);
+  }, []);
 
   return (
     <MapWrapper>

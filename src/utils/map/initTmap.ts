@@ -1,7 +1,6 @@
 import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
-import { FacilityType } from 'types/facility';
-import { IFacilityMarker } from 'types/map';
+import { IFacilityMarker, ITag } from 'types/map';
 
 declare global {
   interface Window {
@@ -9,14 +8,11 @@ declare global {
   }
 }
 
-interface ITag {
-  id: number;
-  type: FacilityType;
-  name: string;
-  clicked: boolean;
-}
-
-export const initTmap = async (markerData: IFacilityMarker[], tags: ITag[], setTags: any) => {
+export const initTmap = async (
+  markerData: IFacilityMarker[],
+  tags: ITag[],
+  setTags: React.Dispatch<React.SetStateAction<ITag[]>>
+) => {
   console.log('initTmap markerData:', markerData);
   let markers: any[] = [];
 

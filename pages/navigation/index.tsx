@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { BiMapAlt } from 'react-icons/bi';
 import styled from 'styled-components';
 import RoutingSection from '@navigation/RoutingSection';
@@ -6,28 +6,13 @@ import COLOR from '@constants/colors';
 import Button from '@common/Button';
 import SCREEN_SIZE from '@constants/sizes';
 import { useRouter } from 'next/router';
+import { handleClickMovePage } from '@utils/map';
+import useQueryString from 'src/hooks/useQueryString';
 
 const NavigationPage = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
-  const [result, setResult] = useState('');
-
-  const handleClickMap = () => {
-    router.push('/map', {
-      query: { result }
-    });
-  };
-
-  const handleClickEndNavigation = () => {
-    router.push('/review', {
-      query: { result }
-    });
-  };
-
-  useEffect(() => {
-    const query = decodeURIComponent(router.asPath.split('=')[1]);
-    setResult(query);
-  }, [router]);
+  const result = useQueryString();
 
   return (
     <div>
@@ -37,9 +22,13 @@ const NavigationPage = () => {
       </MapWrapper>
       <FooterWrapper>
         <MapIconWrapper>
-          <BiMapAlt color={COLOR.BLUE1} size={30} onClick={handleClickMap} />
+          <BiMapAlt
+            color={COLOR.BLUE1}
+            size={30}
+            onClick={() => handleClickMovePage(router, '/map', result)}
+          />
         </MapIconWrapper>
-        <ButtonWrapper onClick={handleClickEndNavigation}>
+        <ButtonWrapper onClick={() => handleClickMovePage(router, '/review', result)}>
           <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} height='50px'>
             경로안내 마치기
           </Button>

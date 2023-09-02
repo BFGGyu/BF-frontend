@@ -6,6 +6,7 @@ import Button from '@common/Button';
 import { getRecommendPlace } from '@apis/map';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
+import { handleClickMovePage } from '@utils/map';
 
 const PlaceTypeDic = {
   museum: '박물관',
@@ -15,14 +16,7 @@ const PlaceTypeDic = {
 
 const FooterSection = () => {
   const router = useRouter();
-
   const { data: recommendPlaces } = useQuery('recommendPlaces', () => getRecommendPlace(2));
-
-  const handleClickRoute = (name: string) => {
-    router.push('map', {
-      query: { result: name }
-    });
-  };
 
   return (
     <FooterWrapper>
@@ -47,7 +41,7 @@ const FooterSection = () => {
                 // height='20%'
                 bgColor={COLOR.BLUE1}
                 color={COLOR.WHITE}
-                onClick={() => handleClickRoute(place.name)}
+                onClick={() => handleClickMovePage(router, '/map', place.name)}
               >
                 길찾기
               </Button>

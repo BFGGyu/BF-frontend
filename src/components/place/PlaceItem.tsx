@@ -6,6 +6,8 @@ import InfoSection from './InfoSection';
 import { IFacilityMarker } from 'types/map';
 import React, { useEffect, useState } from 'react';
 import { getRecommendPlace } from '@apis/map';
+import useQueryString from 'src/hooks/useQueryString';
+import { handleClickMovePage } from '@utils/map';
 
 interface IPlaceItemProps {
   place: IFacilityMarker;
@@ -14,14 +16,7 @@ interface IPlaceItemProps {
 
 const PlaceItem = ({ place, setSearchList }: IPlaceItemProps) => {
   const router = useRouter();
-  // const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker[]>([]);
-
-  const routeMap = () => {
-    router.push({
-      pathname: '/map',
-      query: { result: router.query.result }
-    });
-  };
+  const result = useQueryString();
 
   return (
     <SearchListWrapper key={place.id}>
@@ -29,7 +24,11 @@ const PlaceItem = ({ place, setSearchList }: IPlaceItemProps) => {
         <InfoSection selectedPlace={place} setSelectedPlace={setSearchList} />
       </LeftWrapper>
       <RightWrapper>
-        <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} onClick={routeMap}>
+        <Button
+          bgColor={COLOR.BLUE1}
+          color={COLOR.WHITE}
+          onClick={() => handleClickMovePage(router, '/map', result)}
+        >
           길찾기
         </Button>
       </RightWrapper>

@@ -2,6 +2,7 @@ import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
 import InfoSection from '@place/InfoSection';
+import { handleClickMovePage } from '@utils/map';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -18,15 +19,9 @@ const PlaceInfoSection = ({ selectedPlace, setSelectedPlace }: IPlaceInfoSection
   const router = useRouter();
   const result = useQueryString();
 
-  const handleClickNavigation = () => {
-    router.push('/navigation', {
-      query: { result }
-    });
-  };
-
   return (
     <>
-      <ImageSection>
+      <ImageWrapper>
         {selectedPlace.imageSrc && (
           <Image
             src={selectedPlace.imageSrc}
@@ -35,13 +30,17 @@ const PlaceInfoSection = ({ selectedPlace, setSelectedPlace }: IPlaceInfoSection
             height={170}
           />
         )}
-      </ImageSection>
+      </ImageWrapper>
       <PlaceInfomation>
         <LeftWrapper>
           <InfoSection selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace} />
         </LeftWrapper>
         <RightWrapper>
-          <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} onClick={handleClickNavigation}>
+          <Button
+            bgColor={COLOR.BLUE1}
+            color={COLOR.WHITE}
+            onClick={() => handleClickMovePage(router, '/navigation', result)}
+          >
             길찾기
           </Button>
         </RightWrapper>
@@ -50,7 +49,7 @@ const PlaceInfoSection = ({ selectedPlace, setSelectedPlace }: IPlaceInfoSection
   );
 };
 
-const ImageSection = styled.div`
+const ImageWrapper = styled.div`
   height: 22vh;
 `;
 

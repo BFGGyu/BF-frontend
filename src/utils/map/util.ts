@@ -1,3 +1,5 @@
+import { NextRouter } from 'next/router';
+
 export const changeCurrentPostion = (
   CURRENT_MAP: any,
   startMarker: any,
@@ -28,4 +30,14 @@ export const getDistanceCurrentToTarget = (current: any, target: any) => {
   const distance = currentLonLat.distanceTo(targetLonLat);
   console.log('distance: ', Math.ceil(distance));
   return Math.ceil(distance);
+};
+
+export const handleClickMovePage = (
+  router: NextRouter,
+  targetPage: string,
+  searchResult: string
+) => {
+  router.push(targetPage, {
+    query: { result: searchResult }
+  });
 };

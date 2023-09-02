@@ -74,7 +74,7 @@ const MapSection = () => {
     //     markersRef.current = markers;
     //   });
     // });
-  }, []);
+  }, [tags]);
 
   return (
     <MapWrapper>

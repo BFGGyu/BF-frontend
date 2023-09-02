@@ -1,15 +1,12 @@
-import { getReviewList } from '@apis/review';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { AiFillStar } from 'react-icons/ai';
+import { useReviewQuery } from 'src/hooks/useReviewQuery';
 import { styled } from 'styled-components';
-import { IReview } from 'types/review';
 
 const ReviewSection = () => {
-  const router = useRouter();
-  const [reviewList, setReviewList] = useState<IReview[]>([]);
+  const reviewList = useReviewQuery();
 
   const convertStar = (rating: number) => {
     const result = [false, false, false, false, false].map((data, idx) =>
@@ -17,13 +14,6 @@ const ReviewSection = () => {
     );
     return result;
   };
-
-  useEffect(() => {
-    const query = decodeURIComponent(router.asPath.split('=')[1]);
-    getReviewList(query).then((data) => {
-      setReviewList(data);
-    });
-  }, [router]);
 
   return (
     <ReviewWrapper>

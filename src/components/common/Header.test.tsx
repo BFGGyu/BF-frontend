@@ -1,10 +1,15 @@
 import Header from '@common/Header';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { RecoilRoot } from 'recoil';
 
-describe('contentList test', () => {
-  it('renders content', () => {
-    const { getByText } = render(<Header type={'white'} />);
-    const mainTitle = getByText('서비스명');
+describe('헤더 컴포넌트 렌더링', () => {
+  it('Login 텍스트가 렌더링 되었나요?', () => {
+    render(
+      <RecoilRoot>
+        <Header type={'white'} />
+      </RecoilRoot>
+    );
+    const mainTitle = screen.getByText('Login');
     expect(mainTitle).toBeInTheDocument();
   });
 });

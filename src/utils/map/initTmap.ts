@@ -1,6 +1,6 @@
 import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
-import { IFacilityMarker, ITag } from 'types/map';
+import { IFacilityMarker } from 'types/map';
 
 declare global {
   interface Window {
@@ -10,8 +10,7 @@ declare global {
 
 export const initTmap = async (
   markerData: IFacilityMarker[],
-  tags: ITag[],
-  setTags: React.Dispatch<React.SetStateAction<ITag[]>>
+  handleResetClickedTag: () => void
 ) => {
   console.log('initTmap markerData:', markerData);
   let markers: any[] = [];
@@ -113,13 +112,13 @@ export const initTmap = async (
 
   CURRENT_MAP.addListener('click', () => {
     markers.map((marker) => marker.setVisible(true));
-    setTags(tags.map((tag) => ({ ...tag, clicked: false })));
+    handleResetClickedTag();
     infoWindowArray.map((info) => info.setVisible(false));
   });
 
   CURRENT_MAP.addListener('touchend', () => {
     markers.map((marker) => marker.setVisible(true));
-    setTags(tags.map((tag) => ({ ...tag, clicked: false })));
+    handleResetClickedTag();
     infoWindowArray.map((info) => info.setVisible(false));
   });
 

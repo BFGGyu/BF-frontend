@@ -3,41 +3,47 @@ import { IFacilityMarker, ITag } from 'types/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import { changeMarker, initTmap } from '@utils/map';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getFacilityCoordList } from 'src/apis/map';
 import styled from 'styled-components';
+
+const tagInitialState: ITag[] = [
+  {
+    id: 0,
+    type: 'museum',
+    name: '박물관',
+    clicked: false
+  },
+  {
+    id: 1,
+    type: 'artGallery',
+    name: '미술관',
+    clicked: false
+  },
+  {
+    id: 2,
+    type: 'exhibition',
+    name: '전시회',
+    clicked: false
+  }
+];
 
 const MapSection = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const markersRef = useRef<IFacilityMarker[]>([]);
   const tagRef = useRef<FacilityType>();
 
-  const [tags, setTags] = useState<ITag[]>([
-    {
-      id: 0,
-      type: 'museum',
-      name: '박물관',
-      clicked: false
-    },
-    {
-      id: 1,
-      type: 'artGallery',
-      name: '미술관',
-      clicked: false
-    },
-    {
-      id: 2,
-      type: 'exhibition',
-      name: '전시회',
-      clicked: false
-    }
-  ]);
+  const [tags, setTags] = useState<ITag[]>(tagInitialState);
 
   const handleClickTag = (id: number) => {
     setTags(
       tags.map((tag) => (tag.id === id ? { ...tag, clicked: true } : { ...tag, clicked: false }))
     );
   };
+
+  const handleResetClickedTag = useCallback(() => {
+    setTags((tags) => tags.map((tag) => ({ ...tag, clicked: false })));
+  }, []);
 
   useEffect(() => {
     const tag = tags.filter((tag) => tag.clicked === true);
@@ -51,11 +57,11 @@ const MapSection = () => {
   useEffect(() => {
     getFacilityCoordList().then((data) => {
       console.log('MapSection 연결:', data);
-      initTmap(data, tags, setTags).then((markers: IFacilityMarker[]) => {
+      initTmap(data, handleResetClickedTag).then((markers: IFacilityMarker[]) => {
         markersRef.current = markers;
       });
     });
-  }, []);
+  }, [handleResetClickedTag]);
 
   return (
     <MapWrapper>

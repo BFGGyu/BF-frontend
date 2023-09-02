@@ -23,14 +23,13 @@ const HeaderSection = () => {
             <span>검색해보세요!</span>
           </MainText>
         </MainTextWrapper>
-
         <SubText style={FONT.BODY1}>휠체어 이용자를 위한 안전한 경로 안내</SubText>
       </BodyWrapper>
       <SearchWrapper onClick={handleClickSearch}>
         <SearchDiv>검색어를 입력하세요.</SearchDiv>
-        <SearchButton>
+        <SearchButtonWrapper>
           <AiOutlineSearch />
-        </SearchButton>
+        </SearchButtonWrapper>
       </SearchWrapper>
     </Wrapper>
   );
@@ -91,7 +90,7 @@ const SearchDiv = styled.div`
   color: ${COLOR.WHITE};
 `;
 
-const SearchButton = styled.div`
+const SearchButtonWrapper = styled.div`
   display: flex;
   flex-basis: 15%;
   font-size: 20px;

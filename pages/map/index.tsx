@@ -20,7 +20,7 @@ const MapPage: NextPage = () => {
     distance: '-',
     duration: 0
   });
-  const [searchResult, setSearchResult] = useState('');
+  const [searchResult, setSearchResult] = useState<string>('');
 
   useEffect(() => {
     const queryData = router.query.result;

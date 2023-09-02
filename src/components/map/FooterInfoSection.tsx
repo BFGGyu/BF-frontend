@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import MapInfoSection from './MapInfoSection';
 import RouteResultSection from './RouteResultSection';
+import { handleClickMovePage } from '@utils/map';
 
 interface IFooterInfoSectionProps {
   station: IStation;
@@ -15,12 +16,6 @@ interface IFooterInfoSectionProps {
 
 const FooterInfoSection = ({ station, routeResult, searchResult }: IFooterInfoSectionProps) => {
   const router = useRouter();
-
-  const handleClickNavigation = () => {
-    router.push('/navigation', {
-      query: { result: searchResult }
-    });
-  };
 
   return (
     <FooterInfoWrapper>
@@ -32,7 +27,7 @@ const FooterInfoSection = ({ station, routeResult, searchResult }: IFooterInfoSe
           color={COLOR.WHITE}
           width='90%'
           height='40px'
-          onClick={handleClickNavigation}
+          onClick={() => handleClickMovePage(router, '/navigation', searchResult)}
         >
           안내시작
         </Button>

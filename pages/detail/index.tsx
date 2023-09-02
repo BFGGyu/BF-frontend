@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { BsArrowLeft } from 'react-icons/bs';
 import { styled } from 'styled-components';
 import { IFacilityMarker } from 'types/map';
-import PlaceInformationSection from '@detail/PlaceInformationSection';
+import PlaceInfoSection from '@detail/PlaceInfoSection';
 import ReviewSection from '@detail/ReviewSection';
 
 const DetailPage = () => {
@@ -16,7 +16,7 @@ const DetailPage = () => {
         <BsArrowLeft color={COLOR.GREY} size={25} />
         <div style={FONT.BODY1}>{selectedPlace.name}</div>
       </HeaderWrapper>
-      <PlaceInformationSection selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace} />
+      <PlaceInfoSection selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace} />
       <ReviewSection />
     </DetailWrapper>
   );

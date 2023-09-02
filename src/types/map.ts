@@ -41,3 +41,10 @@ export interface IStation {
   departure: string;
   arrival: string;
 }
+
+export interface ITag {
+  id: number;
+  type: FacilityType;
+  name: string;
+  clicked: boolean;
+}

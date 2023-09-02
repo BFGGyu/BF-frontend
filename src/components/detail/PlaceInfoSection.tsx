@@ -4,13 +4,18 @@ import SCREEN_SIZE from '@constants/sizes';
 import InfoSection from '@place/InfoSection';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import useQueryString from 'src/hooks/useQueryString';
 import { styled } from 'styled-components';
+import { IFacilityMarker } from 'types/map';
 
-const PlaceInfoSection = ({ selectedPlace, setSelectedPlace }: any) => {
+interface IPlaceInfoSectionProps {
+  selectedPlace: IFacilityMarker;
+  setSelectedPlace: React.Dispatch<React.SetStateAction<IFacilityMarker>>;
+}
+
+const PlaceInfoSection = ({ selectedPlace, setSelectedPlace }: IPlaceInfoSectionProps) => {
   const router = useRouter();
-  // const [result, setResult] = useState<string>('');
   const result = useQueryString();
 
   const handleClickNavigation = () => {
@@ -18,11 +23,6 @@ const PlaceInfoSection = ({ selectedPlace, setSelectedPlace }: any) => {
       query: { result }
     });
   };
-
-  // useEffect(() => {
-  //   const query = decodeURIComponent(router.asPath.split('=')[1]);
-  //   setResult(query);
-  // }, [router]);
 
   return (
     <>

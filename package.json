@@ -3,7 +3,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next build && next start",
-    "test": "jest --watch",
+    "test": "jest",
+    "coverage": "jest --watchAll --coverage",
     "deploy": "serverless"
   },
   "dependencies": {

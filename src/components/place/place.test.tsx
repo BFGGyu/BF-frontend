@@ -33,12 +33,10 @@ describe('PlaceInfoSection 컴포넌트 테스트', () => {
       <PlaceInfoSection selectedPlace={initialSelectedPlace} setSelectedPlace={() => jest.fn()} />
     );
 
-    require('@apis/map').getDetailFacility.mockResolvedValue(initialSelectedPlace);
-    expect(require('@apis/map').getDetailFacility).toHaveBeenCalledWith('국립고궁박물관');
-
     const name = screen.getByText('국립고궁박물관');
     const address = screen.getByText('서울 종로구 효자로12');
 
+    expect(require('@apis/map').getDetailFacility).toHaveBeenCalledWith('국립고궁박물관');
     expect(name).toBeInTheDocument();
     expect(address).toBeInTheDocument();
   });

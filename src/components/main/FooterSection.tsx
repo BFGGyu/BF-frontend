@@ -16,7 +16,7 @@ const PlaceTypeDic = {
 
 const FooterSection = () => {
   const router = useRouter();
-  const { data: recommendPlaces } = useQuery('recommendPlaces', () => getRecommendPlace(2));
+  const { data: recommendPlaces } = useQuery(['recommendPlaces', 2], () => getRecommendPlace(2));
 
   return (
     <FooterWrapper>

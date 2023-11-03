@@ -2,6 +2,8 @@ BF-frontend:
   component: '@sls-next/serverless-component@latest'
   inputs:
     deploy: true
+    domain: 'wheelpass.shop'
+    domainMinimumProtocolVersion: 'TLSv1.2_2021'
     bucketName: 'bf-gyu'
     bucketRegion: 'ap-northeast-2' # S3 Bucket 지역 설정
     timeout: 30

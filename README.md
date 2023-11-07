@@ -4,19 +4,19 @@
 
 # 💡 목차
 
-- [1. 실행 방법](#💡-실행-방법)
-- [2. 서비스 소개](#📌-서비스-소개)
-- [3. 아이디어 배경](#📌-아이디어-배경)
-- [4. 추후 계획 및 목표](#📌-추후-계획-및-목표)
-- [5. 기능 소개](#📌-기능-소개)
-- [6. User-Flow](#💭-user-flow)
-- [7. Tech Stack](#🛠️-tech-stack)
+- [1. 실행 방법](#-실행-방법)
+- [2. 서비스 소개](#-서비스-소개)
+- [3. 아이디어 배경](#-아이디어-배경)
+- [4. 추후 계획 및 목표](#-추후-계획-및-목표)
+- [5. 기능 소개](#-기능-소개)
+- [6. User-Flow](#-user-flow)
+- [7. Tech Stack](#-tech-stack)
 
 # 🏆 11th 멋쟁이사자처럼 해커톤 대상 🏆
 
 <div align="center">
   <img src="https://github.com/BFGGyu/BF-frontend/assets/63959171/b82b5c74-0a99-4508-bddf-3861b67bf0c3" width="400px" height="300px">
-  <img src="https://github.com/BFGGyu/BF-frontend/assets/63959171/07b1c14a-bd4c-4ab2-a23e-0be3222bf599" width="500px" height="300px">
+  <img src="https://github.com/BFGGyu/BF-frontend/assets/63959171/07b1c14a-bd4c-4ab2-a23e-0be3222bf599" width="400px" height="300px">
 </div>
 
 # 💡 실행 방법

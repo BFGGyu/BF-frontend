@@ -10,7 +10,7 @@
 - [4. 추후 계획 및 목표](#-추후-계획-및-목표)
 - [5. 기능 소개](#-기능-소개)
 - [6. User-Flow](#-user-flow)
-- [7. Tech Stack](#-tech-stack)
+- [7. Tech-Stack](#%EF%B8%8F-tech-stack)
 
 # 🏆 11th 멋쟁이사자처럼 해커톤 대상 🏆
 

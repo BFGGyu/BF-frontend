@@ -133,6 +133,6 @@ export const initRouteMap = async (
         });
       }
     })
-    .catch((e: any) => console.log(e));
+    .catch((e: any) => console.log('길찾기 지도 불러오기 에러 : ', e));
   return totalData;
 };

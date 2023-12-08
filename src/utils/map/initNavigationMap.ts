@@ -127,6 +127,6 @@ export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, rou
         });
       }
     })
-    .catch((e) => console.log(e));
+    .catch((e) => console.log('네비게이션 불러오기 에러 : ', e));
   return [CURRENT_MAP, currentMarker, markerArray];
 };

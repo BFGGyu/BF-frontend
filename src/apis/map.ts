@@ -1,15 +1,8 @@
 import { Server } from './setting';
-import { IFailityReturnType, IMarkerReturnType, IPathReturnType, IRouteReturnType } from './type';
-
-// export const getFacilityCoords = async () => {
-//   const result = await Server.get<IMarkerReturnType>('place/facility');
-//   const { latitude, longitude } = result.data.data.center;
-//   const markers = result.data.data.markers;
-//   return { markers, latitude, longitude };
-// };
+import { IFacilityReturnType, IMarkerReturnType, IPathReturnType, IRouteReturnType } from './type';
 
 export const getFacilityCoordList = async () => {
-  const result = await Server.get<IFailityReturnType[]>('place/facility/');
+  const result = await Server.get<IFacilityReturnType[]>('place/facility/');
   return result.data;
 };
 
@@ -17,16 +10,11 @@ export const getRecommendPlace = async (count: number) => {
   const result = await getFacilityCoordList();
   const recommendPlaceList = [];
   for (let i = 0; i < count; i++) {
-    const movenum = result.splice(Math.floor(Math.random() * result.length), 1)[0];
-    recommendPlaceList.push(movenum);
+    const newPlace = result.splice(Math.floor(Math.random() * result.length), 1)[0];
+    recommendPlaceList.push(newPlace);
   }
   return recommendPlaceList;
 };
-
-// export const getRoutingCoords = async () => {
-//   const result = await Server.get<IRouteReturnType>('api/map');
-//   return result.data.data;
-// };
 
 export const getRoutingCoords = async (search: string): Promise<IPathReturnType> => {
   const keyword = search.split('-').join('');
@@ -46,7 +34,7 @@ export const getSearchResult = async (search: string) => {
     const result = await Server.get(`place/facility/${keyword}/`);
     return result.data;
   } catch (error) {
-    console.log('검색결과가 없으면?', error);
+    console.log('검색결과 없음 :', error);
   }
 };
 

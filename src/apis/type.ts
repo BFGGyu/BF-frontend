@@ -1,6 +1,6 @@
 import { ICoord, IFacilityMarker, IRouteMarker } from 'types/map';
 
-export interface IFailityReturnType {
+export interface IFacilityReturnType {
   id: number;
   name: string;
   type: 'artGallery' | 'museum' | 'exhibition';

@@ -1,45 +1,39 @@
 import { FacilityType } from 'types/facility';
-import { IFacilityMarker } from 'types/map';
+import { IFacilityMarker, ITag } from 'types/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import { changeMarker, initTmap } from '@utils/map';
-import axios from 'axios';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getFacilityCoordList } from 'src/apis/map';
 import styled from 'styled-components';
 
-interface ITag {
-  id: number;
-  type: FacilityType;
-  name: string;
-  clicked: boolean;
-}
+const tagInitialState: ITag[] = [
+  {
+    id: 0,
+    type: 'museum',
+    name: '박물관',
+    clicked: false
+  },
+  {
+    id: 1,
+    type: 'artGallery',
+    name: '미술관',
+    clicked: false
+  },
+  {
+    id: 2,
+    type: 'exhibition',
+    name: '전시회',
+    clicked: false
+  }
+];
 
 const MapSection = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const markersRef = useRef<IFacilityMarker[]>([]);
   const tagRef = useRef<FacilityType>();
 
-  const [tags, setTags] = useState<ITag[]>([
-    {
-      id: 0,
-      type: 'museum',
-      name: '박물관',
-      clicked: false
-    },
-    {
-      id: 1,
-      type: 'artGallery',
-      name: '미술관',
-      clicked: false
-    },
-    {
-      id: 2,
-      type: 'exhibition',
-      name: '전시회',
-      clicked: false
-    }
-  ]);
+  const [tags, setTags] = useState<ITag[]>(tagInitialState);
 
   const handleClickTag = (id: number) => {
     setTags(
@@ -47,34 +41,25 @@ const MapSection = () => {
     );
   };
 
+  const handleResetClickedTag = useCallback(() => {
+    setTags((tags) => tags.map((tag) => ({ ...tag, clicked: false })));
+  }, []);
+
   useEffect(() => {
     const tag = tags.filter((tag) => tag.clicked === true);
     if (tag.length) {
-      console.log('markersRef:', markersRef);
       tagRef.current = tag[0].type;
       changeMarker(tagRef.current, markersRef.current);
     }
   }, [tags]);
 
   useEffect(() => {
-    // 서버 연결
     getFacilityCoordList().then((data) => {
-      console.log('MapSection 연결:', data);
-      initTmap(data, tags, setTags).then((markers: IFacilityMarker[]) => {
+      initTmap(data, handleResetClickedTag).then((markers: IFacilityMarker[]) => {
         markersRef.current = markers;
       });
     });
-
-    // mock data
-    // axios.get('/api/center').then((res) => {
-    //   const { latitude, longitude } = res.data.data.center;
-    //   const markers: IFacilityMarker[] = res.data.data.markers;
-    //   console.log(markers);
-    //   initTmap(markers, latitude, longitude).then((markers: any) => {
-    //     markersRef.current = markers;
-    //   });
-    // });
-  }, []);
+  }, [handleResetClickedTag]);
 
   return (
     <MapWrapper>

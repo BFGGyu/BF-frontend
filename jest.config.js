@@ -27,8 +27,11 @@ const customJestConfig = {
     '@search/(.*)': '<rootDir>/src/components/search/$1',
     '@detail/(.*)': '<rootDir>/src/components/detail/$1',
     '@pages/(.*)': '<rootDir>/pages/$1',
-    '@utils/(.*)': '<rootDir>/src/components/utils/$1',
+    '@utils/(.*)': '<rootDir>/src/utils/$1',
+    '@apis/(.*)': '<rootDir>/src/apis/$1',
     '@styles/(.*)': '<rootDir>/src/components/styles/$1',
+    '@states/(.*)': '<rootDir>/src/states/$1',
+    '@constants/(.*)': '<rootDir>/src/constants/$1',
     '@layout/(.*)': '<rootDir>/src/components/layout/$1',
     '@images/(.*)': '<rootDir>/public/images/$1',
     'types/(.*)': '<rootDir>/src/components/types/$1'

@@ -95,8 +95,6 @@ export const initRouteMap = async (
         distance: resultData[0].properties.totalDistance,
         duration: Math.ceil((resultData[0].properties.totalTime * 3.3) / 60)
       };
-      console.log(resultText);
-      console.log('MAP Route API data: ', resultData);
 
       const drawInfoArr = [];
 
@@ -135,6 +133,6 @@ export const initRouteMap = async (
         });
       }
     })
-    .catch((e: any) => console.log(e));
+    .catch((e: any) => console.log('길찾기 지도 불러오기 에러 : ', e));
   return totalData;
 };

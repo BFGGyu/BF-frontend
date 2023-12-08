@@ -2,19 +2,29 @@ import axios from 'axios';
 
 export const Server = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
-  timeout: 10000,
+  timeout: 2000,
   headers: {
     'Content-Type': 'application/json'
   }
 });
 
+// Server Setting
+Server.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) config.headers['Authorization'] = `Bearer ${accessToken}`;
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 Server.interceptors.response.use(
-  function (response) {
+  (response) => {
     return response;
   },
-  function (error) {
-    if (error.response && error.response.status) {
-      console.log('axios error 발생:', error);
-    }
+  (error) => {
+    return Promise.reject(error);
   }
 );

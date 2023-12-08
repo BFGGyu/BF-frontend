@@ -6,7 +6,7 @@
   "start_url": "/",
   "name": "wheelpass",
   "short_name": "wheelpass",
-  "description": "A service that provides a safe route for wheelchair users to enjoy cultural life.",
+  "description": "휠체어 사용자들을 위한 문화시설 길안내 서비스\nA service that provides a safe route for wheelchair users to enjoy cultural life.",
   "icons": [
     {
       "src": "images/icons/icon-48x48.png",

@@ -22,7 +22,6 @@ interface IInfoSectionProps {
 const InfoSection = ({ selectedPlace, setSelectedPlace }: IInfoSectionProps) => {
   const router = useRouter();
 
-  // const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
   const [isOpened, setIsOpened] = useState(false);
 
   useEffect(() => {
@@ -60,7 +59,7 @@ const InfoSection = ({ selectedPlace, setSelectedPlace }: IInfoSectionProps) => 
         setSelectedPlace(data);
       });
     }
-  }, [router]);
+  }, [router, setSelectedPlace]);
 
   return (
     <>

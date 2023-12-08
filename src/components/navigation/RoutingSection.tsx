@@ -9,7 +9,7 @@ import {
   speakNavigationGuide
 } from '@utils/map';
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { PiArrowBendUpLeftBold, PiArrowBendUpRightBold } from 'react-icons/pi';
 import { styled } from 'styled-components';
 
@@ -22,11 +22,12 @@ interface INavigationMarker {
 
 const options = {
   enableHighAccuracy: false,
-  maximumAge: 100000,
-  timeout: 100000
+  maximumAge: 30000,
+  timeout: 10000
 };
 
 const RoutingSection = () => {
+  const router = useRouter();
   const currentMapRef = useRef(null);
   const currentMarkerRef = useRef(null);
   const watchId = useRef<number>();
@@ -36,11 +37,12 @@ const RoutingSection = () => {
   const markerIndexRef = useRef<number>(0);
   const [diffPosition, setDiffPosition] = useState<number>(0); // 현재 좌표와 첫번째 경로 사이의 거리
 
-  const handleError = (err: any) => {
-    console.log('geolocation ERROR: ', err);
-    alert('GPS가 원활하지 않습니다. 새로고침 해주세요.');
-    router.push('/');
-  };
+  const handleError = useCallback(() => {
+    (err: any) => {
+      alert('GPS가 원활하지 않습니다. 새로고침 해주세요.');
+      router.push('/');
+    };
+  }, [router]);
 
   // 위치가 바뀔 때마다 첫 번째 경로의 위도, 경도와 거리 계산
   const handlePosition = (position: any) => {
@@ -52,7 +54,6 @@ const RoutingSection = () => {
     // 현재 좌표와 타겟 좌표 사이의 거리 계산
     const length = markerList.current.length;
     if (markerList.current.length > 0 && markerIndexRef.current < length) {
-      console.log('왜없음?:', markerList.current);
       const { latitude, longitude } = markerList.current[markerIndexRef.current];
       const diff = getDistanceCurrentToTarget({ lat, lng }, { latitude, longitude });
       setDiffPosition(diff);
@@ -60,17 +61,13 @@ const RoutingSection = () => {
     }
   };
 
-  const router = useRouter();
-
   useEffect(() => {
-    console.log('navigation page:', router);
     if (router.pathname === '/navigation') {
       const query = decodeURIComponent(router.asPath.split('=')[1]);
       speakNavigationGuide('경로안내를 시작합니다');
       // // 서버 연결
       getNavigationCoords(query).then((data) => {
         initNavigationTmap(data.departure, data.arrival, data.routes).then((data) => {
-          console.log('지도데이터 로딩 성공 !', data);
           currentMapRef.current = data[0];
           currentMarkerRef.current = data[1];
           markerList.current = data[2];
@@ -91,7 +88,7 @@ const RoutingSection = () => {
     return () => {
       if (watchId.current) return navigator.geolocation.clearWatch(watchId.current);
     };
-  }, []);
+  }, [handleError]);
 
   return (
     <HeaderWrapper>

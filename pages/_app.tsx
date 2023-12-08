@@ -5,6 +5,7 @@ import GlobalStyle from '../src/styles/globalStyle';
 import styled from 'styled-components';
 import { RecoilRoot } from 'recoil';
 import SCREEN_SIZE from '@constants/sizes';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 // if (process.env.NODE_ENV === 'development') {
 //   (async () => {
@@ -13,6 +14,8 @@ import SCREEN_SIZE from '@constants/sizes';
 //   })();
 // }
 
+const queryClient = new QueryClient();
+
 const Reactproject: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
     <>
@@ -20,10 +23,12 @@ const Reactproject: NextPage<AppProps> = ({ Component, pageProps }: AppProps) =>
         <title>WheelPass</title>
       </Head>
       <RecoilRoot>
-        <GlobalStyle />
-        <MainLayout>
-          <Component {...pageProps} />
-        </MainLayout>
+        <QueryClientProvider client={queryClient}>
+          <GlobalStyle />
+          <MainLayout>
+            <Component {...pageProps} />
+          </MainLayout>
+        </QueryClientProvider>
       </RecoilRoot>
     </>
   );

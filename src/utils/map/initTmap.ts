@@ -1,6 +1,5 @@
 import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
-import { FacilityType } from 'types/facility';
 import { IFacilityMarker } from 'types/map';
 
 declare global {
@@ -9,15 +8,10 @@ declare global {
   }
 }
 
-interface ITag {
-  id: number;
-  type: FacilityType;
-  name: string;
-  clicked: boolean;
-}
-
-export const initTmap = async (markerData: IFacilityMarker[], tags: ITag[], setTags: any) => {
-  console.log('initTmap markerData:', markerData);
+export const initTmap = async (
+  markerData: IFacilityMarker[],
+  handleResetClickedTag: () => void
+) => {
   let markers: any[] = [];
 
   // map 생성
@@ -65,7 +59,6 @@ export const initTmap = async (markerData: IFacilityMarker[], tags: ITag[], setT
   markers.map((currentMarker, idx) => {
     const lat = currentMarker._marker_data.options.position._lat;
     const lng = currentMarker._marker_data.options.position._lng;
-    console.log('lat lng:', lat, lng);
 
     const name = currentMarker._marker_data.options.title;
     const content = `
@@ -98,14 +91,10 @@ export const initTmap = async (markerData: IFacilityMarker[], tags: ITag[], setT
       const lng = marker._marker_data.options.position._lng;
       CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
 
-      console.log('marker touch:', markers);
-
       if (marker._status.mouse.isMouseDown) marker.setVisible(false);
       infoWindowArray[idx].setVisible(true);
     }),
       marker.addListener('click', () => {
-        console.log('marker click:', marker);
-
         const lat = marker._marker_data.options.position._lat;
         const lng = marker._marker_data.options.position._lng;
         CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
@@ -117,13 +106,13 @@ export const initTmap = async (markerData: IFacilityMarker[], tags: ITag[], setT
 
   CURRENT_MAP.addListener('click', () => {
     markers.map((marker) => marker.setVisible(true));
-    setTags(tags.map((tag) => ({ ...tag, clicked: false })));
+    handleResetClickedTag();
     infoWindowArray.map((info) => info.setVisible(false));
   });
 
   CURRENT_MAP.addListener('touchend', () => {
     markers.map((marker) => marker.setVisible(true));
-    setTags(tags.map((tag) => ({ ...tag, clicked: false })));
+    handleResetClickedTag();
     infoWindowArray.map((info) => info.setVisible(false));
   });
 

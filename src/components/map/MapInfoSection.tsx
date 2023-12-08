@@ -6,22 +6,16 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { styled } from 'styled-components';
+import { handleClickMovePage } from '@utils/map';
 
 const MapInfoSection = ({ arrival }: { arrival: string }) => {
   const router = useRouter();
   const [isHeart, setIsHeart] = useState<boolean>(false);
   const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
 
-  console.log('MapInfoSection:', arrival);
   const handleClickHeart = () => {
     setIsHeart((prev) => !prev);
     // TODO: 찜하기 POST API 연결
-  };
-
-  const handleClickDetail = () => {
-    router.push('/detail', {
-      query: { result: arrival }
-    });
   };
 
   return (
@@ -33,7 +27,12 @@ const MapInfoSection = ({ arrival }: { arrival: string }) => {
         <HeartWrapper onClick={handleClickHeart}>
           {isHeart ? <FaHeart size={20} color={COLOR.RED} /> : <FaRegHeart size={20} />}
         </HeartWrapper>
-        <Button bgColor={COLOR.WHITE} color={COLOR.BLUE2} onClick={handleClickDetail} width='100%'>
+        <Button
+          bgColor={COLOR.WHITE}
+          color={COLOR.BLUE2}
+          onClick={() => handleClickMovePage(router, '/detail', arrival)}
+          width='100%'
+        >
           상세보기
         </Button>
       </InfoRightWrapper>

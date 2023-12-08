@@ -2,29 +2,26 @@ import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
 import InfoSection from '@place/InfoSection';
+import { handleClickMovePage } from '@utils/map';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import useQueryString from 'src/hooks/useQueryString';
 import { styled } from 'styled-components';
+import { IFacilityMarker } from 'types/map';
 
-const PlaceInformationSection = ({ selectedPlace, setSelectedPlace }: any) => {
+interface IPlaceInfoSectionProps {
+  selectedPlace: IFacilityMarker;
+  setSelectedPlace: React.Dispatch<React.SetStateAction<IFacilityMarker>>;
+}
+
+const PlaceInfoSection = ({ selectedPlace, setSelectedPlace }: IPlaceInfoSectionProps) => {
   const router = useRouter();
-  const [result, setResult] = useState<string>('');
-
-  const handleClickNavigation = () => {
-    router.push('/navigation', {
-      query: { result }
-    });
-  };
-
-  useEffect(() => {
-    const query = decodeURIComponent(router.asPath.split('=')[1]);
-    setResult(query);
-  }, [router]);
+  const result = useQueryString();
 
   return (
     <>
-      <ImageSection>
+      <ImageWrapper>
         {selectedPlace.imageSrc && (
           <Image
             src={selectedPlace.imageSrc}
@@ -33,13 +30,17 @@ const PlaceInformationSection = ({ selectedPlace, setSelectedPlace }: any) => {
             height={170}
           />
         )}
-      </ImageSection>
+      </ImageWrapper>
       <PlaceInfomation>
         <LeftWrapper>
           <InfoSection selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace} />
         </LeftWrapper>
         <RightWrapper>
-          <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} onClick={handleClickNavigation}>
+          <Button
+            bgColor={COLOR.BLUE1}
+            color={COLOR.WHITE}
+            onClick={() => handleClickMovePage(router, '/navigation', result)}
+          >
             길찾기
           </Button>
         </RightWrapper>
@@ -48,7 +49,7 @@ const PlaceInformationSection = ({ selectedPlace, setSelectedPlace }: any) => {
   );
 };
 
-const ImageSection = styled.div`
+const ImageWrapper = styled.div`
   height: 22vh;
 `;
 
@@ -70,4 +71,4 @@ const RightWrapper = styled.div`
   margin-top: 20px;
 `;
 
-export default PlaceInformationSection;
+export default PlaceInfoSection;

@@ -1,12 +1,12 @@
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '@common/Button';
 import { getRecommendPlace } from '@apis/map';
-import { IFacilityMarker } from 'types/map';
 import { useRouter } from 'next/router';
+import { useQuery } from 'react-query';
+import { handleClickMovePage } from '@utils/map';
 
 const PlaceTypeDic = {
   museum: '박물관',
@@ -16,49 +16,37 @@ const PlaceTypeDic = {
 
 const FooterSection = () => {
   const router = useRouter();
-  const [recommendPlaces, setRecommendPlaces] = useState<IFacilityMarker[]>([]);
-
-  const handleClickRoute = (name: string) => {
-    router.push('map', {
-      query: { result: name }
-    });
-  };
-
-  useEffect(() => {
-    getRecommendPlace(2).then((data) => {
-      console.log('FooterSection: ', data);
-      setRecommendPlaces(data);
-    });
-  }, []);
+  const { data: recommendPlaces } = useQuery(['recommendPlaces', 2], () => getRecommendPlace(2));
 
   return (
     <FooterWrapper>
       <PlaceWrapper>
-        {recommendPlaces.map((place, idx) => (
-          <PlaceItem key={idx}>
-            <IconWrapper>
-              <Image src='/images/wheelChair.svg' alt='wheelChair' width={30} height={30} />
-              <Image src='/images/elevator.svg' alt='elevator' width={30} height={30} />
-              <Image src='/images/slope.svg' alt='slope' width={30} height={30} />
-            </IconWrapper>
-            <TextWrapper>
-              <PlaceName>{place.name}</PlaceName>
-              <PlaceType style={FONT.BODY2} type={place.type}>
-                {PlaceTypeDic[place.type]}
-              </PlaceType>
-              <PlaceLocation style={FONT.BODY2}>{place.address.slice(0, 10)}</PlaceLocation>
-            </TextWrapper>
-            <Button
-              width='80%'
-              // height='20%'
-              bgColor={COLOR.BLUE1}
-              color={COLOR.WHITE}
-              onClick={() => handleClickRoute(place.name)}
-            >
-              길찾기
-            </Button>
-          </PlaceItem>
-        ))}
+        {recommendPlaces &&
+          recommendPlaces.map((place, idx) => (
+            <PlaceItem key={idx}>
+              <IconWrapper>
+                <Image src='/images/wheelChair.svg' alt='wheelChair' width={30} height={30} />
+                <Image src='/images/elevator.svg' alt='elevator' width={30} height={30} />
+                <Image src='/images/slope.svg' alt='slope' width={30} height={30} />
+              </IconWrapper>
+              <TextWrapper>
+                <PlaceName>{place.name}</PlaceName>
+                <PlaceType style={FONT.BODY2} type={place.type}>
+                  {PlaceTypeDic[place.type]}
+                </PlaceType>
+                <PlaceLocation style={FONT.BODY2}>{place.address.slice(0, 10)}</PlaceLocation>
+              </TextWrapper>
+              <Button
+                width='80%'
+                // height='20%'
+                bgColor={COLOR.BLUE1}
+                color={COLOR.WHITE}
+                onClick={() => handleClickMovePage(router, '/map', place.name)}
+              >
+                길찾기
+              </Button>
+            </PlaceItem>
+          ))}
       </PlaceWrapper>
     </FooterWrapper>
   );

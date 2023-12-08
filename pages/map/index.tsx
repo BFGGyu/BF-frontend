@@ -20,25 +20,22 @@ const MapPage: NextPage = () => {
     distance: '-',
     duration: 0
   });
-  const [searchResult, setSearchResult] = useState('');
+  const [searchResult, setSearchResult] = useState<string>('');
 
   useEffect(() => {
     const queryData = router.query.result;
 
-    console.log('map router:', router);
     if (
       router.asPath.includes('/navigation') ||
       router.asPath.includes('/main') ||
       router.asPath.includes('/search')
     ) {
       const query = decodeURIComponent(router.asPath.split('=')[1]);
-      console.log('map query:', query);
       setSearchResult(query);
       getRoutingCoords(query).then((data) => {
         const { departure, arrival, routes } = data;
         setStation({ departure: departure.name, arrival: arrival.name });
         initRouteMap(departure, arrival, routes).then((data) => {
-          console.log('지도데이터 로딩 성공 !');
           const { distance, duration } = data;
           setRouteResult({ distance, duration });
         });
@@ -49,7 +46,6 @@ const MapPage: NextPage = () => {
         setSearchResult(queryData);
         setStation({ departure: departure.name, arrival: arrival.name });
         initRouteMap(departure, arrival, routes).then((data) => {
-          console.log('지도데이터 로딩 성공 !');
           const { distance, duration } = data;
           setRouteResult({ distance, duration });
         });

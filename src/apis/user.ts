@@ -8,15 +8,12 @@ export const login = async (code: string) => {
       `${process.env.NEXT_PUBLIC_SERVER_URL}/accounts/kakao/callback/`,
       { code }
     );
-    console.log('accessToken 발급 성공: ', result);
     setItemWithExpireTime('access', result.data.access_token);
     setItemWithExpireTime('refresh', result.data.refresh_token);
     return result.data;
   } catch (error: any) {
-    console.log('getKakaoAccessToken 에러: ', error);
     if (error.response.status === 401) {
       const result = await getRefresh();
-      console.log('에러시 재발급: ', result);
       if (result) {
         error.config.headers.Authorization = result.data.access_token;
         await Server.post(error.config.url, error.config);

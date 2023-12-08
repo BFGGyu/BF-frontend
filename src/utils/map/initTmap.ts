@@ -12,7 +12,6 @@ export const initTmap = async (
   markerData: IFacilityMarker[],
   handleResetClickedTag: () => void
 ) => {
-  console.log('initTmap markerData:', markerData);
   let markers: any[] = [];
 
   // map 생성
@@ -60,7 +59,6 @@ export const initTmap = async (
   markers.map((currentMarker, idx) => {
     const lat = currentMarker._marker_data.options.position._lat;
     const lng = currentMarker._marker_data.options.position._lng;
-    console.log('lat lng:', lat, lng);
 
     const name = currentMarker._marker_data.options.title;
     const content = `
@@ -93,14 +91,10 @@ export const initTmap = async (
       const lng = marker._marker_data.options.position._lng;
       CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
 
-      console.log('marker touch:', markers);
-
       if (marker._status.mouse.isMouseDown) marker.setVisible(false);
       infoWindowArray[idx].setVisible(true);
     }),
       marker.addListener('click', () => {
-        console.log('marker click:', marker);
-
         const lat = marker._marker_data.options.position._lat;
         const lng = marker._marker_data.options.position._lng;
         CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));

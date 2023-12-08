@@ -95,8 +95,6 @@ export const initRouteMap = async (
         distance: resultData[0].properties.totalDistance,
         duration: Math.ceil((resultData[0].properties.totalTime * 3.3) / 60)
       };
-      console.log(resultText);
-      console.log('MAP Route API data: ', resultData);
 
       const drawInfoArr = [];
 

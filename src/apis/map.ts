@@ -10,7 +10,6 @@ import { IFailityReturnType, IMarkerReturnType, IPathReturnType, IRouteReturnTyp
 
 export const getFacilityCoordList = async () => {
   const result = await Server.get<IFailityReturnType[]>('place/facility/');
-  console.log('시설 전체 좌표:', result.data);
   return result.data;
 };
 
@@ -31,23 +30,18 @@ export const getRecommendPlace = async (count: number) => {
 
 export const getRoutingCoords = async (search: string): Promise<IPathReturnType> => {
   const keyword = search.split('-').join('');
-  console.log('getRoutingCoords keyword:', keyword);
   const result = await Server.get(`path/${keyword}/`);
-  console.log('getRoutingCoords result:', result);
   return result.data;
 };
 
 export const getNavigationCoords = async (search: string): Promise<IPathReturnType> => {
   const keyword = search.split('-').join('');
-  console.log('getNavigationCoords keyword:', keyword);
   const result = await Server.get(`path/${keyword}/`);
-  console.log('getNavigationCoords result:', result);
   return result.data;
 };
 
 export const getSearchResult = async (search: string) => {
   const keyword = search.split('-').join('');
-  console.log('getSearchResult keyword: ', keyword);
   try {
     const result = await Server.get(`place/facility/${keyword}/`);
     return result.data;
@@ -58,7 +52,6 @@ export const getSearchResult = async (search: string) => {
 
 export const getDetailFacility = async (search: string) => {
   const keyword = search.split('-').join('');
-  console.log('getDetailFacility keyword: ', keyword);
   const result = await Server.get(`place/facility/${keyword}/`);
   return result.data;
 };

@@ -4,7 +4,6 @@ const { rest } = require('msw');
 
 const handlers = [
   rest.post('/api/login', (req, res, ctx) => {
-    console.log('req:', req);
     return res(
       ctx.status(200),
       ctx.delay(1000),

@@ -75,8 +75,6 @@ export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, rou
         '총 거리 : ' + (resultData[0].properties.totalDistance / 1000).toFixed(1) + 'km,';
       const tTime = ' 총 시간 : ' + (resultData[0].properties.totalTime / 60).toFixed(0) + '분';
       const resultText = tDistance + tTime;
-      console.log(resultText);
-      console.log(resultData);
 
       // for문 시작
       for (let i in resultData) {

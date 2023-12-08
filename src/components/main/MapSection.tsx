@@ -48,7 +48,6 @@ const MapSection = () => {
   useEffect(() => {
     const tag = tags.filter((tag) => tag.clicked === true);
     if (tag.length) {
-      console.log('markersRef:', markersRef);
       tagRef.current = tag[0].type;
       changeMarker(tagRef.current, markersRef.current);
     }
@@ -56,7 +55,6 @@ const MapSection = () => {
 
   useEffect(() => {
     getFacilityCoordList().then((data) => {
-      console.log('MapSection 연결:', data);
       initTmap(data, handleResetClickedTag).then((markers: IFacilityMarker[]) => {
         markersRef.current = markers;
       });

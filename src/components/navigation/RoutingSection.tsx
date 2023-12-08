@@ -39,7 +39,6 @@ const RoutingSection = () => {
 
   const handleError = useCallback(() => {
     (err: any) => {
-      console.log('geolocation ERROR: ', err);
       alert('GPS가 원활하지 않습니다. 새로고침 해주세요.');
       router.push('/');
     };
@@ -55,7 +54,6 @@ const RoutingSection = () => {
     // 현재 좌표와 타겟 좌표 사이의 거리 계산
     const length = markerList.current.length;
     if (markerList.current.length > 0 && markerIndexRef.current < length) {
-      console.log('왜없음?:', markerList.current);
       const { latitude, longitude } = markerList.current[markerIndexRef.current];
       const diff = getDistanceCurrentToTarget({ lat, lng }, { latitude, longitude });
       setDiffPosition(diff);
@@ -64,14 +62,12 @@ const RoutingSection = () => {
   };
 
   useEffect(() => {
-    console.log('navigation page:', router);
     if (router.pathname === '/navigation') {
       const query = decodeURIComponent(router.asPath.split('=')[1]);
       speakNavigationGuide('경로안내를 시작합니다');
       // // 서버 연결
       getNavigationCoords(query).then((data) => {
         initNavigationTmap(data.departure, data.arrival, data.routes).then((data) => {
-          console.log('지도데이터 로딩 성공 !', data);
           currentMapRef.current = data[0];
           currentMarkerRef.current = data[1];
           markerList.current = data[2];

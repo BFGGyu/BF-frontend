@@ -1,4 +1,4 @@
-import { getItemWithExpireTime, setItemWithExpireTime } from '@utils/storage';
+import { getItemWithExpireTime, localStorageClear, setItemWithExpireTime } from '@utils/storage';
 import { Server } from './setting';
 import { LoginReturnType } from './type';
 
@@ -31,18 +31,18 @@ export const getRefresh = async () => {
   try {
     return await Server.post('/refresh/', { refresh_token: refreshToken }, { headers });
   } catch (error) {
-    console.log('액세스 토큰 갱신 실패: ', error);
+    console.error(error);
   }
 };
 
 export const logout = async () => {
   const refreshToken = getItemWithExpireTime('refresh');
   try {
-    localStorage.clear();
+    localStorageClear();
     return await Server.post('/logout/', {
       refresh_token: refreshToken
     });
   } catch (error) {
-    console.log('로그아웃 에러:', error);
+    console.error(error);
   }
 };

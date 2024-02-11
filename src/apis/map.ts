@@ -34,7 +34,7 @@ export const getSearchResult = async (search: string) => {
     const result = await Server.get(`place/facility/${keyword}/`);
     return result.data;
   } catch (error) {
-    console.log('검색결과 없음 :', error);
+    console.error(error);
   }
 };
 

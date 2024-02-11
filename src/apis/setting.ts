@@ -1,5 +1,6 @@
-import { getItemWithExpireTime } from '@utils/storage';
 import axios from 'axios';
+
+import { getItemWithExpireTime } from '@utils/storage';
 
 export const Server = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER_URL,

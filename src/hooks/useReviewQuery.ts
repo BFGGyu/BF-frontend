@@ -1,6 +1,7 @@
-import { getReviewList } from '@apis/review';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
+
+import { getReviewList } from '@apis/review';
 import { IReview } from 'types/review';
 
 export const useReviewQuery = (): IReview[] => {

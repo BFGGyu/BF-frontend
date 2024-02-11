@@ -1,9 +1,10 @@
-import COLOR from '@constants/colors';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
-import { styled } from 'styled-components';
 import { AiFillCloseCircle, AiOutlineSearch } from 'react-icons/ai';
 import { BsArrowLeft } from 'react-icons/bs';
+import { styled } from 'styled-components';
+
+import COLOR from '@constants/colors';
 
 interface ISearchBarProps {
   keyword?: string | string[];

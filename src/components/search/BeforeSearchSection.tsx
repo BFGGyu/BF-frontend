@@ -1,9 +1,10 @@
-import { getRecommendPlace } from '@apis/map';
-import FONT from '@constants/fonts';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { FaRegThumbsUp } from 'react-icons/fa';
 import { styled } from 'styled-components';
+
+import { getRecommendPlace } from '@apis/map';
+import FONT from '@constants/fonts';
 import { IFacilityMarker } from 'types/map';
 
 const BeforeSearchSection = () => {

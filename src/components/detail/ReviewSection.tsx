@@ -1,9 +1,10 @@
-import COLOR from '@constants/colors';
-import FONT from '@constants/fonts';
 import React from 'react';
 import { AiFillStar } from 'react-icons/ai';
-import { useReviewQuery } from 'src/hooks/useReviewQuery';
 import { styled } from 'styled-components';
+
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
+import { useReviewQuery } from 'src/hooks/useReviewQuery';
 
 const ReviewSection = () => {
   const reviewList = useReviewQuery();

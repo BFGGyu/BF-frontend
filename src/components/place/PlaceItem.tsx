@@ -1,13 +1,15 @@
-import COLOR from '@constants/colors';
 import { useRouter } from 'next/router';
-import { styled } from 'styled-components';
-import Button from '@common/Button';
-import InfoSection from './InfoSection';
-import { IFacilityMarker } from 'types/map';
 import React, { useEffect, useState } from 'react';
+import { styled } from 'styled-components';
+
+import InfoSection from './InfoSection';
+
 import { getRecommendPlace } from '@apis/map';
-import useQueryString from 'src/hooks/useQueryString';
+import Button from '@common/Button';
+import COLOR from '@constants/colors';
 import { handleClickMovePage } from '@utils/map';
+import useQueryString from 'src/hooks/useQueryString';
+import { IFacilityMarker } from 'types/map';
 
 interface IPlaceItemProps {
   place: IFacilityMarker;

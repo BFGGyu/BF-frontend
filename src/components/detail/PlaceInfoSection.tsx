@@ -1,13 +1,14 @@
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { styled } from 'styled-components';
+
 import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
 import InfoSection from '@place/InfoSection';
 import { handleClickMovePage } from '@utils/map';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import React from 'react';
 import useQueryString from 'src/hooks/useQueryString';
-import { styled } from 'styled-components';
 import { IFacilityMarker } from 'types/map';
 
 interface IPlaceInfoSectionProps {

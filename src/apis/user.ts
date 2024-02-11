@@ -1,6 +1,7 @@
-import { getItemWithExpireTime, localStorageClear, setItemWithExpireTime } from '@utils/storage';
 import { Server } from './setting';
 import { LoginReturnType } from './type';
+
+import { getItemWithExpireTime, localStorageClear, setItemWithExpireTime } from '@utils/storage';
 
 export const login = async (code: string) => {
   try {

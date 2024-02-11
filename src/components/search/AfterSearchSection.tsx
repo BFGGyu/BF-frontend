@@ -1,8 +1,9 @@
-import FONT from '@constants/fonts';
-import PlaceItem from '@place/PlaceItem';
 import Image from 'next/image';
 import React from 'react';
 import { styled } from 'styled-components';
+
+import FONT from '@constants/fonts';
+import PlaceItem from '@place/PlaceItem';
 
 const AfterSearchSection = ({ searchList, setSearchList }: any) => {
   // 검색을 한 경우 검색결과가 있으면 검색결과, 없으면 텍스트와 팬더이미지 띄우기

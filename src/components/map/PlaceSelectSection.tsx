@@ -1,9 +1,10 @@
-import { IStation } from 'types/map';
+import { useRouter } from 'next/router';
+import { styled } from 'styled-components';
+
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import SCREEN_SIZE from '@constants/sizes';
-import { useRouter } from 'next/router';
-import { styled } from 'styled-components';
+import { IStation } from 'types/map';
 
 const PlaceSelectSection = ({ station }: { station: IStation }) => {
   const router = useRouter();

@@ -1,12 +1,13 @@
-import { IFacilityMarker } from 'types/map';
-import { getDetailFacility, getSearchResult } from '@apis/map';
-import COLOR from '@constants/colors';
-import FONT from '@constants/fonts';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { styled } from 'styled-components';
+
+import { getDetailFacility, getSearchResult } from '@apis/map';
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
+import { IFacilityMarker } from 'types/map';
 
 const PlaceTypeDic = {
   museum: '박물관',

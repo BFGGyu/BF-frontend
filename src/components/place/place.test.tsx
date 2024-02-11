@@ -1,5 +1,6 @@
-import PlaceInfoSection from '@detail/PlaceInfoSection';
 import { render, screen } from '@testing-library/react';
+
+import PlaceInfoSection from '@detail/PlaceInfoSection';
 import { IFacilityMarker } from 'types/map';
 
 const initialSelectedPlace: IFacilityMarker = {

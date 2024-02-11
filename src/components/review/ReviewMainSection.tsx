@@ -1,9 +1,10 @@
-import COLOR from '@constants/colors';
-import FONT from '@constants/fonts';
 import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 import { AiFillStar } from 'react-icons/ai';
 import { styled } from 'styled-components';
+
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
 
 interface IReviewSectionProps {
   setRating: React.Dispatch<React.SetStateAction<number>>;

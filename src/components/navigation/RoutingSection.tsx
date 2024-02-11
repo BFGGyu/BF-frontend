@@ -1,3 +1,8 @@
+import { useRouter } from 'next/router';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { PiArrowBendUpLeftBold, PiArrowBendUpRightBold } from 'react-icons/pi';
+import { styled } from 'styled-components';
+
 import { getNavigationCoords } from '@apis/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
@@ -8,10 +13,6 @@ import {
   initNavigationTmap,
   speakNavigationGuide
 } from '@utils/map';
-import { useRouter } from 'next/router';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { PiArrowBendUpLeftBold, PiArrowBendUpRightBold } from 'react-icons/pi';
-import { styled } from 'styled-components';
 
 interface INavigationMarker {
   latitude: string;

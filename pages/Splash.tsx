@@ -1,6 +1,7 @@
-import FONT from '@constants/fonts';
 import Image from 'next/image';
 import styled from 'styled-components';
+
+import FONT from '@constants/fonts';
 import PageLayout from '@layout/PageLayout';
 
 const Splash = () => {

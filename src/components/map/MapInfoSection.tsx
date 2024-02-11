@@ -1,12 +1,13 @@
-import { IFacilityMarker } from 'types/map';
-import Button from '@common/Button';
-import COLOR from '@constants/colors';
-import InfoSection from '@place/InfoSection';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { styled } from 'styled-components';
+
+import Button from '@common/Button';
+import COLOR from '@constants/colors';
+import InfoSection from '@place/InfoSection';
 import { handleClickMovePage } from '@utils/map';
+import { IFacilityMarker } from 'types/map';
 
 const MapInfoSection = ({ arrival }: { arrival: string }) => {
   const router = useRouter();

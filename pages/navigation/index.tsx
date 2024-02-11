@@ -1,11 +1,12 @@
+import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
 import { BiMapAlt } from 'react-icons/bi';
 import styled from 'styled-components';
-import RoutingSection from '@navigation/RoutingSection';
-import COLOR from '@constants/colors';
+
 import Button from '@common/Button';
+import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
-import { useRouter } from 'next/router';
+import RoutingSection from '@navigation/RoutingSection';
 import { handleClickMovePage } from '@utils/map';
 import useQueryString from 'src/hooks/useQueryString';
 

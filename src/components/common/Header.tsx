@@ -1,10 +1,11 @@
 import Image from 'next/image';
-import { styled } from 'styled-components';
-import { AiOutlineUser } from 'react-icons/ai';
 import { useRouter } from 'next/router';
+import { AiOutlineUser } from 'react-icons/ai';
 import { useRecoilValue } from 'recoil';
-import { nicknameState } from '@states/user';
+import { styled } from 'styled-components';
+
 import FONT from '@constants/fonts';
+import { nicknameState } from '@states/user';
 
 interface IHeaderProps {
   bgColor?: string;

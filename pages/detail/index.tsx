@@ -1,11 +1,12 @@
-import COLOR from '@constants/colors';
-import FONT from '@constants/fonts';
 import { useState } from 'react';
 import { BsArrowLeft } from 'react-icons/bs';
 import { styled } from 'styled-components';
-import { IFacilityMarker } from 'types/map';
+
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
 import PlaceInfoSection from '@detail/PlaceInfoSection';
 import ReviewSection from '@detail/ReviewSection';
+import { IFacilityMarker } from 'types/map';
 
 const DetailPage = () => {
   const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);

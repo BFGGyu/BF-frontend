@@ -1,12 +1,14 @@
-import { IStation, ITotalRouteResult } from 'types/map';
-import Button from '@common/Button';
-import COLOR from '@constants/colors';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
+
 import MapInfoSection from './MapInfoSection';
 import RouteResultSection from './RouteResultSection';
+
+import Button from '@common/Button';
+import COLOR from '@constants/colors';
 import { handleClickMovePage } from '@utils/map';
+import { IStation, ITotalRouteResult } from 'types/map';
 
 interface IFooterInfoSectionProps {
   station: IStation;

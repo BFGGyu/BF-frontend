@@ -1,11 +1,12 @@
-import { IFacilityMarker } from 'types/map';
-import { getSearchResult } from '@apis/map';
-import SearchBar from '@common/SearchBar';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+
+import { getSearchResult } from '@apis/map';
+import SearchBar from '@common/SearchBar';
 import AfterSearchSection from '@search/AfterSearchSection';
 import BeforeSearchSection from '@search/BeforeSearchSection';
+import { IFacilityMarker } from 'types/map';
 
 const SearchPage = () => {
   const router = useRouter();

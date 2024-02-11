@@ -20,3 +20,9 @@ export const TAG_INITIAL_VALUE: ITag[] = [
     clicked: false
   }
 ];
+
+export const PLACE_DIC = {
+  museum: '박물관',
+  artGallery: '미술관',
+  exhibition: '전시회'
+};

@@ -1,6 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
+import { getFacilityCoordList } from '@apis/map';
 import { TAG_INITIAL_VALUE } from '@constants/map';
+import { initTmap } from '@utils/map';
 import { ITag } from 'types/map';
 
 interface IMapInfo {
@@ -37,5 +39,13 @@ export const useMapInfo = () => {
     }));
   }, []);
 
-  return { mapInfo, setMapInfo, handleClickTag, handleResetClickedTag };
+  useEffect(() => {
+    getFacilityCoordList().then((data) => {
+      initTmap(data, handleResetClickedTag).then((markers: any[]) => {
+        setMapInfo((mapInfo) => ({ ...mapInfo, markerList: markers }));
+      });
+    });
+  }, [handleResetClickedTag, setMapInfo]);
+
+  return { mapInfo, handleClickTag };
 };

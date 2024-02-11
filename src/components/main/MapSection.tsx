@@ -1,23 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import styled from 'styled-components';
 
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
-import { initTmap } from '@utils/map';
-import { getFacilityCoordList } from 'src/apis/map';
 import { useMapInfo } from 'src/hooks/useMapInfo';
 
 const MapSection = () => {
   const mapRef = useRef<HTMLDivElement>(null);
-  const { mapInfo, setMapInfo, handleClickTag, handleResetClickedTag } = useMapInfo();
-
-  useEffect(() => {
-    getFacilityCoordList().then((data) => {
-      initTmap(data, handleResetClickedTag).then((markers: any[]) => {
-        setMapInfo((mapInfo) => ({ ...mapInfo, markerList: markers }));
-      });
-    });
-  }, [handleResetClickedTag, setMapInfo]);
+  const { mapInfo, handleClickTag } = useMapInfo();
 
   return (
     <MapWrapper>
@@ -34,7 +24,6 @@ const MapSection = () => {
           </TagButton>
         ))}
       </TagWrapper>
-      {/* <MapDiv style={{ width: '390px', height: '591px', border: '3px solid black' }}></MapDiv> */}
       <MapDiv ref={mapRef} id='map_div'></MapDiv>
     </MapWrapper>
   );

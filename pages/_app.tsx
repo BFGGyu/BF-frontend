@@ -38,7 +38,7 @@ const NextApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
 
 const MainLayout = styled.div`
   width: ${SCREEN_SIZE.WIDTH};
-  height: ${SCREEN_SIZE.HEIGHT};
+  height: 100vh;
   margin: 0 auto;
 `;
 

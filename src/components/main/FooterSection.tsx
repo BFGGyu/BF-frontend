@@ -7,6 +7,7 @@ import { getRecommendPlace } from '@apis/map';
 import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
+import SCREEN_SIZE from '@constants/sizes';
 import { handleClickMovePage } from '@utils/map';
 
 const PlaceTypeDic = {
@@ -39,7 +40,6 @@ const FooterSection = () => {
               </TextWrapper>
               <Button
                 width='80%'
-                // height='20%'
                 bgColor={COLOR.BLUE1}
                 color={COLOR.WHITE}
                 onClick={() => handleClickMovePage(router, '/map', place.name)}
@@ -54,8 +54,10 @@ const FooterSection = () => {
 };
 
 const FooterWrapper = styled.div`
-  height: 30vh;
-  width: 100%;
+  position: absolute;
+  bottom: 10px;
+  height: 25vh;
+  width: ${SCREEN_SIZE.WIDTH};
   display: flex;
   justify-content: center;
   z-index: 1;

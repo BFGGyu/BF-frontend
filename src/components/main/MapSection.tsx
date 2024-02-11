@@ -32,12 +32,10 @@ const MapSection = () => {
 export default MapSection;
 
 const MapWrapper = styled.div`
-  flex-basis: 50%;
+  flex-basis: 65%;
 `;
 
-const MapDiv = styled.div`
-  position: absolute;
-`;
+const MapDiv = styled.div``;
 
 const TagWrapper = styled.div`
   display: flex;

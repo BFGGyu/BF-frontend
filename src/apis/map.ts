@@ -1,5 +1,5 @@
 import { Server } from './setting';
-import { IFacilityReturnType, IMarkerReturnType, IPathReturnType, IRouteReturnType } from './type';
+import { IFacilityReturnType, IPathReturnType } from './type';
 
 export const getFacilityCoordList = async () => {
   const result = await Server.get<IFacilityReturnType[]>('place/facility/');

@@ -16,7 +16,7 @@ export const initTmap = async (
   const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
     center: new window.Tmapv2.LatLng(37.5, 126.9), // 지도 초기 좌표
     width: SCREEN_SIZE.WIDTH,
-    height: '566px',
+    height: '100%',
     zoom: 8,
     pinchZoom: true,
     scrollwheel: true,

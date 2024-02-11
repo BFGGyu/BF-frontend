@@ -9,13 +9,10 @@ declare global {
 }
 
 export const initTmap = async (
-  markerData: IFacilityMarker[],
+  markerList: IFacilityMarker[],
   handleResetClickedTag: () => void
 ) => {
-  let markers: any[] = [];
-
-  // map 생성
-  // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
+  // TMAP 생성
   const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
     center: new window.Tmapv2.LatLng(37.5, 126.9), // 지도 초기 좌표
     width: SCREEN_SIZE.WIDTH,
@@ -28,24 +25,13 @@ export const initTmap = async (
 
   // markerList 에 맞게 zoom level 설정
   const latlngBounds = new window.Tmapv2.LatLngBounds(
-    new window.Tmapv2.LatLng(markerData[0].latitude, markerData[0].longitude)
+    new window.Tmapv2.LatLng(markerList[0].latitude, markerList[0].longitude)
   );
 
-  markerData.map((data, idx) => {
-    const newMarker = new window.Tmapv2.Marker({
-      position: new window.Tmapv2.LatLng(data.latitude, data.longitude),
-      icon: `/images/${data.type}.svg`,
-      iconSize: new window.Tmapv2.Size(30, 30),
-      title: data.name,
-      map: CURRENT_MAP,
-      id: data.type,
-      animation: window.Tmapv2.MarkerOptions.ANIMATE_BOUNCE_ONCE,
-      animationLength: 500
-    });
-    latlngBounds.extend(new window.Tmapv2.LatLng(data.latitude, data.longitude));
-    markers.push(newMarker);
-  });
+  // TMAP marker에 API로 가져온 marker 데이터 주입
+  const markers = getTmapMarkerList(markerList, CURRENT_MAP, latlngBounds);
 
+  // marker 데이터에 맞게 지도 정렬 후 margin 추가
   const margin = {
     left: 150,
     top: 150,
@@ -114,6 +100,24 @@ export const initTmap = async (
     markers.map((marker) => marker.setVisible(true));
     handleResetClickedTag();
     infoWindowArray.map((info) => info.setVisible(false));
+  });
+
+  return markers;
+};
+
+const getTmapMarkerList = (markerList: IFacilityMarker[], CURRENT_MAP: any, latlngBounds: any) => {
+  const markers = markerList.map((data) => {
+    latlngBounds.extend(new window.Tmapv2.LatLng(data.latitude, data.longitude));
+    return new window.Tmapv2.Marker({
+      position: new window.Tmapv2.LatLng(data.latitude, data.longitude),
+      icon: `/images/${data.type}.svg`,
+      iconSize: new window.Tmapv2.Size(30, 30),
+      title: data.name,
+      map: CURRENT_MAP,
+      id: data.type,
+      animation: window.Tmapv2.MarkerOptions.ANIMATE_BOUNCE_ONCE,
+      animationLength: 500
+    });
   });
 
   return markers;

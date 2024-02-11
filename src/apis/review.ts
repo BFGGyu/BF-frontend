@@ -1,8 +1,8 @@
 import { Server } from './setting';
-import { IReviewReturnType } from './type';
+import { ReviewDto } from './type';
 
 export const getReviewList = async (place: string) => {
-  const result = await Server.get<IReviewReturnType[]>(`review/${place}/`);
+  const result = await Server.get<ReviewDto[]>(`review/${place}/`);
   return result.data;
 };
 
@@ -12,7 +12,7 @@ export const submitReview = async (
   rating: number,
   comment: string
 ) => {
-  await Server.post<IReviewReturnType>(`review/${place}/`, {
+  await Server.post<ReviewDto>(`review/${place}/`, {
     writer,
     rating,
     comment

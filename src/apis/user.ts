@@ -1,11 +1,11 @@
 import { Server } from './setting';
-import { LoginReturnType } from './type';
+import { UserDto } from './type';
 
 import { getItemWithExpireTime, localStorageClear, setItemWithExpireTime } from '@utils/storage';
 
 export const login = async (code: string) => {
   try {
-    const result = await Server.post<LoginReturnType>(
+    const result = await Server.post<UserDto>(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/accounts/kakao/callback/`,
       { code }
     );

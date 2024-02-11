@@ -9,10 +9,6 @@ import FONT from '@constants/fonts';
 const HeaderSection = () => {
   const router = useRouter();
 
-  const handleClickSearch = () => {
-    router.push('/search');
-  };
-
   return (
     <Wrapper>
       <Header type='white' />
@@ -26,7 +22,7 @@ const HeaderSection = () => {
         </MainTextWrapper>
         <SubText style={FONT.BODY1}>휠체어 이용자를 위한 안전한 경로 안내</SubText>
       </BodyWrapper>
-      <SearchWrapper onClick={handleClickSearch}>
+      <SearchWrapper onClick={() => router.push('/search')}>
         <SearchDiv>검색어를 입력하세요.</SearchDiv>
         <SearchButtonWrapper>
           <AiOutlineSearch />

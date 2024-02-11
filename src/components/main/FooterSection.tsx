@@ -86,7 +86,6 @@ const PlaceItem = styled.div`
 
 const IconWrapper = styled.div`
   display: flex;
-  flexbasis: 20%;
   gap: 5px;
 `;
 
@@ -98,7 +97,6 @@ const TextWrapper = styled.div`
 `;
 
 const PlaceName = styled.div`
-  // font-size: 5vw;
   fontsize: 12px;
   font-weight: 700;
 `;

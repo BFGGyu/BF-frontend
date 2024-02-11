@@ -1,6 +1,4 @@
-import { ICoord, IFacilityMarker, IRouteMarker } from 'types/map';
-
-export interface IFacilityReturnType {
+export interface FacilityDto {
   id: number;
   name: string;
   type: 'artGallery' | 'museum' | 'exhibition';
@@ -13,29 +11,7 @@ export interface IFacilityReturnType {
   imageSrc: string;
 }
 
-export interface IMarkerReturnType {
-  [key: string]: {
-    path_id: number;
-    center: {
-      latitude: string;
-      longitude: string;
-    };
-    markers: IFacilityMarker[];
-  };
-}
-
-export interface IRouteReturnType {
-  [key: string]: {
-    path_id: 1;
-    center: ICoord;
-    departure: ICoord;
-    arrival: ICoord;
-    markers: IRouteMarker[];
-    routes: IRouteMarker[];
-  };
-}
-
-export interface IPathReturnType {
+export interface PathDto {
   path_id: number;
   departure: {
     name: string;
@@ -55,13 +31,13 @@ export interface IPathReturnType {
   }[];
 }
 
-export interface LoginReturnType {
+export interface UserDto {
   nickname: string;
   access_token: string;
   refresh_token: string;
 }
 
-export interface IReviewReturnType {
+export interface ReviewDto {
   id: number;
   departure: string;
   arrival: string;

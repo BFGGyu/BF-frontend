@@ -130,7 +130,7 @@ const PlaceTimeWrapper = styled.div`
 
 const IconWrapper = styled.div`
   display: flex;
-  flexbasis: 20%;
+  flex-basis: 20%;
   gap: 5px;
 `;
 

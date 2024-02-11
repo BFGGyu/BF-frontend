@@ -8,44 +8,56 @@ import FONT from '@constants/fonts';
 import { TAG_INITIAL_VALUE } from '@constants/map';
 import { initTmap } from '@utils/map';
 import { getFacilityCoordList } from 'src/apis/map';
+import { useFacilityTags } from 'src/hooks/useFacilityTags';
 import { ITag } from 'types/map';
+
+interface IMapInfo {
+  markerList: any[];
+  tagList: ITag[];
+}
 
 const MapSection = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const [markerList, setMarkerList] = useState<any[]>([]);
-  const [tags, setTags] = useState<ITag[]>(TAG_INITIAL_VALUE);
+  const [mapInfo, setMapInfo] = useState<IMapInfo>({
+    markerList: [],
+    tagList: TAG_INITIAL_VALUE
+  });
 
   const handleClickTag = (tagId: number) => {
-    const tag = tags.filter((tag) => tag.id === tagId)[0];
-    setMarkerList((markerList) =>
-      markerList.map((marker: any) => {
+    const tag = mapInfo.tagList.filter((tag) => tag.id === tagId)[0];
+    setMapInfo({
+      ...mapInfo,
+      markerList: mapInfo.markerList.map((marker: any) => {
         if (marker._marker_data.id === tag.type) {
           marker.setVisible(true);
         } else marker.setVisible(false);
         return marker;
-      })
-    );
-    setTags(
-      tags.map((tag) => (tag.id === tagId ? { ...tag, clicked: true } : { ...tag, clicked: false }))
-    );
+      }),
+      tagList: mapInfo.tagList.map((tag) =>
+        tag.id === tagId ? { ...tag, clicked: true } : { ...tag, clicked: false }
+      )
+    });
   };
 
   const handleResetClickedTag = useCallback(() => {
-    setTags((tags) => tags.map((tag) => ({ ...tag, clicked: false })));
+    setMapInfo((mapInfo) => ({
+      ...mapInfo,
+      tagList: mapInfo.tagList.map((tag) => ({ ...tag, clicked: false }))
+    }));
   }, []);
 
   useEffect(() => {
     getFacilityCoordList().then((data) => {
       initTmap(data, handleResetClickedTag).then((markers: any[]) => {
-        setMarkerList(markers);
+        setMapInfo((mapInfo) => ({ ...mapInfo, markerList: markers }));
       });
     });
-  }, [handleResetClickedTag]);
+  }, [handleResetClickedTag, setMapInfo]);
 
   return (
     <MapWrapper>
       <TagWrapper>
-        {tags.map((tag) => (
+        {mapInfo.tagList.map((tag) => (
           <TagButton
             key={tag.id}
             style={FONT.HEADLINE2}

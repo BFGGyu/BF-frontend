@@ -3,7 +3,7 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["next/core-web-vitals"],
+  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
   "overrides": [],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -11,7 +11,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": ["react", "@typescript-eslint", "prettier"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "no-console": "warn"

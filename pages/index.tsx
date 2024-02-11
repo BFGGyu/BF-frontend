@@ -7,9 +7,7 @@ const Index: NextPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    setTimeout(() => {
-      router.push('/main');
-    }, 1500);
+    router.prefetch('/main').then(() => router.push('/main'));
   }, [router]);
 
   return <Splash />;

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { BsArrowLeft } from 'react-icons/bs';
 import { styled } from 'styled-components';
 
@@ -6,20 +5,26 @@ import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import PlaceInfoSection from '@detail/PlaceInfoSection';
 import ReviewSection from '@detail/ReviewSection';
-import { IFacilityMarker } from 'types/map';
+import useQueryString from 'src/hooks/useQueryString';
+import { useSearchQuery } from 'src/hooks/useSearchQuery';
 
 const DetailPage = () => {
-  const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
+  const result = useQueryString();
+  const selectedPlace = useSearchQuery(result);
 
   return (
-    <DetailWrapper>
-      <HeaderWrapper onClick={() => window.history.back()}>
-        <BsArrowLeft color={COLOR.GREY} size={25} />
-        <div style={FONT.BODY1}>{selectedPlace.name}</div>
-      </HeaderWrapper>
-      <PlaceInfoSection selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace} />
-      <ReviewSection />
-    </DetailWrapper>
+    <>
+      {selectedPlace && (
+        <DetailWrapper>
+          <HeaderWrapper onClick={() => window.history.back()}>
+            <BsArrowLeft color={COLOR.GREY} size={25} />
+            <div style={FONT.BODY1}>{selectedPlace.name}</div>
+          </HeaderWrapper>
+          <PlaceInfoSection selectedPlace={selectedPlace} result={result} />
+          <ReviewSection />
+        </DetailWrapper>
+      )}
+    </>
   );
 };
 

@@ -7,11 +7,11 @@ import { styled } from 'styled-components';
 import COLOR from '@constants/colors';
 
 interface ISearchBarProps {
-  keyword?: string | string[];
-  setIsSearched: React.Dispatch<React.SetStateAction<boolean>>;
+  keyword: string;
+  setKeyword: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const SearchBar = ({ keyword, setIsSearched }: ISearchBarProps) => {
+const SearchBar = ({ keyword, setKeyword }: ISearchBarProps) => {
   const router = useRouter();
   const [inputText, setInputText] = useState<string>('');
 
@@ -32,12 +32,9 @@ const SearchBar = ({ keyword, setIsSearched }: ISearchBarProps) => {
   };
 
   const goBackSearch = useCallback(() => {
-    router.push({
-      pathname: '/search'
-    });
-    setInputText('');
-    setIsSearched(false);
-  }, [router, setInputText, setIsSearched]);
+    router.replace('/search');
+    setKeyword('');
+  }, [router, setKeyword]);
 
   useEffect(() => {
     if (typeof keyword === 'string') {
@@ -45,11 +42,6 @@ const SearchBar = ({ keyword, setIsSearched }: ISearchBarProps) => {
       setInputText(keywords);
     }
   }, [keyword]);
-
-  // useEffect(() => {
-  //   window.addEventListener('popstate', goBackSearch);
-  //   return () => window.removeEventListener('popstate', goBackSearch);
-  // }, [goBackSearch]);
 
   return (
     <SearchInputWrapper>

@@ -4,20 +4,26 @@ import { styled } from 'styled-components';
 
 import FONT from '@constants/fonts';
 import PlaceItem from '@place/PlaceItem';
+import { useSearchQuery } from 'src/hooks/useSearchQuery';
 
-const AfterSearchSection = ({ searchList, setSearchList }: any) => {
-  // 검색을 한 경우 검색결과가 있으면 검색결과, 없으면 텍스트와 팬더이미지 띄우기
-  return Object.keys(searchList).length > 0 ? (
-    <PlaceItem place={searchList} setSearchList={setSearchList} />
+interface AfterSearchSectionProps {
+  keyword: string;
+}
+
+const AfterSearchSection = ({ keyword }: AfterSearchSectionProps) => {
+  const searchList = useSearchQuery(keyword);
+
+  return searchList ? (
+    <PlaceItem place={searchList} />
   ) : (
-    <NoSearchResult>
+    <NoSearchResultWrapper>
       <NoSearchText style={FONT.BODY1}>검색결과가 없습니다.</NoSearchText>
       <Image src='/images/reviewImage.svg' alt='' width={300} height={100} />
-    </NoSearchResult>
+    </NoSearchResultWrapper>
   );
 };
 
-const NoSearchResult = styled.div`
+const NoSearchResultWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;

@@ -1,29 +1,26 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 import InfoSection from './InfoSection';
 
-import { getRecommendPlace } from '@apis/map';
 import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import { handleClickMovePage } from '@utils/map';
 import useQueryString from 'src/hooks/useQueryString';
 import { IFacilityMarker } from 'types/map';
 
-interface IPlaceItemProps {
+interface PlaceItemProps {
   place: IFacilityMarker;
-  setSearchList: React.Dispatch<React.SetStateAction<IFacilityMarker>>;
 }
 
-const PlaceItem = ({ place, setSearchList }: IPlaceItemProps) => {
+const PlaceItem = ({ place }: PlaceItemProps) => {
   const router = useRouter();
   const result = useQueryString();
 
   return (
     <SearchListWrapper key={place.id}>
       <LeftWrapper>
-        <InfoSection selectedPlace={place} setSelectedPlace={setSearchList} />
+        <InfoSection selectedPlace={place} />
       </LeftWrapper>
       <RightWrapper>
         <Button

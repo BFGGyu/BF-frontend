@@ -1,18 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
+import { useMarkerQuery } from './useMarkerQuery';
+
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import { TAG_INITIAL_VALUE } from '@constants/map';
 import { changeMarker, initTmap } from '@utils/map';
 import { getFacilityCoordList } from 'src/apis/map';
-import { FacilityType } from 'types/facility';
 import { IFacilityMarker, ITag } from 'types/map';
 
 const MapSection = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const markersRef = useRef<IFacilityMarker[]>([]);
-  const tagRef = useRef<FacilityType>();
 
   const [tags, setTags] = useState<ITag[]>(TAG_INITIAL_VALUE);
 
@@ -29,8 +29,8 @@ const MapSection = () => {
   useEffect(() => {
     const tag = tags.filter((tag) => tag.clicked === true);
     if (tag.length) {
-      tagRef.current = tag[0].type;
-      changeMarker(tagRef.current, markersRef.current);
+      const markerType = tag[0].type;
+      changeMarker(markerType, markersRef.current);
     }
   }, [tags]);
 

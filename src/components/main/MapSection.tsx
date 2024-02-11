@@ -1,50 +1,15 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-
-import { useMarkerQuery } from './useMarkerQuery';
 
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
-import { TAG_INITIAL_VALUE } from '@constants/map';
 import { initTmap } from '@utils/map';
 import { getFacilityCoordList } from 'src/apis/map';
-import { useFacilityTags } from 'src/hooks/useFacilityTags';
-import { ITag } from 'types/map';
-
-interface IMapInfo {
-  markerList: any[];
-  tagList: ITag[];
-}
+import { useMapInfo } from 'src/hooks/useMapInfo';
 
 const MapSection = () => {
-  const mapRef = useRef<HTMLDivElement | null>(null);
-  const [mapInfo, setMapInfo] = useState<IMapInfo>({
-    markerList: [],
-    tagList: TAG_INITIAL_VALUE
-  });
-
-  const handleClickTag = (tagId: number) => {
-    const tag = mapInfo.tagList.filter((tag) => tag.id === tagId)[0];
-    setMapInfo({
-      ...mapInfo,
-      markerList: mapInfo.markerList.map((marker: any) => {
-        if (marker._marker_data.id === tag.type) {
-          marker.setVisible(true);
-        } else marker.setVisible(false);
-        return marker;
-      }),
-      tagList: mapInfo.tagList.map((tag) =>
-        tag.id === tagId ? { ...tag, clicked: true } : { ...tag, clicked: false }
-      )
-    });
-  };
-
-  const handleResetClickedTag = useCallback(() => {
-    setMapInfo((mapInfo) => ({
-      ...mapInfo,
-      tagList: mapInfo.tagList.map((tag) => ({ ...tag, clicked: false }))
-    }));
-  }, []);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const { mapInfo, setMapInfo, handleClickTag, handleResetClickedTag } = useMapInfo();
 
   useEffect(() => {
     getFacilityCoordList().then((data) => {

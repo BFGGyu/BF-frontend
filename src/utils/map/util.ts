@@ -28,6 +28,7 @@ export const handleClickMovePage = (
   searchResult: string
 ) => {
   router.push(targetPage, {
+    pathname: targetPage,
     query: { result: searchResult }
   });
 };

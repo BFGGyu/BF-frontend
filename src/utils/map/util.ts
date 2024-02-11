@@ -10,14 +10,6 @@ export const changeCurrentPostion = (
   if (startMarker) startMarker.setPosition(new window.Tmapv2.LatLng(lat, lng));
 };
 
-export const changeMarker = (markerType: string, markers: any) => {
-  markers.forEach((marker: any) => {
-    if (marker._marker_data.id === markerType) {
-      marker.setVisible(true);
-    } else marker.setVisible(false);
-  });
-};
-
 export const speakNavigationGuide = (voiceText: string) => {
   const utterance = new SpeechSynthesisUtterance(voiceText);
   speechSynthesis.speak(utterance);

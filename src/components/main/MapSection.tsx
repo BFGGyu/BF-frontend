@@ -6,19 +6,27 @@ import { useMarkerQuery } from './useMarkerQuery';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import { TAG_INITIAL_VALUE } from '@constants/map';
-import { changeMarker, initTmap } from '@utils/map';
+import { initTmap } from '@utils/map';
 import { getFacilityCoordList } from 'src/apis/map';
-import { IFacilityMarker, ITag } from 'types/map';
+import { ITag } from 'types/map';
 
 const MapSection = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const markersRef = useRef<IFacilityMarker[]>([]);
-
+  const [markerList, setMarkerList] = useState<any[]>([]);
   const [tags, setTags] = useState<ITag[]>(TAG_INITIAL_VALUE);
 
-  const handleClickTag = (id: number) => {
+  const handleClickTag = (tagId: number) => {
+    const tag = tags.filter((tag) => tag.id === tagId)[0];
+    setMarkerList((markerList) =>
+      markerList.map((marker: any) => {
+        if (marker._marker_data.id === tag.type) {
+          marker.setVisible(true);
+        } else marker.setVisible(false);
+        return marker;
+      })
+    );
     setTags(
-      tags.map((tag) => (tag.id === id ? { ...tag, clicked: true } : { ...tag, clicked: false }))
+      tags.map((tag) => (tag.id === tagId ? { ...tag, clicked: true } : { ...tag, clicked: false }))
     );
   };
 
@@ -27,17 +35,9 @@ const MapSection = () => {
   }, []);
 
   useEffect(() => {
-    const tag = tags.filter((tag) => tag.clicked === true);
-    if (tag.length) {
-      const markerType = tag[0].type;
-      changeMarker(markerType, markersRef.current);
-    }
-  }, [tags]);
-
-  useEffect(() => {
     getFacilityCoordList().then((data) => {
-      initTmap(data, handleResetClickedTag).then((markers: IFacilityMarker[]) => {
-        markersRef.current = markers;
+      initTmap(data, handleResetClickedTag).then((markers: any[]) => {
+        setMarkerList(markers);
       });
     });
   }, [handleResetClickedTag]);

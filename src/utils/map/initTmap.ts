@@ -29,7 +29,7 @@ export const initTmap = async (
   );
 
   // TMAP marker에 API로 가져온 marker 데이터 주입
-  const markers = getTmapMarkerList(markerList, CURRENT_MAP, latlngBounds);
+  const newMarkers = getTmapMarkerList(markerList, CURRENT_MAP, latlngBounds);
 
   // marker 데이터에 맞게 지도 정렬 후 margin 추가
   const margin = {
@@ -40,25 +40,8 @@ export const initTmap = async (
   };
   CURRENT_MAP.fitBounds(latlngBounds, margin);
 
-  const markerTooltipList = getMarkerTooltipList(markers, CURRENT_MAP); // TMAP marker 클릭 시 보여줄 툴팁
-  markers.map((marker, idx) => {
-    marker.addListener('touchend', () => {
-      const lat = marker._marker_data.options.position._lat;
-      const lng = marker._marker_data.options.position._lng;
-      CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
-
-      if (marker._status.mouse.isMouseDown) marker.setVisible(false);
-      markerTooltipList[idx].setVisible(true);
-    }),
-      marker.addListener('click', () => {
-        const lat = marker._marker_data.options.position._lat;
-        const lng = marker._marker_data.options.position._lng;
-        CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
-
-        if (marker._status.mouse.mouseClickFlag) marker.setVisible(false);
-        markerTooltipList[idx].setVisible(true);
-      });
-  });
+  const markerTooltipList = getMarkerTooltipList(newMarkers, CURRENT_MAP); // TMAP marker 클릭 시 보여줄 툴팁
+  const markers = getEventMarkers(newMarkers, CURRENT_MAP, markerTooltipList); // TMP marker 이벤트핸들러 등록
 
   CURRENT_MAP.addListener('click', () => {
     markers.map((marker) => marker.setVisible(true));
@@ -121,4 +104,26 @@ const getMarkerTooltipList = (markers: any[], CURRENT_MAP: any) => {
   });
 
   return markerTooltipList;
+};
+
+const getEventMarkers = (markers: any[], CURRENT_MAP: any, markerTooltipList: any[]) => {
+  return markers.map((marker, idx) => {
+    marker.addListener('touchend', () => {
+      const lat = marker._marker_data.options.position._lat;
+      const lng = marker._marker_data.options.position._lng;
+      CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
+
+      if (marker._status.mouse.isMouseDown) marker.setVisible(false);
+      markerTooltipList[idx].setVisible(true);
+    }),
+      marker.addListener('click', () => {
+        const lat = marker._marker_data.options.position._lat;
+        const lng = marker._marker_data.options.position._lng;
+        CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
+
+        if (marker._status.mouse.mouseClickFlag) marker.setVisible(false);
+        markerTooltipList[idx].setVisible(true);
+      });
+    return marker;
+  });
 };

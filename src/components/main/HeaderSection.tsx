@@ -1,9 +1,10 @@
+import { useRouter } from 'next/router';
+import { AiOutlineSearch } from 'react-icons/ai';
 import styled from 'styled-components';
+
+import Header from '@common/Header';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
-import { AiOutlineSearch } from 'react-icons/ai';
-import { useRouter } from 'next/router';
-import Header from '@common/Header';
 
 const HeaderSection = () => {
   const router = useRouter();

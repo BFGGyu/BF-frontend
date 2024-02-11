@@ -1,39 +1,20 @@
-import { FacilityType } from 'types/facility';
-import { IFacilityMarker, ITag } from 'types/map';
-import COLOR from '@constants/colors';
-import FONT from '@constants/fonts';
-import { changeMarker, initTmap } from '@utils/map';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { getFacilityCoordList } from 'src/apis/map';
 import styled from 'styled-components';
 
-const tagInitialState: ITag[] = [
-  {
-    id: 0,
-    type: 'museum',
-    name: '박물관',
-    clicked: false
-  },
-  {
-    id: 1,
-    type: 'artGallery',
-    name: '미술관',
-    clicked: false
-  },
-  {
-    id: 2,
-    type: 'exhibition',
-    name: '전시회',
-    clicked: false
-  }
-];
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
+import { TAG_INITIAL_VALUE } from '@constants/map';
+import { changeMarker, initTmap } from '@utils/map';
+import { getFacilityCoordList } from 'src/apis/map';
+import { FacilityType } from 'types/facility';
+import { IFacilityMarker, ITag } from 'types/map';
 
 const MapSection = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const markersRef = useRef<IFacilityMarker[]>([]);
   const tagRef = useRef<FacilityType>();
 
-  const [tags, setTags] = useState<ITag[]>(tagInitialState);
+  const [tags, setTags] = useState<ITag[]>(TAG_INITIAL_VALUE);
 
   const handleClickTag = (id: number) => {
     setTags(

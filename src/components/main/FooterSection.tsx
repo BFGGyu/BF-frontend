@@ -1,11 +1,12 @@
-import COLOR from '@constants/colors';
-import FONT from '@constants/fonts';
 import Image from 'next/image';
-import styled from 'styled-components';
-import Button from '@common/Button';
-import { getRecommendPlace } from '@apis/map';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
+import styled from 'styled-components';
+
+import { getRecommendPlace } from '@apis/map';
+import Button from '@common/Button';
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
 import { handleClickMovePage } from '@utils/map';
 
 const PlaceTypeDic = {

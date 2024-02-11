@@ -40,37 +40,7 @@ export const initTmap = async (
   };
   CURRENT_MAP.fitBounds(latlngBounds, margin);
 
-  const infoWindowArray: any[] = [];
-
-  markers.map((currentMarker, idx) => {
-    const lat = currentMarker._marker_data.options.position._lat;
-    const lng = currentMarker._marker_data.options.position._lng;
-
-    const name = currentMarker._marker_data.options.title;
-    const content = `
-    <div style='display: flex; align-items: center; padding: 0px 5px; background-color: ${COLOR.WHITE}; outline-offset: 0.1rem; outline: 1rem solid white;
-    width: 220px; border-radius: 100px;'>
-      <div style='font-size: 16px; font-weight: 500; width: 150px;'>${name}</div>
-      <div style='background-color: ${COLOR.BLUE1}; color: ${COLOR.WHITE}; width: 100px; height: 40px;
-      border-radius: 100px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700';
-      ontouchend="function hi(){window.location.href='/map?result=${name}'};hi()">
-          <a href='/map?result=${name}'>길찾기</a>
-        </div>
-      </div>`;
-
-    infoWindowArray.push(
-      new window.Tmapv2.InfoWindow({
-        position: new window.Tmapv2.LatLng(lat, lng), //Popup 이 표출될 맵 좌표
-        align: 18,
-        content: content, //Popup 표시될 text
-        type: 2,
-        map: CURRENT_MAP,
-        border: 0,
-        visible: false
-      })
-    );
-  });
-
+  const markerTooltipList = getMarkerTooltipList(markers, CURRENT_MAP); // TMAP marker 클릭 시 보여줄 툴팁
   markers.map((marker, idx) => {
     marker.addListener('touchend', () => {
       const lat = marker._marker_data.options.position._lat;
@@ -78,7 +48,7 @@ export const initTmap = async (
       CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
 
       if (marker._status.mouse.isMouseDown) marker.setVisible(false);
-      infoWindowArray[idx].setVisible(true);
+      markerTooltipList[idx].setVisible(true);
     }),
       marker.addListener('click', () => {
         const lat = marker._marker_data.options.position._lat;
@@ -86,20 +56,20 @@ export const initTmap = async (
         CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
 
         if (marker._status.mouse.mouseClickFlag) marker.setVisible(false);
-        infoWindowArray[idx].setVisible(true);
+        markerTooltipList[idx].setVisible(true);
       });
   });
 
   CURRENT_MAP.addListener('click', () => {
     markers.map((marker) => marker.setVisible(true));
     handleResetClickedTag();
-    infoWindowArray.map((info) => info.setVisible(false));
+    markerTooltipList.map((info) => info.setVisible(false));
   });
 
   CURRENT_MAP.addListener('touchend', () => {
     markers.map((marker) => marker.setVisible(true));
     handleResetClickedTag();
-    infoWindowArray.map((info) => info.setVisible(false));
+    markerTooltipList.map((info) => info.setVisible(false));
   });
 
   return markers;
@@ -121,4 +91,34 @@ const getTmapMarkerList = (markerList: IFacilityMarker[], CURRENT_MAP: any, latl
   });
 
   return markers;
+};
+
+const getMarkerTooltipList = (markers: any[], CURRENT_MAP: any) => {
+  const markerTooltipList = markers.map((currentMarker, idx) => {
+    const lat = currentMarker._marker_data.options.position._lat;
+    const lng = currentMarker._marker_data.options.position._lng;
+    const name = currentMarker._marker_data.options.title;
+    const content = `
+    <div style='display: flex; align-items: center; padding: 0px 5px; background-color: ${COLOR.WHITE}; outline-offset: 0.1rem; outline: 1rem solid white;
+    width: 220px; border-radius: 100px;'>
+      <div style='font-size: 16px; font-weight: 500; width: 150px;'>${name}</div>
+      <div style='background-color: ${COLOR.BLUE1}; color: ${COLOR.WHITE}; width: 100px; height: 40px;
+      border-radius: 100px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700';
+      ontouchend="function hi(){window.location.href='/map?result=${name}'};hi()">
+          <a href='/map?result=${name}'>길찾기</a>
+        </div>
+      </div>`;
+
+    return new window.Tmapv2.InfoWindow({
+      position: new window.Tmapv2.LatLng(lat, lng), // Popup 이 표출될 맵 좌표
+      align: 18,
+      content: content, // Popup 표시될 text
+      type: 2,
+      map: CURRENT_MAP,
+      border: 0,
+      visible: false
+    });
+  });
+
+  return markerTooltipList;
 };

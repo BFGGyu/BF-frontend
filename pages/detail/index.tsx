@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { BsArrowLeft } from 'react-icons/bs';
 import { styled } from 'styled-components';
 
@@ -5,18 +6,19 @@ import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import PlaceInfoSection from '@detail/PlaceInfoSection';
 import ReviewSection from '@detail/ReviewSection';
-import useQueryString from 'src/hooks/useQueryString';
+import useQueryParams from 'src/hooks/useQueryParams';
 import { useSearchQuery } from 'src/hooks/useSearchQuery';
 
 const DetailPage = () => {
-  const result = useQueryString();
+  const router = useRouter();
+  const result = useQueryParams();
   const selectedPlace = useSearchQuery(result);
 
   return (
     <>
       {selectedPlace && (
         <DetailWrapper>
-          <HeaderWrapper onClick={() => window.history.back()}>
+          <HeaderWrapper onClick={() => router.back()}>
             <BsArrowLeft color={COLOR.GREY} size={25} />
             <div style={FONT.BODY1}>{selectedPlace.name}</div>
           </HeaderWrapper>

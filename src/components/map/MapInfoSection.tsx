@@ -7,12 +7,12 @@ import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import InfoSection from '@place/InfoSection';
 import { handleClickMovePage } from '@utils/map';
-import useQueryString from 'src/hooks/useQueryString';
+import useQueryParams from 'src/hooks/useQueryParams';
 import { useSearchQuery } from 'src/hooks/useSearchQuery';
 
 const MapInfoSection = ({ arrival }: { arrival: string }) => {
   const router = useRouter();
-  const result = useQueryString();
+  const result = useQueryParams();
   const selectedPlace = useSearchQuery(result);
   const [isHeart, setIsHeart] = useState<boolean>(false);
   const handleClickHeart = () => {

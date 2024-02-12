@@ -8,7 +8,8 @@ export const useSearchQuery = (searchKeyword: string) => {
     queryFn: () => getSearchResult(searchKeyword),
     enabled: !!searchKeyword,
     staleTime: 60 * 1000,
-    retry: false
+    retry: false,
+    refetchOnWindowFocus: false
   });
   return searchList;
 };

@@ -8,12 +8,12 @@ import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
 import RoutingSection from '@navigation/RoutingSection';
 import { handleClickMovePage } from '@utils/map';
-import useQueryString from 'src/hooks/useQueryString';
+import useQueryParams from 'src/hooks/useQueryParams';
 
 const NavigationPage = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
-  const result = useQueryString();
+  const result = useQueryParams();
 
   return (
     <div>
@@ -23,11 +23,7 @@ const NavigationPage = () => {
       </MapWrapper>
       <FooterWrapper>
         <MapIconWrapper>
-          <BiMapAlt
-            color={COLOR.BLUE1}
-            size={30}
-            onClick={() => handleClickMovePage(router, '/map', result)}
-          />
+          <BiMapAlt color={COLOR.BLUE1} size={30} onClick={() => router.back()} />
         </MapIconWrapper>
         <ButtonWrapper onClick={() => handleClickMovePage(router, '/review', result)}>
           <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} height='50px'>

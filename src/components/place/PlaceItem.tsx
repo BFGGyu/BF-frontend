@@ -6,7 +6,7 @@ import InfoSection from './InfoSection';
 import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import { handleClickMovePage } from '@utils/map';
-import useQueryString from 'src/hooks/useQueryString';
+import useQueryParams from 'src/hooks/useQueryParams';
 import { IFacilityMarker } from 'types/map';
 
 interface PlaceItemProps {
@@ -15,7 +15,7 @@ interface PlaceItemProps {
 
 const PlaceItem = ({ place }: PlaceItemProps) => {
   const router = useRouter();
-  const result = useQueryString();
+  const result = useQueryParams();
 
   return (
     <SearchListWrapper key={place.id}>

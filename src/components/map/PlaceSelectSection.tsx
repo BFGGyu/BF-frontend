@@ -4,20 +4,24 @@ import { styled } from 'styled-components';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import SCREEN_SIZE from '@constants/sizes';
-import { IStation } from 'types/map';
+import { ICoord, IStation } from 'types/map';
 
-const PlaceSelectSection = ({ station }: { station: IStation }) => {
+interface PlaceSelectSectionProps {
+  departure: string;
+  arrival: string;
+}
+const PlaceSelectSection = ({ departure, arrival }: PlaceSelectSectionProps) => {
   const router = useRouter();
 
   return (
     <PlaceSelectBarWrapper onClick={() => router.push('/search')}>
       <PlaceSelectBar>
         <PlaceLabel style={FONT.BODY2}>출발지</PlaceLabel>
-        <StartPlace style={FONT.BODY1}>{station.departure}</StartPlace>
+        <StartPlace style={FONT.BODY1}>{departure}</StartPlace>
       </PlaceSelectBar>
       <PlaceSelectBar>
         <PlaceLabel style={FONT.BODY2}>도착지</PlaceLabel>
-        <EndPlace style={FONT.BODY1}>{station.arrival}</EndPlace>
+        <EndPlace style={FONT.BODY1}>{arrival}</EndPlace>
       </PlaceSelectBar>
     </PlaceSelectBarWrapper>
   );

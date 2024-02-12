@@ -3,7 +3,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next build && next start",
-    "test": "jest",
+    "test:changed-since": "jest --changedSince=origin/main",
     "coverage": "jest --watchAll --coverage",
     "deploy": "serverless"
   },

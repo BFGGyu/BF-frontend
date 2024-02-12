@@ -4,16 +4,29 @@ on:
     branches: main
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        node-version: [16.x]
     steps:
-      - name: Checkout source code.
-        uses: actions/checkout@master
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           ref: main
-
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          # cache를 무효화하를 결정하는 기준은 의존성이 변경되면 함께 변경되는 파일인 package-lock.json을 기준으로 합니다.
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Install Dependencies
-        run: |
-          npm install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
 
       # 환경 변수 파일을 생성.
       - name: Generate Environment Variables File for Production

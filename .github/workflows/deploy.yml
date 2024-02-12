@@ -16,14 +16,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
       - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
+      - uses: actions/cache@v3
         with:
-          path: '**/node_modules'
-          # cache를 무효화하를 결정하는 기준은 의존성이 변경되면 함께 변경되는 파일인 package-lock.json을 기준으로 합니다.
+          path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci

@@ -1,12 +1,13 @@
-import Button from '@common/Button';
-import COLOR from '@constants/colors';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { styled } from 'styled-components';
 import toast, { Toaster } from 'react-hot-toast';
-import FONT from '@constants/fonts';
-import { submitReview } from '@apis/review';
 import { useRecoilValue } from 'recoil';
+import { styled } from 'styled-components';
+
+import { submitReview } from '@apis/review';
+import Button from '@common/Button';
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
 import { nicknameState } from '@states/user';
 
 const notifySubmitReview = () =>

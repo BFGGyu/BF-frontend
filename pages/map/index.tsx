@@ -1,17 +1,17 @@
-import { initRouteMap } from '@utils/map';
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
-import { getRoutingCoords } from 'src/apis/map';
 import { styled } from 'styled-components';
-import { IStation, ITotalRouteResult } from 'types/map';
-import PlaceSelectSection from '@map/PlaceSelectSection';
+
 import FooterInfoSection from '@map/FooterInfoSection';
+import PlaceSelectSection from '@map/PlaceSelectSection';
+import { initRouteMap } from '@utils/map';
+import { getRoutingCoords } from 'src/apis/map';
+import useQueryParams from 'src/hooks/useQueryParams';
+import { IStation, ITotalRouteResult } from 'types/map';
 
 const MapPage: NextPage = () => {
-  const router = useRouter();
+  const searchResult = useQueryParams();
   const mapRef = useRef<HTMLDivElement | null>(null);
-
   const [station, setStation] = useState<IStation>({
     departure: '로딩중...',
     arrival: '로딩중...'
@@ -20,46 +20,31 @@ const MapPage: NextPage = () => {
     distance: '-',
     duration: 0
   });
-  const [searchResult, setSearchResult] = useState<string>('');
 
   useEffect(() => {
-    const queryData = router.query.result;
-
-    if (
-      router.asPath.includes('/navigation') ||
-      router.asPath.includes('/main') ||
-      router.asPath.includes('/search')
-    ) {
-      const query = decodeURIComponent(router.asPath.split('=')[1]);
-      setSearchResult(query);
-      getRoutingCoords(query).then((data) => {
+    if (searchResult) {
+      getRoutingCoords(searchResult).then((data) => {
         const { departure, arrival, routes } = data;
         setStation({ departure: departure.name, arrival: arrival.name });
-        initRouteMap(departure, arrival, routes).then((data) => {
-          const { distance, duration } = data;
-          setRouteResult({ distance, duration });
-        });
-      });
-    } else if (typeof queryData === 'string') {
-      getRoutingCoords(queryData).then((data) => {
-        const { departure, arrival, routes } = data;
-        setSearchResult(queryData);
-        setStation({ departure: departure.name, arrival: arrival.name });
-        initRouteMap(departure, arrival, routes).then((data) => {
+        initRouteMap({ departure, arrival, routes }).then((data) => {
           const { distance, duration } = data;
           setRouteResult({ distance, duration });
         });
       });
     }
-  }, [router]);
+  }, [searchResult]);
 
   return (
     <>
-      <PlaceSelectSection station={station} />
+      <PlaceSelectSection departure={station.departure} arrival={station.arrival} />
       <MapWrapper>
         <MapDiv ref={mapRef} id='map_div'></MapDiv>
       </MapWrapper>
-      <FooterInfoSection station={station} routeResult={routeResult} searchResult={searchResult} />
+      <FooterInfoSection
+        arrival={station.arrival}
+        routeResult={routeResult}
+        searchResult={searchResult}
+      />
     </>
   );
 };

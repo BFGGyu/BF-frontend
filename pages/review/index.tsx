@@ -1,7 +1,8 @@
-import Header from '@common/Header';
 import { NextPage } from 'next';
-import { styled } from 'styled-components';
 import { useState } from 'react';
+import { styled } from 'styled-components';
+
+import Header from '@common/Header';
 import ReviewFooterSection from '@review/ReviewFooterSection';
 import ReviewMainSection from '@review/ReviewMainSection';
 

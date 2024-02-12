@@ -1,7 +1,8 @@
+import { styled } from 'styled-components';
+
 import FooterSection from '@main/FooterSection';
 import HeaderSection from '@main/HeaderSection';
 import MapSection from '@main/MapSection';
-import { styled } from 'styled-components';
 
 const MainPage = () => {
   return (

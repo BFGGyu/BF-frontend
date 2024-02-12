@@ -1,5 +1,6 @@
-import PlaceInfoSection from '@detail/PlaceInfoSection';
 import { render, screen } from '@testing-library/react';
+
+import PlaceInfoSection from '@detail/PlaceInfoSection';
 import { IFacilityMarker } from 'types/map';
 
 const initialSelectedPlace: IFacilityMarker = {
@@ -15,28 +16,26 @@ const initialSelectedPlace: IFacilityMarker = {
   type: 'museum'
 };
 
-jest.mock('next/router', () => ({
-  useRouter: () => ({
-    query: { result: '국립고궁박물관' },
-    asPath: '/navigation?result=국립고궁박물관'
-  })
-}));
+// jest.mock('next/router', () => ({
+//   useRouter: () => ({
+//     query: { result: '국립고궁박물관' },
+//     asPath: '/navigation?result=국립고궁박물관'
+//   })
+// }));
 
 jest.mock('@apis/map', () => ({
   // api mock 함수 및 Promise 반환 설정
-  getDetailFacility: jest.fn(() => Promise.resolve(initialSelectedPlace))
+  getSearchResult: jest.fn((keyword) => Promise.resolve(initialSelectedPlace)),
+  getRecommendPlace: jest.fn(() => Promise.resolve())
 }));
 
-describe('PlaceInfoSection 컴포넌트 테스트', () => {
+describe('PlaceInfoSection 에 장소 정보를 불러온다.', () => {
   it('PlaceInfoSection test', () => {
-    render(
-      <PlaceInfoSection selectedPlace={initialSelectedPlace} setSelectedPlace={() => jest.fn()} />
-    );
+    render(<PlaceInfoSection selectedPlace={initialSelectedPlace} result={'국립고궁박물관'} />);
 
     const name = screen.getByText('국립고궁박물관');
     const address = screen.getByText('서울 종로구 효자로12');
 
-    expect(require('@apis/map').getDetailFacility).toHaveBeenCalledWith('국립고궁박물관');
     expect(name).toBeInTheDocument();
     expect(address).toBeInTheDocument();
   });

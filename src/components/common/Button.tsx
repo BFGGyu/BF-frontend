@@ -1,5 +1,6 @@
-import FONT from '@constants/fonts';
 import { styled } from 'styled-components';
+
+import FONT from '@constants/fonts';
 
 interface IButton {
   width?: string;

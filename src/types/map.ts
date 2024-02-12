@@ -21,6 +21,7 @@ export interface IRouteMarker {
 }
 
 export interface ICoord {
+  name: string;
   latitude: string;
   longitude: string;
 }
@@ -47,4 +48,10 @@ export interface ITag {
   type: FacilityType;
   name: string;
   clicked: boolean;
+}
+
+export interface RouteMapDto {
+  departure: ICoord;
+  arrival: ICoord;
+  routes: IRoute[];
 }

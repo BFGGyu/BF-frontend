@@ -1,8 +1,8 @@
 import { Server } from './setting';
-import { IFacilityReturnType, IMarkerReturnType, IPathReturnType, IRouteReturnType } from './type';
+import { FacilityDto, PathDto } from './type';
 
 export const getFacilityCoordList = async () => {
-  const result = await Server.get<IFacilityReturnType[]>('place/facility/');
+  const result = await Server.get<FacilityDto[]>('place/facility/');
   return result.data;
 };
 
@@ -16,30 +16,26 @@ export const getRecommendPlace = async (count: number) => {
   return recommendPlaceList;
 };
 
-export const getRoutingCoords = async (search: string): Promise<IPathReturnType> => {
+export const getRoutingCoords = async (search: string) => {
   const keyword = search.split('-').join('');
-  const result = await Server.get(`path/${keyword}/`);
-  return result.data;
+  const { data } = await Server.get<PathDto>(`path/${keyword}/`);
+  return data;
 };
 
-export const getNavigationCoords = async (search: string): Promise<IPathReturnType> => {
+export const getNavigationCoords = async (search: string) => {
   const keyword = search.split('-').join('');
-  const result = await Server.get(`path/${keyword}/`);
-  return result.data;
+  const { data } = await Server.get<PathDto>(`path/${keyword}/`);
+  return data;
 };
 
 export const getSearchResult = async (search: string) => {
   const keyword = search.split('-').join('');
-  try {
-    const result = await Server.get(`place/facility/${keyword}/`);
-    return result.data;
-  } catch (error) {
-    console.log('검색결과 없음 :', error);
-  }
+  const { data } = await Server.get<FacilityDto>(`place/facility/${keyword}/`);
+  return data;
 };
 
 export const getDetailFacility = async (search: string) => {
   const keyword = search.split('-').join('');
-  const result = await Server.get(`place/facility/${keyword}/`);
-  return result.data;
+  const { data } = await Server.get<FacilityDto>(`place/facility/${keyword}/`);
+  return data;
 };

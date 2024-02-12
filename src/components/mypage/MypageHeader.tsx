@@ -1,8 +1,9 @@
-import COLOR from '@constants/colors';
-import FONT from '@constants/fonts';
 import { useRouter } from 'next/router';
 import { BsArrowLeft } from 'react-icons/bs';
 import { styled } from 'styled-components';
+
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
 
 const MypageHeader = () => {
   const router = useRouter();

@@ -2,15 +2,15 @@ import axios from 'axios';
 
 import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
-import { ICoord, IFacilityMarker, IRoute, IRouteMarker, ITotalRouteResult } from 'types/map';
+import { ITotalRouteResult, RouteMapDto } from 'types/map';
 
 const APP_KEY = process.env.NEXT_PUBLIC_TMAP_KEY;
 
-export const initRouteMap = async (
-  departure: ICoord,
-  arrival: ICoord,
-  routes: IRoute[]
-): Promise<ITotalRouteResult> => {
+export const initRouteMap = async ({
+  departure,
+  arrival,
+  routes
+}: RouteMapDto): Promise<ITotalRouteResult> => {
   // map 생성
   // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
   const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
@@ -134,6 +134,6 @@ export const initRouteMap = async (
         });
       }
     })
-    .catch((e: any) => console.log('길찾기 지도 불러오기 에러 : ', e));
+    .catch((error: any) => console.error(error));
   return totalData;
 };

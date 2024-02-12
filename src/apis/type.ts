@@ -1,3 +1,5 @@
+import { ICoord, IRoute } from 'types/map';
+
 export interface FacilityDto {
   id: number;
   name: string;
@@ -13,22 +15,9 @@ export interface FacilityDto {
 
 export interface PathDto {
   path_id: number;
-  departure: {
-    name: string;
-    latitude: string;
-    longitude: string;
-  };
-  arrival: {
-    name: string;
-    latitude: string;
-    longitude: string;
-  };
-  routes: {
-    id: number;
-    latitude: string;
-    longitude: string;
-    path_id: number;
-  }[];
+  departure: ICoord;
+  arrival: ICoord;
+  routes: IRoute[];
 }
 
 export interface UserDto {

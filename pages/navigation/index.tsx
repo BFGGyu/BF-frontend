@@ -23,7 +23,11 @@ const NavigationPage = () => {
       </MapWrapper>
       <FooterWrapper>
         <MapIconWrapper>
-          <BiMapAlt color={COLOR.BLUE1} size={30} onClick={() => router.back()} />
+          <BiMapAlt
+            color={COLOR.BLUE1}
+            size={30}
+            onClick={() => handleClickMovePage(router, '/map', result)}
+          />
         </MapIconWrapper>
         <ButtonWrapper onClick={() => handleClickMovePage(router, '/review', result)}>
           <Button bgColor={COLOR.BLUE1} color={COLOR.WHITE} height='50px'>

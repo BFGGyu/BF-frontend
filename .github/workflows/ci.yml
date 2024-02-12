@@ -56,6 +56,5 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
 
-      # 변경사항을 대상으로 수행
-      - name: Run test (changedSince)
-        run: npm run test:changed-since
+      - name: Run test
+        run: npm run test

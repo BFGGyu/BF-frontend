@@ -21,12 +21,10 @@ jobs:
         uses: actions/setup-node@v3
 
       - name: Cache dependencies
-        id: cache
         uses: actions/cache@v3
         with:
-          path: '**/node_modules'
-          restore-keys: |
-            ${{ runner.os }}-node-
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
@@ -37,6 +35,9 @@ jobs:
 
   test:
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        node-version: [16.x]
     steps:
       - name: Checkout
         uses: actions/checkout@v3

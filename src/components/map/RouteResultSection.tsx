@@ -1,8 +1,9 @@
-import { ITotalRouteResult } from 'types/map';
-import COLOR from '@constants/colors';
-import FONT from '@constants/fonts';
 import React from 'react';
 import { styled } from 'styled-components';
+
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
+import { ITotalRouteResult } from 'types/map';
 
 const RouteResultSection = ({ routeResult }: { routeResult: ITotalRouteResult }) => {
   return (

@@ -1,10 +1,11 @@
-import { getItemWithExpireTime, setItemWithExpireTime } from '@utils/storage';
 import { Server } from './setting';
-import { LoginReturnType } from './type';
+import { UserDto } from './type';
+
+import { getItemWithExpireTime, localStorageClear, setItemWithExpireTime } from '@utils/storage';
 
 export const login = async (code: string) => {
   try {
-    const result = await Server.post<LoginReturnType>(
+    const result = await Server.post<UserDto>(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/accounts/kakao/callback/`,
       { code }
     );
@@ -31,18 +32,18 @@ export const getRefresh = async () => {
   try {
     return await Server.post('/refresh/', { refresh_token: refreshToken }, { headers });
   } catch (error) {
-    console.log('액세스 토큰 갱신 실패: ', error);
+    console.error(error);
   }
 };
 
 export const logout = async () => {
   const refreshToken = getItemWithExpireTime('refresh');
   try {
-    localStorage.clear();
+    localStorageClear();
     return await Server.post('/logout/', {
       refresh_token: refreshToken
     });
   } catch (error) {
-    console.log('로그아웃 에러:', error);
+    console.error(error);
   }
 };

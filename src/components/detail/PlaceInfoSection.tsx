@@ -1,23 +1,21 @@
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { styled } from 'styled-components';
+
 import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
 import InfoSection from '@place/InfoSection';
 import { handleClickMovePage } from '@utils/map';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import React from 'react';
-import useQueryString from 'src/hooks/useQueryString';
-import { styled } from 'styled-components';
 import { IFacilityMarker } from 'types/map';
 
-interface IPlaceInfoSectionProps {
+interface PlaceInfoSectionProps {
   selectedPlace: IFacilityMarker;
-  setSelectedPlace: React.Dispatch<React.SetStateAction<IFacilityMarker>>;
+  result: string;
 }
 
-const PlaceInfoSection = ({ selectedPlace, setSelectedPlace }: IPlaceInfoSectionProps) => {
+const PlaceInfoSection = ({ selectedPlace, result }: PlaceInfoSectionProps) => {
   const router = useRouter();
-  const result = useQueryString();
 
   return (
     <>
@@ -31,9 +29,9 @@ const PlaceInfoSection = ({ selectedPlace, setSelectedPlace }: IPlaceInfoSection
           />
         )}
       </ImageWrapper>
-      <PlaceInfomation>
+      <PlaceInformation>
         <LeftWrapper>
-          <InfoSection selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace} />
+          <InfoSection selectedPlace={selectedPlace} />
         </LeftWrapper>
         <RightWrapper>
           <Button
@@ -44,7 +42,7 @@ const PlaceInfoSection = ({ selectedPlace, setSelectedPlace }: IPlaceInfoSection
             길찾기
           </Button>
         </RightWrapper>
-      </PlaceInfomation>
+      </PlaceInformation>
     </>
   );
 };
@@ -53,7 +51,7 @@ const ImageWrapper = styled.div`
   height: 22vh;
 `;
 
-const PlaceInfomation = styled.div`
+const PlaceInformation = styled.div`
   display: flex;
 `;
 

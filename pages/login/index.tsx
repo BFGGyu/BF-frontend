@@ -1,12 +1,13 @@
-import { login } from '@apis/user';
-import Header from '@common/Header';
-import FONT from '@constants/fonts';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { isLoggedInState, nicknameState } from '@states/user';
 import styled from 'styled-components';
+
+import { login } from '@apis/user';
+import Header from '@common/Header';
+import FONT from '@constants/fonts';
+import { isLoggedInState, nicknameState } from '@states/user';
 
 const LoginPage = () => {
   const router = useRouter();

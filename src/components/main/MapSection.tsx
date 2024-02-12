@@ -1,70 +1,18 @@
-import { FacilityType } from 'types/facility';
-import { IFacilityMarker, ITag } from 'types/map';
-import COLOR from '@constants/colors';
-import FONT from '@constants/fonts';
-import { changeMarker, initTmap } from '@utils/map';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { getFacilityCoordList } from 'src/apis/map';
+import { useRef } from 'react';
 import styled from 'styled-components';
 
-const tagInitialState: ITag[] = [
-  {
-    id: 0,
-    type: 'museum',
-    name: '박물관',
-    clicked: false
-  },
-  {
-    id: 1,
-    type: 'artGallery',
-    name: '미술관',
-    clicked: false
-  },
-  {
-    id: 2,
-    type: 'exhibition',
-    name: '전시회',
-    clicked: false
-  }
-];
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
+import { useMapInfo } from 'src/hooks/useMapInfo';
 
 const MapSection = () => {
-  const mapRef = useRef<HTMLDivElement | null>(null);
-  const markersRef = useRef<IFacilityMarker[]>([]);
-  const tagRef = useRef<FacilityType>();
-
-  const [tags, setTags] = useState<ITag[]>(tagInitialState);
-
-  const handleClickTag = (id: number) => {
-    setTags(
-      tags.map((tag) => (tag.id === id ? { ...tag, clicked: true } : { ...tag, clicked: false }))
-    );
-  };
-
-  const handleResetClickedTag = useCallback(() => {
-    setTags((tags) => tags.map((tag) => ({ ...tag, clicked: false })));
-  }, []);
-
-  useEffect(() => {
-    const tag = tags.filter((tag) => tag.clicked === true);
-    if (tag.length) {
-      tagRef.current = tag[0].type;
-      changeMarker(tagRef.current, markersRef.current);
-    }
-  }, [tags]);
-
-  useEffect(() => {
-    getFacilityCoordList().then((data) => {
-      initTmap(data, handleResetClickedTag).then((markers: IFacilityMarker[]) => {
-        markersRef.current = markers;
-      });
-    });
-  }, [handleResetClickedTag]);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const { mapInfo, handleClickTag } = useMapInfo();
 
   return (
     <MapWrapper>
       <TagWrapper>
-        {tags.map((tag) => (
+        {mapInfo.tagList.map((tag) => (
           <TagButton
             key={tag.id}
             style={FONT.HEADLINE2}
@@ -76,7 +24,6 @@ const MapSection = () => {
           </TagButton>
         ))}
       </TagWrapper>
-      {/* <MapDiv style={{ width: '390px', height: '591px', border: '3px solid black' }}></MapDiv> */}
       <MapDiv ref={mapRef} id='map_div'></MapDiv>
     </MapWrapper>
   );
@@ -85,12 +32,10 @@ const MapSection = () => {
 export default MapSection;
 
 const MapWrapper = styled.div`
-  flex-basis: 50%;
+  flex-basis: 65%;
 `;
 
-const MapDiv = styled.div`
-  position: absolute;
-`;
+const MapDiv = styled.div``;
 
 const TagWrapper = styled.div`
   display: flex;

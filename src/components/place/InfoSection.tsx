@@ -1,77 +1,27 @@
-import { IFacilityMarker } from 'types/map';
-import { getDetailFacility, getSearchResult } from '@apis/map';
-import COLOR from '@constants/colors';
-import FONT from '@constants/fonts';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
-import { useState } from 'react';
 import { styled } from 'styled-components';
 
-const PlaceTypeDic = {
-  museum: '박물관',
-  artGallery: '미술관',
-  exhibition: '전시회'
-};
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
+import { PLACE_DIC } from '@constants/map';
+import { IFacilityMarker } from 'types/map';
 
 interface IInfoSectionProps {
   selectedPlace: IFacilityMarker;
-  setSelectedPlace: React.Dispatch<React.SetStateAction<IFacilityMarker>>;
 }
 
-const InfoSection = ({ selectedPlace, setSelectedPlace }: IInfoSectionProps) => {
-  const router = useRouter();
-
-  const [isOpened, setIsOpened] = useState(false);
-
-  useEffect(() => {
-    if (Object.keys(selectedPlace).length > 0) {
-      const currentHour = new Date().getHours();
-      const openHour = parseInt(selectedPlace.opening_time.slice(0, 2));
-      const closeHour = parseInt(selectedPlace.closing_time.slice(0, 2));
-      if (openHour < currentHour && currentHour < closeHour) setIsOpened(true);
-      else setIsOpened(false);
-    }
-  }, [selectedPlace]);
-
-  useEffect(() => {
-    if (
-      router.asPath.includes('/navigation') ||
-      router.asPath.includes('/main') ||
-      router.asPath.includes('/search')
-    ) {
-      const query = decodeURIComponent(router.asPath.split('=')[1]);
-      getDetailFacility(query).then((data) => {
-        setSelectedPlace(data);
-      });
-    }
-
-    if (router.pathname === '/detail') {
-      const query = decodeURIComponent(router.asPath.split('=')[1]);
-      getDetailFacility(query).then((data) => {
-        setSelectedPlace(data);
-      });
-    }
-
-    const result = router.query.result;
-    if (typeof result === 'string') {
-      getDetailFacility(result).then((data) => {
-        setSelectedPlace(data);
-      });
-    }
-  }, [router, setSelectedPlace]);
-
+const InfoSection = ({ selectedPlace }: IInfoSectionProps) => {
   return (
     <>
       <PlaceHeadWrapper>
         <PlaceName style={FONT.HEADLINE2}>{selectedPlace.name}</PlaceName>
         <PlaceType style={FONT.BODY2} $type={selectedPlace.type}>
-          {PlaceTypeDic[selectedPlace.type]}
+          {PLACE_DIC[selectedPlace.type]}
         </PlaceType>
       </PlaceHeadWrapper>
       <PlaceLocation style={FONT.BODY2}>{selectedPlace.address}</PlaceLocation>
       <PlaceTimeWrapper style={FONT.BODY2}>
-        {isOpened ? (
+        {isOpened(selectedPlace) ? (
           <>
             <div style={{ color: COLOR.GREEN }}>운영중</div>
             <div>{selectedPlace.closing_time} 에 운영종료</div>
@@ -90,6 +40,13 @@ const InfoSection = ({ selectedPlace, setSelectedPlace }: IInfoSectionProps) => 
       </IconWrapper>
     </>
   );
+};
+
+const isOpened = (selectedPlace: IFacilityMarker) => {
+  const currentHour = new Date().getHours();
+  const openHour = parseInt(selectedPlace.opening_time.slice(0, 2));
+  const closeHour = parseInt(selectedPlace.closing_time.slice(0, 2));
+  return openHour < currentHour && currentHour < closeHour;
 };
 
 interface PlaceTypeProps {
@@ -129,7 +86,7 @@ const PlaceTimeWrapper = styled.div`
 
 const IconWrapper = styled.div`
   display: flex;
-  flexbasis: 20%;
+  flex-basis: 20%;
   gap: 5px;
 `;
 

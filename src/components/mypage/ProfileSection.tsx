@@ -1,9 +1,10 @@
-import COLOR from '@constants/colors';
-import FONT from '@constants/fonts';
-import { nicknameState } from '@states/user';
 import Image from 'next/image';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
+
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
+import { nicknameState } from '@states/user';
 
 const ProfileSection = () => {
   const nickname = useRecoilValue(nicknameState);

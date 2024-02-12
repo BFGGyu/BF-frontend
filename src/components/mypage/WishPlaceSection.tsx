@@ -1,10 +1,11 @@
-import { IPlace } from 'types/facility';
-import COLOR from '@constants/colors';
-import FONT from '@constants/fonts';
 import Image from 'next/image';
 import { useState } from 'react';
 import { AiFillHeart } from 'react-icons/ai';
 import { styled } from 'styled-components';
+
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
+import { IPlace } from 'types/facility';
 
 const PlaceTypeDic = {
   museum: '박물관',

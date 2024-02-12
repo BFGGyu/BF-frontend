@@ -1,22 +1,18 @@
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
+
+import Button from '@common/Button';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
-import Image from 'next/image';
-import styled from 'styled-components';
-import Button from '@common/Button';
-import { getRecommendPlace } from '@apis/map';
-import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
+import { PLACE_DIC } from '@constants/map';
+import SCREEN_SIZE from '@constants/sizes';
 import { handleClickMovePage } from '@utils/map';
-
-const PlaceTypeDic = {
-  museum: '박물관',
-  artGallery: '미술관',
-  exhibition: '전시회'
-};
+import { useRecommendQuery } from 'src/hooks/useRecommendQuery';
 
 const FooterSection = () => {
   const router = useRouter();
-  const { data: recommendPlaces } = useQuery(['recommendPlaces', 2], () => getRecommendPlace(2));
+  const recommendPlaces = useRecommendQuery(2);
 
   return (
     <FooterWrapper>
@@ -32,13 +28,12 @@ const FooterSection = () => {
               <TextWrapper>
                 <PlaceName>{place.name}</PlaceName>
                 <PlaceType style={FONT.BODY2} type={place.type}>
-                  {PlaceTypeDic[place.type]}
+                  {PLACE_DIC[place.type]}
                 </PlaceType>
                 <PlaceLocation style={FONT.BODY2}>{place.address.slice(0, 10)}</PlaceLocation>
               </TextWrapper>
               <Button
                 width='80%'
-                // height='20%'
                 bgColor={COLOR.BLUE1}
                 color={COLOR.WHITE}
                 onClick={() => handleClickMovePage(router, '/map', place.name)}
@@ -53,8 +48,10 @@ const FooterSection = () => {
 };
 
 const FooterWrapper = styled.div`
-  height: 30vh;
-  width: 100%;
+  position: absolute;
+  bottom: 10px;
+  height: 25vh;
+  width: ${SCREEN_SIZE.WIDTH};
   display: flex;
   justify-content: center;
   z-index: 1;
@@ -83,7 +80,6 @@ const PlaceItem = styled.div`
 
 const IconWrapper = styled.div`
   display: flex;
-  flexbasis: 20%;
   gap: 5px;
 `;
 
@@ -95,7 +91,6 @@ const TextWrapper = styled.div`
 `;
 
 const PlaceName = styled.div`
-  // font-size: 5vw;
   fontsize: 12px;
   font-weight: 700;
 `;

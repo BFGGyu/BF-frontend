@@ -1,11 +1,13 @@
-import { AppProps } from 'next/app';
 import { NextPage } from 'next';
+import { AppProps } from 'next/app';
 import Head from 'next/head';
-import GlobalStyle from '../src/styles/globalStyle';
-import styled from 'styled-components';
-import { RecoilRoot } from 'recoil';
-import SCREEN_SIZE from '@constants/sizes';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { RecoilRoot } from 'recoil';
+import styled from 'styled-components';
+
+import GlobalStyle from '../src/styles/globalStyle';
+
+import SCREEN_SIZE from '@constants/sizes';
 
 // if (process.env.NODE_ENV === 'development') {
 //   (async () => {
@@ -16,7 +18,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 const queryClient = new QueryClient();
 
-const Reactproject: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
+const NextApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Head>
@@ -36,8 +38,8 @@ const Reactproject: NextPage<AppProps> = ({ Component, pageProps }: AppProps) =>
 
 const MainLayout = styled.div`
   width: ${SCREEN_SIZE.WIDTH};
-  height: ${SCREEN_SIZE.HEIGHT};
+  height: 100vh;
   margin: 0 auto;
 `;
 
-export default Reactproject;
+export default NextApp;

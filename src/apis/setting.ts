@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { getItemWithExpireTime } from '@utils/storage';
+
 export const Server = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
   timeout: 2000,
@@ -11,7 +13,7 @@ export const Server = axios.create({
 // Server Setting
 Server.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getItemWithExpireTime('accessToken');
     if (accessToken) config.headers['Authorization'] = `Bearer ${accessToken}`;
     return config;
   },

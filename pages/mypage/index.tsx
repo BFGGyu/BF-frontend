@@ -1,7 +1,7 @@
-import ProfileSection from '@mypage/ProfileSection';
 import BadgeSection from '@mypage/BadgeSection';
-import WishPlaceSection from '@mypage/WishPlaceSection';
 import MypageHeader from '@mypage/MypageHeader';
+import ProfileSection from '@mypage/ProfileSection';
+import WishPlaceSection from '@mypage/WishPlaceSection';
 
 const Mypage = () => {
   return (

@@ -1,18 +1,20 @@
-import { IFacilityMarker } from 'types/map';
-import Button from '@common/Button';
-import COLOR from '@constants/colors';
-import InfoSection from '@place/InfoSection';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { styled } from 'styled-components';
+
+import Button from '@common/Button';
+import COLOR from '@constants/colors';
+import InfoSection from '@place/InfoSection';
 import { handleClickMovePage } from '@utils/map';
+import useQueryParams from 'src/hooks/useQueryParams';
+import { useSearchQuery } from 'src/hooks/useSearchQuery';
 
 const MapInfoSection = ({ arrival }: { arrival: string }) => {
   const router = useRouter();
+  const result = useQueryParams();
+  const selectedPlace = useSearchQuery(result);
   const [isHeart, setIsHeart] = useState<boolean>(false);
-  const [selectedPlace, setSelectedPlace] = useState<IFacilityMarker>({} as IFacilityMarker);
-
   const handleClickHeart = () => {
     setIsHeart((prev) => !prev);
     // TODO: 찜하기 POST API 연결
@@ -21,7 +23,7 @@ const MapInfoSection = ({ arrival }: { arrival: string }) => {
   return (
     <InfoWrapper>
       <InfoLeftWrapper>
-        <InfoSection selectedPlace={selectedPlace} setSelectedPlace={setSelectedPlace} />
+        {selectedPlace && <InfoSection selectedPlace={selectedPlace} />}
       </InfoLeftWrapper>
       <InfoRightWrapper>
         <HeartWrapper onClick={handleClickHeart}>

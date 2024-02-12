@@ -1,16 +1,13 @@
+import { useRouter } from 'next/router';
+import { AiOutlineSearch } from 'react-icons/ai';
 import styled from 'styled-components';
+
+import Header from '@common/Header';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
-import { AiOutlineSearch } from 'react-icons/ai';
-import { useRouter } from 'next/router';
-import Header from '@common/Header';
 
 const HeaderSection = () => {
   const router = useRouter();
-
-  const handleClickSearch = () => {
-    router.push('/search');
-  };
 
   return (
     <Wrapper>
@@ -25,7 +22,7 @@ const HeaderSection = () => {
         </MainTextWrapper>
         <SubText style={FONT.BODY1}>휠체어 이용자를 위한 안전한 경로 안내</SubText>
       </BodyWrapper>
-      <SearchWrapper onClick={handleClickSearch}>
+      <SearchWrapper onClick={() => router.push('/search')}>
         <SearchDiv>검색어를 입력하세요.</SearchDiv>
         <SearchButtonWrapper>
           <AiOutlineSearch />
@@ -38,7 +35,7 @@ const HeaderSection = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  flex-basis: 40%;
+  flex-basis: 35%;
   background-color: ${COLOR.BLUE1};
   color: ${COLOR.WHITE};
 `;

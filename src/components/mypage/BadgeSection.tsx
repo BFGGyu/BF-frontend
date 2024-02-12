@@ -1,7 +1,8 @@
-import COLOR from '@constants/colors';
-import FONT from '@constants/fonts';
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
+
+import COLOR from '@constants/colors';
+import FONT from '@constants/fonts';
 
 interface IBadge {
   id: string;

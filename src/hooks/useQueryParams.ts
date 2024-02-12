@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-const useQueryString = () => {
+const useQueryParams = () => {
   const router = useRouter();
   const [result, setResult] = useState<string>('');
 
@@ -13,4 +13,4 @@ const useQueryString = () => {
   return result;
 };
 
-export default useQueryString;
+export default useQueryParams;

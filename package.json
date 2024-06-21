@@ -41,6 +41,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.0",
+    "headers-polyfill": "^3.2.5",
     "jest": "^29.6.2",
     "jest-environment-jsdom": "^29.6.2",
     "msw": "^1.2.3",

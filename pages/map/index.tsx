@@ -22,15 +22,16 @@ const MapPage: NextPage = () => {
   });
 
   useEffect(() => {
+    const initRoute = async (searchResult: string) => {
+      const { departure, arrival, routes } = await getRoutingCoords(searchResult);
+      const { distance, duration } = await initRouteMap({ departure, arrival, routes });
+
+      setStation({ departure: departure.name, arrival: arrival.name });
+      setRouteResult({ distance, duration });
+    };
+
     if (searchResult) {
-      getRoutingCoords(searchResult).then((data) => {
-        const { departure, arrival, routes } = data;
-        setStation({ departure: departure.name, arrival: arrival.name });
-        initRouteMap({ departure, arrival, routes }).then((data) => {
-          const { distance, duration } = data;
-          setRouteResult({ distance, duration });
-        });
-      });
+      initRoute(searchResult);
     }
   }, [searchResult]);
 

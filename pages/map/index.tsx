@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import React, { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
 
+import { ELEMENT_ID } from '@constants/map';
 import FooterInfoSection from '@map/FooterInfoSection';
 import PlaceSelectSection from '@map/PlaceSelectSection';
 import { initRouteMap } from '@utils/map';
@@ -39,7 +40,7 @@ const MapPage: NextPage = () => {
     <>
       <PlaceSelectSection departure={station.departure} arrival={station.arrival} />
       <MapWrapper>
-        <MapDiv ref={mapRef} id='map_div'></MapDiv>
+        <MapDiv ref={mapRef} id={ELEMENT_ID}></MapDiv>
       </MapWrapper>
       <FooterInfoSection
         arrival={station.arrival}

@@ -1,36 +1,20 @@
 import COLOR from '@constants/colors';
-import { ELEMENT_ID } from '@constants/map';
-import SCREEN_SIZE from '@constants/sizes';
 import { IFacilityMarker } from 'types/map';
 
-declare global {
-  interface Window {
-    Tmapv2: any;
-  }
+interface InitTmapParams {
+  facilityList: IFacilityMarker[];
+  handleResetClickedTag: () => void;
+  currentMap: any;
 }
 
-export const initTmap = async (
-  markerList: IFacilityMarker[],
-  handleResetClickedTag: () => void
-) => {
-  // TMAP 생성
-  const CURRENT_MAP = new window.Tmapv2.Map(ELEMENT_ID, {
-    center: new window.Tmapv2.LatLng(37.5, 126.9), // 지도 초기 좌표
-    width: SCREEN_SIZE.WIDTH,
-    height: '100%',
-    zoom: 8,
-    pinchZoom: true,
-    scrollwheel: true,
-    zoomControl: true
-  });
-
+export const initTmap = ({ facilityList, handleResetClickedTag, currentMap }: InitTmapParams) => {
   // markerList 에 맞게 zoom level 설정
   const latlngBounds = new window.Tmapv2.LatLngBounds(
-    new window.Tmapv2.LatLng(markerList[0].latitude, markerList[0].longitude)
+    new window.Tmapv2.LatLng(facilityList[0].latitude, facilityList[0].longitude)
   );
 
   // TMAP marker에 API로 가져온 marker 데이터 주입
-  const newMarkers = getTmapMarkerList(markerList, CURRENT_MAP, latlngBounds);
+  const newMarkers = getTmapMarkerList(facilityList, currentMap, latlngBounds);
 
   // marker 데이터에 맞게 지도 정렬 후 margin 추가
   const margin = {
@@ -39,18 +23,18 @@ export const initTmap = async (
     right: 150,
     bottom: 300
   };
-  CURRENT_MAP.fitBounds(latlngBounds, margin);
+  currentMap.fitBounds(latlngBounds, margin);
 
-  const markerTooltipList = getMarkerTooltipList(newMarkers, CURRENT_MAP); // TMAP marker 클릭 시 보여줄 툴팁
-  const markers = getEventMarkers(newMarkers, CURRENT_MAP, markerTooltipList); // TMP marker 이벤트핸들러 등록
+  const markerTooltipList = getMarkerTooltipList(newMarkers, currentMap); // TMAP marker 클릭 시 보여줄 툴팁
+  const markers = getEventMarkers(newMarkers, currentMap, markerTooltipList); // TMP marker 이벤트핸들러 등록
 
-  CURRENT_MAP.addListener('click', () => {
+  currentMap.addListener('click', () => {
     markers.map((marker) => marker.setVisible(true));
     handleResetClickedTag();
     markerTooltipList.map((info) => info.setVisible(false));
   });
 
-  CURRENT_MAP.addListener('touchend', () => {
+  currentMap.addListener('touchend', () => {
     markers.map((marker) => marker.setVisible(true));
     handleResetClickedTag();
     markerTooltipList.map((info) => info.setVisible(false));
@@ -59,7 +43,7 @@ export const initTmap = async (
   return markers;
 };
 
-const getTmapMarkerList = (markerList: IFacilityMarker[], CURRENT_MAP: any, latlngBounds: any) => {
+const getTmapMarkerList = (markerList: IFacilityMarker[], currentMap: any, latlngBounds: any) => {
   const markers = markerList.map((data) => {
     latlngBounds.extend(new window.Tmapv2.LatLng(data.latitude, data.longitude));
     return new window.Tmapv2.Marker({
@@ -67,7 +51,7 @@ const getTmapMarkerList = (markerList: IFacilityMarker[], CURRENT_MAP: any, latl
       icon: `/images/${data.type}.svg`,
       iconSize: new window.Tmapv2.Size(30, 30),
       title: data.name,
-      map: CURRENT_MAP,
+      map: currentMap,
       id: data.type,
       animation: window.Tmapv2.MarkerOptions.ANIMATE_BOUNCE_ONCE,
       animationLength: 500
@@ -77,7 +61,7 @@ const getTmapMarkerList = (markerList: IFacilityMarker[], CURRENT_MAP: any, latl
   return markers;
 };
 
-const getMarkerTooltipList = (markers: any[], CURRENT_MAP: any) => {
+const getMarkerTooltipList = (markers: any[], currentMap: any) => {
   const markerTooltipList = markers.map((currentMarker, idx) => {
     const lat = currentMarker._marker_data.options.position._lat;
     const lng = currentMarker._marker_data.options.position._lng;
@@ -98,7 +82,7 @@ const getMarkerTooltipList = (markers: any[], CURRENT_MAP: any) => {
       align: 18,
       content: content, // Popup 표시될 text
       type: 2,
-      map: CURRENT_MAP,
+      map: currentMap,
       border: 0,
       visible: false
     });
@@ -107,12 +91,12 @@ const getMarkerTooltipList = (markers: any[], CURRENT_MAP: any) => {
   return markerTooltipList;
 };
 
-const getEventMarkers = (markers: any[], CURRENT_MAP: any, markerTooltipList: any[]) => {
+const getEventMarkers = (markers: any[], currentMap: any, markerTooltipList: any[]) => {
   return markers.map((marker, idx) => {
     marker.addListener('touchend', () => {
       const lat = marker._marker_data.options.position._lat;
       const lng = marker._marker_data.options.position._lng;
-      CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
+      currentMap.panTo(new window.Tmapv2.LatLng(lat, lng));
 
       if (marker._status.mouse.isMouseDown) marker.setVisible(false);
       markerTooltipList[idx].setVisible(true);
@@ -120,7 +104,7 @@ const getEventMarkers = (markers: any[], CURRENT_MAP: any, markerTooltipList: an
       marker.addListener('click', () => {
         const lat = marker._marker_data.options.position._lat;
         const lng = marker._marker_data.options.position._lng;
-        CURRENT_MAP.panTo(new window.Tmapv2.LatLng(lat, lng));
+        currentMap.panTo(new window.Tmapv2.LatLng(lat, lng));
 
         if (marker._status.mouse.mouseClickFlag) marker.setVisible(false);
         markerTooltipList[idx].setVisible(true);

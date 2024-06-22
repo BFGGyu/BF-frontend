@@ -1,13 +1,14 @@
 import axios from 'axios';
 
 import COLOR from '@constants/colors';
+import { ELEMENT_ID } from '@constants/map';
 import SCREEN_SIZE from '@constants/sizes';
 import { ICoord, IRoute } from 'types/map';
 
 const APP_KEY = process.env.NEXT_PUBLIC_TMAP_KEY;
 
 export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, routes: IRoute[]) => {
-  const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
+  const CURRENT_MAP = new window.Tmapv2.Map(ELEMENT_ID, {
     center: new window.Tmapv2.LatLng(departure.latitude, departure.longitude), // 지도 초기 좌표
     width: SCREEN_SIZE.WIDTH,
     height: '100%',

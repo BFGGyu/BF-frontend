@@ -2,6 +2,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 
 import COLOR from '@constants/colors';
+import { ELEMENT_ID } from '@constants/map';
 import SCREEN_SIZE from '@constants/sizes';
 import { ITotalRouteResult, RouteMapDto } from 'types/map';
 
@@ -17,7 +18,7 @@ export const initRouteMap = async ({
 }: RouteMapDto): Promise<ITotalRouteResult> => {
   // map 생성
   // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
-  const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
+  const CURRENT_MAP = new window.Tmapv2.Map(ELEMENT_ID, {
     center: new window.Tmapv2.LatLng(37.5, 126.9),
     width: SCREEN_SIZE.WIDTH,
     height: '606px',

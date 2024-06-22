@@ -1,4 +1,5 @@
 import COLOR from '@constants/colors';
+import { ELEMENT_ID } from '@constants/map';
 import SCREEN_SIZE from '@constants/sizes';
 import { IFacilityMarker } from 'types/map';
 
@@ -13,7 +14,7 @@ export const initTmap = async (
   handleResetClickedTag: () => void
 ) => {
   // TMAP 생성
-  const CURRENT_MAP = new window.Tmapv2.Map('map_div', {
+  const CURRENT_MAP = new window.Tmapv2.Map(ELEMENT_ID, {
     center: new window.Tmapv2.LatLng(37.5, 126.9), // 지도 초기 좌표
     width: SCREEN_SIZE.WIDTH,
     height: '100%',

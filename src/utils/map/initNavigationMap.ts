@@ -1,4 +1,5 @@
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 import COLOR from '@constants/colors';
 import { ELEMENT_ID } from '@constants/map';
@@ -8,8 +9,8 @@ import { ICoord, IRoute } from 'types/map';
 const APP_KEY = process.env.NEXT_PUBLIC_TMAP_KEY;
 
 export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, routes: IRoute[]) => {
-  const CURRENT_MAP = new window.Tmapv2.Map(ELEMENT_ID, {
-    center: new window.Tmapv2.LatLng(departure.latitude, departure.longitude), // 지도 초기 좌표
+  const currentMap = new Tmapv2.Map(ELEMENT_ID, {
+    center: new Tmapv2.LatLng(departure.latitude, departure.longitude), // 지도 초기 좌표
     width: SCREEN_SIZE.WIDTH,
     height: '100%',
     zoom: 19,
@@ -19,26 +20,26 @@ export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, rou
   });
 
   // 출발
-  const startMarker = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(departure.latitude, departure.longitude),
+  const startMarker = new Tmapv2.Marker({
+    position: new Tmapv2.LatLng(departure.latitude, departure.longitude),
     icon: `/images/departure.svg`,
-    iconSize: new window.Tmapv2.Size(24, 38),
-    map: CURRENT_MAP
+    iconSize: new Tmapv2.Size(24, 38),
+    map: currentMap
   });
 
   // 도착
-  const endMarker = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(arrival.latitude, arrival.longitude),
+  const endMarker = new Tmapv2.Marker({
+    position: new Tmapv2.LatLng(arrival.latitude, arrival.longitude),
     icon: '/images/arrival.svg',
-    iconSize: new window.Tmapv2.Size(24, 38),
-    map: CURRENT_MAP
+    iconSize: new Tmapv2.Size(24, 38),
+    map: currentMap
   });
 
-  const currentMarker = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(departure.latitude, departure.longitude),
+  const currentMarker = new Tmapv2.Marker({
+    position: new Tmapv2.LatLng(departure.latitude, departure.longitude),
     icon: '/images/currentPosition.svg',
-    iconSize: new window.Tmapv2.Size(30, 45),
-    map: CURRENT_MAP
+    iconSize: new Tmapv2.Size(30, 45),
+    map: currentMap
   });
 
   const drawInfoArray: any[] = [];
@@ -87,22 +88,23 @@ export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, rou
         if (geometry.type == 'LineString') {
           for (let j in geometry.coordinates) {
             // 경로들의 결과값(구간)들을 포인트 객체로 변환
-            const latlng = new window.Tmapv2.Point(
-              geometry.coordinates[j][0],
-              geometry.coordinates[j][1]
-            );
-            // 포인트 객체를 받아 좌표값으로 변환
-            const convertPoint = new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
-            // 포인트객체의 정보로 좌표값 변환 객체로 저장
-            const convertChange = new window.Tmapv2.LatLng(convertPoint._lat, convertPoint._lng);
-            // 배열에 담기
+            const latlng = new Tmapv2.Point(geometry.coordinates[j][0], geometry.coordinates[j][1]);
 
+            // 포인트 객체를 받아 좌표값으로 변환
+            const convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
+
+            // 포인트객체의 정보로 좌표값 변환 객체로 저장
+            const convertChange = new Tmapv2.LatLng(convertPoint._lat, convertPoint._lng);
+
+            // 배열에 담기
             drawInfoArray.push(convertChange);
           }
         } else {
           // 경로들의 결과값들을 포인트 객체로 변환
-          const latlon = new window.Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]); // 포인트 객체를 받아 좌표값으로 다시 변환
-          const convertPoint = new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlon);
+          const latlng = new Tmapv2.Point(geometry.coordinates[0], geometry.coordinates[1]);
+
+          // 포인트 객체를 받아 좌표값으로 다시 변환
+          const convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
 
           pointArray.push({
             latitude: convertPoint._lat,
@@ -120,15 +122,19 @@ export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, rou
         return { ...point, distance: point.description.replace(regex, '') };
       });
 
-      function drawLine(arrPoint: any[]) {
-        new window.Tmapv2.Polyline({
+      function drawLine(arrPoint: Tmapv2.LatLng[]) {
+        new Tmapv2.Polyline({
           path: arrPoint,
           strokeColor: COLOR.BLUE1,
           strokeWeight: 6,
-          map: CURRENT_MAP
+          map: currentMap
         });
       }
     })
-    .catch((e) => console.log('네비게이션 불러오기 에러 : ', e));
-  return [CURRENT_MAP, currentMarker, markerArray];
+    .catch((err: unknown) => {
+      const error = err as Error;
+      toast.error(error.message);
+    });
+
+  return { currentMap, currentMarker, markerArray };
 };

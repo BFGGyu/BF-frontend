@@ -18,8 +18,8 @@ export const initRouteMap = async ({
 }: RouteMapDto): Promise<ITotalRouteResult> => {
   // map 생성
   // Tmapv2.Map을 이용하여, 지도가 들어갈 div, 넓이, 높이를 설정합니다.
-  const CURRENT_MAP = new window.Tmapv2.Map(ELEMENT_ID, {
-    center: new window.Tmapv2.LatLng(37.5, 126.9),
+  const CURRENT_MAP = new Tmapv2.Map(ELEMENT_ID, {
+    center: new Tmapv2.LatLng(37.5, 126.9),
     width: SCREEN_SIZE.WIDTH,
     height: '606px',
     zoom: 15,
@@ -29,13 +29,13 @@ export const initRouteMap = async ({
   });
 
   // markerList 에 맞게 zoom level 설정
-  const latlngBounds = new window.Tmapv2.LatLngBounds(
-    new window.Tmapv2.LatLng(routes[0].latitude, routes[0].longitude)
+  const latlngBounds = new Tmapv2.LatLngBounds(
+    new Tmapv2.LatLng(routes[0].latitude, routes[0].longitude)
   );
-  latlngBounds.extend(new window.Tmapv2.LatLng(departure.latitude, departure.longitude));
-  latlngBounds.extend(new window.Tmapv2.LatLng(arrival.latitude, arrival.longitude));
+  latlngBounds.extend(new Tmapv2.LatLng(departure.latitude, departure.longitude));
+  latlngBounds.extend(new Tmapv2.LatLng(arrival.latitude, arrival.longitude));
   routes.forEach((marker) =>
-    latlngBounds.extend(new window.Tmapv2.LatLng(marker.latitude, marker.longitude))
+    latlngBounds.extend(new Tmapv2.LatLng(marker.latitude, marker.longitude))
   );
 
   const margin = {
@@ -47,18 +47,18 @@ export const initRouteMap = async ({
   CURRENT_MAP.fitBounds(latlngBounds, margin);
 
   // 출발
-  const startMarker = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(departure.latitude, departure.longitude),
+  const startMarker = new Tmapv2.Marker({
+    position: new Tmapv2.LatLng(departure.latitude, departure.longitude),
     icon: `/images/departure.svg`,
-    iconSize: new window.Tmapv2.Size(24, 38),
+    iconSize: new Tmapv2.Size(24, 38),
     map: CURRENT_MAP
   });
 
   // 도착
-  const endMarker = new window.Tmapv2.Marker({
-    position: new window.Tmapv2.LatLng(arrival.latitude, arrival.longitude),
+  const endMarker = new Tmapv2.Marker({
+    position: new Tmapv2.LatLng(arrival.latitude, arrival.longitude),
     icon: `/images/arrival.svg`,
-    iconSize: new window.Tmapv2.Size(24, 38),
+    iconSize: new Tmapv2.Size(24, 38),
     map: CURRENT_MAP
   });
 
@@ -105,14 +105,14 @@ export const initRouteMap = async ({
         if (geometry.type == 'LineString') {
           for (let j in geometry.coordinates) {
             // 경로들의 결과값(구간)들을 포인트 객체로 변환
-            const latlng = new window.Tmapv2.Point(
-              geometry.coordinates[j][0],
-              geometry.coordinates[j][1]
-            );
+            const latlng = new Tmapv2.Point(geometry.coordinates[j][0], geometry.coordinates[j][1]);
+
             // 포인트 객체를 받아 좌표값으로 변환
-            const convertPoint = new window.Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
+            const convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
+
             // 포인트객체의 정보로 좌표값 변환 객체로 저장
-            const convertChange = new window.Tmapv2.LatLng(convertPoint._lat, convertPoint._lng);
+            const convertChange = new Tmapv2.LatLng(convertPoint._lat, convertPoint._lng);
+
             // 배열에 담기
             drawInfoArr.push(convertChange);
           }
@@ -122,8 +122,8 @@ export const initRouteMap = async ({
       //for문 종료
       drawLine(drawInfoArr);
 
-      function drawLine(arrPoint: any[]) {
-        new window.Tmapv2.Polyline({
+      function drawLine(arrPoint: Tmapv2.LatLng[]) {
+        new Tmapv2.Polyline({
           path: arrPoint,
           strokeColor: COLOR.BLUE1,
           strokeWeight: 6,

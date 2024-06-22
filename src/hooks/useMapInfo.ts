@@ -44,17 +44,19 @@ export const useMapInfo = () => {
   }, []);
 
   useEffect(() => {
-    const initMap = async () => {
+    const initMap = async (currentMap: Tmapv2.Map) => {
       const facilityList = await getFacilityCoordList();
       const markerList = initTmap({
         facilityList,
         handleResetClickedTag,
-        currentMap: mapRef.current
+        currentMap
       });
       setMapInfo((mapInfo) => ({ ...mapInfo, markerList }));
     };
 
-    initMap();
+    if (mapRef.current) {
+      initMap(mapRef.current);
+    }
   }, [handleResetClickedTag, setMapInfo, mapRef]);
 
   return { mapInfo, handleClickTag };

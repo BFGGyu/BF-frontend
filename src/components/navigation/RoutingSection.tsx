@@ -8,7 +8,7 @@ import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import SCREEN_SIZE from '@constants/sizes';
 import {
-  changeCurrentPostion,
+  changeCurrentPosition,
   getDistanceCurrentToTarget,
   initNavigationTmap,
   speakNavigationGuide
@@ -29,14 +29,14 @@ const options = {
 
 const RoutingSection = () => {
   const router = useRouter();
-  const currentMapRef = useRef(null);
-  const currentMarkerRef = useRef(null);
+  const currentMapRef = useRef<Tmapv2.Map | null>(null);
+  const currentMarkerRef = useRef<Tmapv2.Marker | null>(null);
   const watchId = useRef<number>();
 
   // navigation 데이터 리스트
   const markerList = useRef<INavigationMarker[]>([]);
-  const markerIndexRef = useRef<number>(0);
-  const [diffPosition, setDiffPosition] = useState<number>(0); // 현재 좌표와 첫번째 경로 사이의 거리
+  const markerIndexRef = useRef(0);
+  const [diffPosition, setDiffPosition] = useState(0); // 현재 좌표와 첫번째 경로 사이의 거리
 
   const handleError = useCallback(() => {
     (err: any) => {
@@ -50,7 +50,7 @@ const RoutingSection = () => {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
 
-    changeCurrentPostion(currentMapRef.current, currentMarkerRef.current, lat, lng);
+    changeCurrentPosition(currentMapRef.current, currentMarkerRef.current, lat, lng);
 
     // 현재 좌표와 타겟 좌표 사이의 거리 계산
     const length = markerList.current.length;
@@ -69,9 +69,10 @@ const RoutingSection = () => {
       // // 서버 연결
       getNavigationCoords(query).then((data) => {
         initNavigationTmap(data.departure, data.arrival, data.routes).then((data) => {
-          currentMapRef.current = data[0];
-          currentMarkerRef.current = data[1];
-          markerList.current = data[2];
+          const { currentMap, currentMarker, markerArray } = data;
+          currentMapRef.current = currentMap;
+          currentMarkerRef.current = currentMarker;
+          markerList.current = markerArray;
         });
       });
     }

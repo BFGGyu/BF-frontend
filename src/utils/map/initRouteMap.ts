@@ -1,10 +1,14 @@
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 import COLOR from '@constants/colors';
 import SCREEN_SIZE from '@constants/sizes';
 import { ITotalRouteResult, RouteMapDto } from 'types/map';
 
+const WHEELCHAIR_TIME_ADJUSTMENT = 3.3;
 const APP_KEY = process.env.NEXT_PUBLIC_TMAP_KEY;
+const TMAP_REQUEST_URL =
+  'https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result';
 
 export const initRouteMap = async ({
   departure,
@@ -29,7 +33,7 @@ export const initRouteMap = async ({
   );
   latlngBounds.extend(new window.Tmapv2.LatLng(departure.latitude, departure.longitude));
   latlngBounds.extend(new window.Tmapv2.LatLng(arrival.latitude, arrival.longitude));
-  routes.map((marker) =>
+  routes.forEach((marker) =>
     latlngBounds.extend(new window.Tmapv2.LatLng(marker.latitude, marker.longitude))
   );
 
@@ -58,44 +62,36 @@ export const initRouteMap = async ({
   });
 
   // 도착 장소까지의 거리와 소요시간 담을 객체
-  let totalData: ITotalRouteResult = { distance: '', duration: 0 };
+  const routeResult: ITotalRouteResult = { distance: '', duration: 0 };
 
-  let text: string[] = [];
-  routes.map((path) => text.push(`${path.longitude},${path.latitude}`));
-  const passList = text.join('_');
+  const headers = {
+    appKey: APP_KEY
+  };
 
-  const requestData = {
+  // 경유지(passList) 설정(최대 5곳). 단, 경로가 너무 벗어날 경우와 5곳 이상일 경우 error 발생
+  const passList = routes.map((coord) => `${coord.longitude},${coord.latitude}`).join('_');
+
+  const requestBody = {
     startX: departure.longitude,
     startY: departure.latitude,
     endX: arrival.longitude,
     endY: arrival.latitude,
-    passList: passList,
+    passList,
     reqCoordType: 'WGS84GEO',
     resCoordType: 'EPSG3857',
     startName: '출발지',
     endName: '도착지'
   };
 
-  const headers = {
-    appKey: APP_KEY
-  };
-
   await axios
-    .post(
-      'https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result',
-      requestData,
-      { headers: headers }
-    )
+    .post(TMAP_REQUEST_URL, requestBody, { headers: headers })
     .then((response) => {
       const resultData = response.data.features;
-      const tDistance =
-        '총 거리 : ' + (resultData[0].properties.totalDistance / 1000).toFixed(1) + 'km,';
-      const tTime = ' 총 시간 : ' + (resultData[0].properties.totalTime / 60).toFixed(0) + '분';
-      const resultText = tDistance + tTime;
-      totalData = {
-        distance: resultData[0].properties.totalDistance,
-        duration: Math.ceil((resultData[0].properties.totalTime * 3.3) / 60)
-      };
+      const totalDistance = resultData[0].properties.totalDistance;
+      const totalTime = resultData[0].properties.totalTime;
+
+      routeResult.distance = totalDistance;
+      routeResult.duration = Math.ceil((totalTime * WHEELCHAIR_TIME_ADJUSTMENT) / 60);
 
       const drawInfoArr = [];
 
@@ -134,6 +130,9 @@ export const initRouteMap = async ({
         });
       }
     })
-    .catch((error: any) => console.error(error));
-  return totalData;
+    .catch((err: unknown) => {
+      const error = err as Error;
+      toast.error(error.message);
+    });
+  return routeResult;
 };

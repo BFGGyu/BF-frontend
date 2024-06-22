@@ -1,6 +1,6 @@
 import { FacilityDto } from '@apis/type';
 
-export const facilities: FacilityDto[] = [
+export const FACILITIES: FacilityDto[] = [
   {
     id: 1,
     name: '국립고궁박물관',
@@ -11,7 +11,7 @@ export const facilities: FacilityDto[] = [
     closing_time: '18:00',
     latitude: '37.5765595',
     longitude: '126.9757996',
-    imageSrc: '이미지 경로'
+    imageSrc: '/images/departure.svg'
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ export const facilities: FacilityDto[] = [
     closing_time: '18:00',
     latitude: '37.5759848',
     longitude: '126.9740679',
-    imageSrc: '이미지 경로'
+    imageSrc: '/images/departure.svg'
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ export const facilities: FacilityDto[] = [
     closing_time: '18:00',
     latitude: '37.5759730',
     longitude: '126.9734500',
-    imageSrc: '이미지 경로'
+    imageSrc: '/images/departure.svg'
   },
   {
     id: 4,
@@ -47,7 +47,7 @@ export const facilities: FacilityDto[] = [
     closing_time: '18:00',
     latitude: '37.5757730',
     longitude: '126.9732500',
-    imageSrc: '이미지 경로'
+    imageSrc: '/images/departure.svg'
   },
   {
     id: 5,
@@ -59,6 +59,6 @@ export const facilities: FacilityDto[] = [
     closing_time: '18:00',
     latitude: '37.5756730',
     longitude: '126.9739500',
-    imageSrc: '이미지 경로'
+    imageSrc: '/images/departure.svg'
   }
 ];

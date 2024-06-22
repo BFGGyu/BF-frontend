@@ -41,6 +41,6 @@
       "types/*": ["src/types/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.js", "**/*.ts", "**/*.tsx", "jest.setup.js", "jest.config.js"],
+  "include": ["next-env.d.ts", "**/*.js", "**/*.ts", "**/*.tsx", "jest.config.js"],
   "exclude": ["node_modules"]
 }

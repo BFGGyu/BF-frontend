@@ -2,22 +2,19 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 
 import COLOR from '@constants/colors';
-import { ELEMENT_ID } from '@constants/map';
-import SCREEN_SIZE from '@constants/sizes';
-import { ICoord, IRoute } from 'types/map';
+import { RouteMapDto } from 'types/map';
 
 const APP_KEY = process.env.NEXT_PUBLIC_TMAP_KEY;
+const TMAP_API_URL =
+  'https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result';
 
-export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, routes: IRoute[]) => {
-  const currentMap = new Tmapv2.Map(ELEMENT_ID, {
-    center: new Tmapv2.LatLng(departure.latitude, departure.longitude), // 지도 초기 좌표
-    width: SCREEN_SIZE.WIDTH,
-    height: '100%',
-    zoom: 19,
-    pinchZoom: true,
-    scrollwheel: true,
-    zoomControl: true
-  });
+interface NavigationMapParams {
+  navigationCoords: RouteMapDto;
+  currentMap: Tmapv2.Map;
+}
+
+export const initNavigationMap = async ({ navigationCoords, currentMap }: NavigationMapParams) => {
+  const { departure, arrival, routes } = navigationCoords;
 
   // 출발
   const startMarker = new Tmapv2.Marker({
@@ -35,7 +32,7 @@ export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, rou
     map: currentMap
   });
 
-  const currentMarker = new Tmapv2.Marker({
+  const currentPositionMarker = new Tmapv2.Marker({
     position: new Tmapv2.LatLng(departure.latitude, departure.longitude),
     icon: '/images/currentPosition.svg',
     iconSize: new Tmapv2.Size(30, 45),
@@ -44,11 +41,10 @@ export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, rou
 
   const drawInfoArray: any[] = [];
   const pointArray: any[] = [];
-  let markerArray: any[] = [];
+  let turnPointMarkerList: any[] = [];
 
-  let text: string[] = [];
-  routes.map((path) => text.push(`${path.longitude},${path.latitude}`));
-  const passList = text.join('_');
+  // 경유지(passList) 설정(최대 5곳). 단, 경로가 너무 벗어날 경우와 5곳 이상일 경우 error 발생
+  const passList = routes.map((coord) => `${coord.longitude},${coord.latitude}`).join('_');
 
   const requestData = {
     startX: departure.longitude,
@@ -67,11 +63,7 @@ export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, rou
   };
 
   await axios
-    .post(
-      'https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result',
-      requestData,
-      { headers: headers }
-    )
+    .post(TMAP_API_URL, requestData, { headers: headers })
     .then((response) => {
       const resultData = response.data.features;
       const tDistance =
@@ -118,9 +110,10 @@ export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, rou
       drawLine(drawInfoArray);
 
       const regex = /[^0-9]/g;
-      markerArray = pointArray.map((point) => {
-        return { ...point, distance: point.description.replace(regex, '') };
-      });
+      turnPointMarkerList = pointArray.map((point) => ({
+        ...point,
+        distance: point.description.replace(regex, '')
+      }));
 
       function drawLine(arrPoint: Tmapv2.LatLng[]) {
         new Tmapv2.Polyline({
@@ -136,5 +129,5 @@ export const initNavigationTmap = async (departure: ICoord, arrival: ICoord, rou
       toast.error(error.message);
     });
 
-  return { currentMap, currentMarker, markerArray };
+  return { currentMap, currentPositionMarker, turnPointMarkerList };
 };

@@ -3,23 +3,11 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { PiArrowBendUpLeftBold, PiArrowBendUpRightBold } from 'react-icons/pi';
 import { styled } from 'styled-components';
 
-import { getNavigationCoords } from '@apis/map';
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
 import SCREEN_SIZE from '@constants/sizes';
-import {
-  changeCurrentPosition,
-  getDistanceCurrentToTarget,
-  initNavigationTmap,
-  speakNavigationGuide
-} from '@utils/map';
-
-interface INavigationMarker {
-  latitude: string;
-  longitude: string;
-  description: string;
-  distance: string;
-}
+import { changeCurrentPosition, getDistanceCurrentToTarget } from '@utils/map';
+import useNavigationInfo from 'src/hooks/useNavigationInfo';
 
 const options = {
   enableHighAccuracy: false,
@@ -29,14 +17,12 @@ const options = {
 
 const RoutingSection = () => {
   const router = useRouter();
-  const currentMapRef = useRef<Tmapv2.Map | null>(null);
-  const currentMarkerRef = useRef<Tmapv2.Marker | null>(null);
-  const watchId = useRef<number>();
+  const watchId = useRef(0);
 
-  // navigation 데이터 리스트
-  const markerList = useRef<INavigationMarker[]>([]);
   const markerIndexRef = useRef(0);
   const [diffPosition, setDiffPosition] = useState(0); // 현재 좌표와 첫번째 경로 사이의 거리
+
+  const { mapRef, currentPositionMarkerRef, markerListRef } = useNavigationInfo();
 
   const handleError = useCallback(() => {
     (err: any) => {
@@ -50,33 +36,17 @@ const RoutingSection = () => {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
 
-    changeCurrentPosition(currentMapRef.current, currentMarkerRef.current, lat, lng);
+    changeCurrentPosition(mapRef.current, currentPositionMarkerRef.current, lat, lng);
 
     // 현재 좌표와 타겟 좌표 사이의 거리 계산
-    const length = markerList.current.length;
-    if (markerList.current.length > 0 && markerIndexRef.current < length) {
-      const { latitude, longitude } = markerList.current[markerIndexRef.current];
+    const length = markerListRef.current.length;
+    if (markerListRef.current.length > 0 && markerIndexRef.current < length) {
+      const { latitude, longitude } = markerListRef.current[markerIndexRef.current];
       const diff = getDistanceCurrentToTarget({ lat, lng }, { latitude, longitude });
       setDiffPosition(diff);
       if (diff < 5) markerIndexRef.current++;
     }
   };
-
-  useEffect(() => {
-    if (router.pathname === '/navigation') {
-      const query = decodeURIComponent(router.asPath.split('=')[1]);
-      speakNavigationGuide('경로안내를 시작합니다');
-      // // 서버 연결
-      getNavigationCoords(query).then((data) => {
-        initNavigationTmap(data.departure, data.arrival, data.routes).then((data) => {
-          const { currentMap, currentMarker, markerArray } = data;
-          currentMapRef.current = currentMap;
-          currentMarkerRef.current = currentMarker;
-          markerList.current = markerArray;
-        });
-      });
-    }
-  }, [router]);
 
   useEffect(() => {
     if ('geolocation' in navigator) {
@@ -99,8 +69,8 @@ const RoutingSection = () => {
           <RoutingLeftWrapper>
             <PiArrowBendUpRightBold size={40} />
             <div style={{ fontSize: '60%' }}>
-              {(markerList.current.length > 0 &&
-                markerList.current[markerIndexRef.current].description) ||
+              {(markerListRef.current.length > 0 &&
+                markerListRef.current[markerIndexRef.current].description) ||
                 '로딩중...'}
             </div>
           </RoutingLeftWrapper>
@@ -111,15 +81,16 @@ const RoutingSection = () => {
           <RoutingLeftWrapper>
             <PiArrowBendUpLeftBold size={40} />
             <div style={{ fontSize: '60%' }}>
-              {(markerList.current.length > 0 &&
-                markerList.current[markerIndexRef.current + 1].description) ||
+              {(markerListRef.current.length > 0 &&
+                markerListRef.current[markerIndexRef.current + 1].description) ||
                 '로딩중...'}
             </div>
           </RoutingLeftWrapper>
 
           <div>
-            {(markerList.current.length > 0 &&
-              diffPosition + parseInt(markerList.current[markerIndexRef.current + 1].distance)) ||
+            {(markerListRef.current.length > 0 &&
+              diffPosition +
+                parseInt(markerListRef.current[markerIndexRef.current + 1].distance)) ||
               '0'}
             m
           </div>

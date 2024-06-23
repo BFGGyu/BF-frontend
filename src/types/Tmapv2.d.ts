@@ -33,6 +33,7 @@ declare namespace Tmapv2 {
     fitBounds(latlngBounds: LatLngBounds, margin: Record<string, number>): void;
     addListener(event: string, eventListener: () => void): void;
     panTo(latLng: LatLng): void;
+    setCenter(latLng: LatLng): void;
   }
 
   interface MapOptions {

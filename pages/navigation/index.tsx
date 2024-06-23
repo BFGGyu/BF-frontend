@@ -12,7 +12,6 @@ import { handleClickMovePage } from '@utils/map';
 import useQueryParams from 'src/hooks/useQueryParams';
 
 const NavigationPage = () => {
-  const mapRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
   const result = useQueryParams();
 
@@ -20,7 +19,7 @@ const NavigationPage = () => {
     <div>
       <RoutingSection />
       <MapWrapper>
-        <MapDiv ref={mapRef} id={ELEMENT_ID}></MapDiv>
+        <MapDiv id={ELEMENT_ID}></MapDiv>
       </MapWrapper>
       <FooterWrapper>
         <MapIconWrapper>

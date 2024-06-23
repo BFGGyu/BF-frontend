@@ -3,7 +3,9 @@ import { useEffect, useRef } from 'react';
 import { ELEMENT_ID } from '@constants/map';
 import SCREEN_SIZE from '@constants/sizes';
 
-const useCreateTMap = () => {
+interface TMapOptions extends Tmapv2.MapOptions {}
+
+const useCreateTMap = (options?: TMapOptions) => {
   const mapRef = useRef<Tmapv2.Map | null>(null);
 
   useEffect(() => {
@@ -15,7 +17,9 @@ const useCreateTMap = () => {
       zoom: 8,
       pinchZoom: true,
       scrollWheel: true,
-      zoomControl: true
+      zoomControl: true,
+      httpsMode: process.env.NODE_ENV === 'production',
+      ...options
     });
 
     // 메모리 누수 방지
@@ -25,6 +29,7 @@ const useCreateTMap = () => {
         mapRef.current = null;
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { mapRef };

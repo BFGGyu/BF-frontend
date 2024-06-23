@@ -57,8 +57,8 @@ export interface RouteMapDto {
 }
 
 export interface NavigationMarker {
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   description: string;
   distance: string;
 }

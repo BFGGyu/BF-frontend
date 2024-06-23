@@ -41,8 +41,8 @@ const useTrackLocation = ({
     changeCurrentPosition(map, currentPositionMarker, lat, lng);
 
     // 현재 좌표와 타겟 좌표 사이의 거리 계산
-    const length = turnPointMarkerList.length;
-    if (turnPointMarkerList.length > 0 && markerIndexRef.current < length) {
+    const markerTotalCount = turnPointMarkerList.length;
+    if (markerTotalCount > 0 && markerIndexRef.current < markerTotalCount) {
       const { latitude, longitude } = turnPointMarkerList[markerIndexRef.current];
       const diff = getDistanceCurrentToTarget({ lat, lng }, { latitude, longitude });
       setDiffPosition(diff);

@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
 
 import useCreateTMap from './useCreateTMap';
 
@@ -37,7 +38,12 @@ const useNavigationInfo = () => {
     };
 
     if (mapRef.current) {
-      initNavigation(mapRef.current);
+      try {
+        initNavigation(mapRef.current);
+      } catch (err) {
+        const error = err as Error;
+        toast.error(error.message);
+      }
     }
   }, [router, mapRef]);
 

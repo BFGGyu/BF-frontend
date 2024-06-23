@@ -1,12 +1,11 @@
-import { useRef } from 'react';
 import styled from 'styled-components';
 
 import COLOR from '@constants/colors';
 import FONT from '@constants/fonts';
+import { ELEMENT_ID } from '@constants/map';
 import { useMapInfo } from 'src/hooks/useMapInfo';
 
 const MapSection = () => {
-  const mapRef = useRef<HTMLDivElement>(null);
   const { mapInfo, handleClickTag } = useMapInfo();
 
   return (
@@ -24,7 +23,7 @@ const MapSection = () => {
           </TagButton>
         ))}
       </TagWrapper>
-      <MapDiv ref={mapRef} id='map_div'></MapDiv>
+      <MapDiv id={ELEMENT_ID}></MapDiv>
     </MapWrapper>
   );
 };

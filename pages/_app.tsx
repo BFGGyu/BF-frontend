@@ -8,13 +8,7 @@ import styled from 'styled-components';
 import GlobalStyle from '../src/styles/globalStyle';
 
 import SCREEN_SIZE from '@constants/sizes';
-
-// if (process.env.NODE_ENV === 'development') {
-//   (async () => {
-//     const { worker } = await import('../src/mocks/browser');
-//     worker.start();
-//   })();
-// }
+import MSWProvider from 'src/mocks/MSWProvider';
 
 const queryClient = new QueryClient();
 
@@ -24,14 +18,16 @@ const NextApp: NextPage<AppProps> = ({ Component, pageProps }: AppProps) => {
       <Head>
         <title>WheelPass</title>
       </Head>
-      <RecoilRoot>
-        <QueryClientProvider client={queryClient}>
-          <GlobalStyle />
-          <MainLayout>
-            <Component {...pageProps} />
-          </MainLayout>
-        </QueryClientProvider>
-      </RecoilRoot>
+      <MSWProvider>
+        <RecoilRoot>
+          <QueryClientProvider client={queryClient}>
+            <GlobalStyle />
+            <MainLayout>
+              <Component {...pageProps} />
+            </MainLayout>
+          </QueryClientProvider>
+        </RecoilRoot>
+      </MSWProvider>
     </>
   );
 };

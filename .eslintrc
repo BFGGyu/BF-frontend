@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "jest": true
   },
   "extends": ["next/core-web-vitals", "plugin:prettier/recommended", "plugin:import/errors"],
   "overrides": [],
@@ -42,5 +43,5 @@
     }
   },
   // 검사무시 추가
-  "ignorePatterns": ["node_modules/*"]
+  "ignorePatterns": ["node_modules/*", "jest.setup.js", "next.config.js"]
 }

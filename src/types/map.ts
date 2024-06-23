@@ -34,7 +34,7 @@ export interface IRoute {
 }
 
 export interface ITotalRouteResult {
-  distance: string;
+  distance: number;
   duration: number;
 }
 
@@ -54,4 +54,11 @@ export interface RouteMapDto {
   departure: ICoord;
   arrival: ICoord;
   routes: IRoute[];
+}
+
+export interface NavigationMarker {
+  latitude: number;
+  longitude: number;
+  description: string;
+  distance: string;
 }

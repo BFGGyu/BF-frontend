@@ -34,7 +34,7 @@ export interface IRoute {
 }
 
 export interface ITotalRouteResult {
-  distance: string;
+  distance: number;
   duration: number;
 }
 

@@ -55,7 +55,7 @@ export const initRouteMap = async ({
   });
 
   // 도착 장소까지의 거리와 소요시간 담을 객체
-  const routeResult: ITotalRouteResult = { distance: '', duration: 0 };
+  const routeResult: ITotalRouteResult = { distance: 0, duration: 0 };
 
   const headers = {
     appKey: APP_KEY
@@ -76,57 +76,46 @@ export const initRouteMap = async ({
     endName: '도착지'
   };
 
-  await axios
-    .post(TMAP_API_URL, requestBody, { headers: headers })
-    .then((response) => {
-      const resultData = response.data.features;
-      const totalDistance = resultData[0].properties.totalDistance;
-      const totalTime = resultData[0].properties.totalTime;
+  try {
+    const response = await axios.post(TMAP_API_URL, requestBody, { headers });
 
-      routeResult.distance = totalDistance;
-      routeResult.duration = Math.ceil((totalTime * WHEELCHAIR_TIME_ADJUSTMENT) / 60);
+    const distanceData: Tmapv2.PolylineResponse[] = response.data.features;
+    const totalDistance = distanceData[0].properties.totalDistance;
+    const totalTime = distanceData[0].properties.totalTime;
 
-      const drawInfoArr = [];
+    routeResult.distance = totalDistance;
+    routeResult.duration = Math.ceil((totalTime * WHEELCHAIR_TIME_ADJUSTMENT) / 60);
 
-      // for문 시작
-      for (let i in resultData) {
-        const geometry = resultData[i].geometry;
-        const properties = resultData[i].properties;
+    const polylinePointList = distanceData
+      .filter((item) => item.geometry.type === 'LineString')
+      .flatMap((item) =>
+        item.geometry.coordinates.map((coord) => {
+          const [lat, lng] = coord;
+          // 경로들의 결과값(구간)들을 포인트 객체로 변환
+          const latlng = new Tmapv2.Point(lat, lng);
 
-        // geometry.type == 'LineString' | 'Point'
-        if (geometry.type == 'LineString') {
-          for (let j in geometry.coordinates) {
-            // 경로들의 결과값(구간)들을 포인트 객체로 변환
-            const latlng = new Tmapv2.Point(geometry.coordinates[j][0], geometry.coordinates[j][1]);
+          // 포인트 객체를 받아 좌표값으로 변환
+          const convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
 
-            // 포인트 객체를 받아 좌표값으로 변환
-            const convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(latlng);
+          // 포인트객체의 정보로 좌표값 변환 객체로 저장
+          return new Tmapv2.LatLng(convertPoint._lat, convertPoint._lng);
+        })
+      );
 
-            // 포인트객체의 정보로 좌표값 변환 객체로 저장
-            const convertChange = new Tmapv2.LatLng(convertPoint._lat, convertPoint._lng);
-
-            // 배열에 담기
-            drawInfoArr.push(convertChange);
-          }
-        }
-      }
-
-      //for문 종료
-      drawLine(drawInfoArr);
-
-      function drawLine(arrPoint: Tmapv2.LatLng[]) {
-        new Tmapv2.Polyline({
-          path: arrPoint,
-          strokeColor: COLOR.BLUE1,
-          strokeWeight: 6,
-          map: currentMap
-        });
-      }
-    })
-    .catch((err: unknown) => {
-      const error = err as Error;
-      toast.error(error.message);
-    });
+    drawLine(currentMap, polylinePointList);
+  } catch (err: unknown) {
+    const error = err as Error;
+    toast.error(error.message);
+  }
 
   return routeResult;
+};
+
+const drawLine = (currentMap: Tmapv2.Map, polylinePointList: Tmapv2.LatLng[]) => {
+  new Tmapv2.Polyline({
+    path: polylinePointList,
+    strokeColor: COLOR.BLUE1,
+    strokeWeight: 6,
+    map: currentMap
+  });
 };

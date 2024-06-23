@@ -120,4 +120,23 @@ declare namespace Tmapv2 {
     map: Tmapv2.Map;
     [key: string]: any;
   }
+
+  //   interface PolylineResponse {
+  //     geometry: { type: 'LineString' | 'Point'; coordinates: number[][] };
+  //   }
+
+  interface PolylineResponse {
+    geometry: {
+      coordinates: number[][];
+      type: 'LineString' | 'Point';
+    };
+    properties: {
+      description: string;
+      index: 0;
+      totalDistance: 363;
+      totalTime: 307;
+      turnType: 200;
+      [key: string]: any;
+    };
+  }
 }

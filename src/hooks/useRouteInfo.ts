@@ -22,7 +22,7 @@ const useRouteInfo = () => {
     arrival: '로딩중...'
   });
   const [routeResult, setRouteResult] = useState<ITotalRouteResult>({
-    distance: '-',
+    distance: 0,
     duration: 0
   });
 

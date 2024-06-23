@@ -55,3 +55,10 @@ export interface RouteMapDto {
   arrival: ICoord;
   routes: IRoute[];
 }
+
+export interface NavigationMarker {
+  latitude: string;
+  longitude: string;
+  description: string;
+  distance: string;
+}

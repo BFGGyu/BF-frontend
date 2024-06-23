@@ -1,22 +1,16 @@
 import { useRouter } from 'next/router';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import useCreateTMap from './useCreateTMap';
 
 import { getNavigationCoords } from '@apis/map';
 import { initNavigationMap, speakNavigationGuide } from '@utils/map';
-
-interface NavigationMarker {
-  latitude: string;
-  longitude: string;
-  description: string;
-  distance: string;
-}
+import { NavigationMarker } from 'types/map';
 
 const useNavigationInfo = () => {
   const router = useRouter();
   const currentPositionMarkerRef = useRef<Tmapv2.Marker | null>(null);
-  const markerListRef = useRef<NavigationMarker[]>([]);
+  const [turnPointMarkerList, setTurnPointMarkerList] = useState<NavigationMarker[]>([]);
 
   const { mapRef } = useCreateTMap({
     zoom: 19
@@ -39,7 +33,7 @@ const useNavigationInfo = () => {
       });
 
       currentPositionMarkerRef.current = currentPositionMarker;
-      markerListRef.current = turnPointMarkerList;
+      setTurnPointMarkerList(turnPointMarkerList);
     };
 
     if (mapRef.current) {
@@ -47,7 +41,7 @@ const useNavigationInfo = () => {
     }
   }, [router, mapRef]);
 
-  return { markerListRef, currentPositionMarkerRef, mapRef };
+  return { turnPointMarkerList, currentPositionMarkerRef, mapRef };
 };
 
 export default useNavigationInfo;

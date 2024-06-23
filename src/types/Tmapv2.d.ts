@@ -36,13 +36,14 @@ declare namespace Tmapv2 {
   }
 
   interface MapOptions {
-    center: LatLng;
-    width: string | number;
-    height: string | number;
-    zoom: number;
+    center?: LatLng;
+    width?: string | number;
+    height?: string | number;
+    zoom?: number;
     pinchZoom?: boolean;
     scrollwheel?: boolean;
     zoomControl?: boolean;
+    httpsMode?: boolean;
     [key: string]: any;
   }
 
@@ -67,9 +68,9 @@ declare namespace Tmapv2 {
   };
 
   interface MarkerParams {
-    position: InstanceType<LatLng>;
+    position: LatLng;
     icon?: string;
-    iconSize?: InstanceType<Size>;
+    iconSize?: Size;
     title?: string;
     map?: Tmapv2.Map;
     id?: string;
@@ -85,7 +86,7 @@ declare namespace Tmapv2 {
   }
 
   interface InfoWindowParams {
-    position: InstanceType<LatLng>;
+    position: LatLng;
     align: 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19;
     content: string;
     type: 1 | 2;

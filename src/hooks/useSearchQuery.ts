@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 
-import { getSearchResult } from '@apis/map';
+import { getSearchResult } from '@apis/facility';
 
 export const useSearchQuery = (searchKeyword: string) => {
   const { data: searchList } = useQuery({

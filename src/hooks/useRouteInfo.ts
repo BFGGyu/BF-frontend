@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import useCreateTMap from './useCreateTMap';
 import useQueryParams from './useQueryParams';
 
-import { getRoutingCoords } from '@apis/map';
+import { getRoutingCoords } from '@apis/facility';
 import { initRouteMap } from '@utils/map';
 import { IStation, ITotalRouteResult } from 'types/map';
 

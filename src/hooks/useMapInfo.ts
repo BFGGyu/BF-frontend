@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import useCreateTMap from './useCreateTMap';
 
-import { getFacilityCoordList } from '@apis/map';
+import { getFacilityCoordList } from '@apis/facility';
 import { TAG_INITIAL_VALUE } from '@constants/map';
 import { initTmap } from '@utils/map';
 import { ITag } from 'types/map';

@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 
 import useCreateTMap from './useCreateTMap';
 
-import { getNavigationCoords } from '@apis/map';
+import { getNavigationCoords } from '@apis/facility';
 import { initNavigationMap, speakNavigationGuide } from '@utils/map';
 import { NavigationMarker } from 'types/map';
 

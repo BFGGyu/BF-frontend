@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import useCreateTMap from './useCreateTMap';
+
 import { getFacilityCoordList } from '@apis/map';
 import { TAG_INITIAL_VALUE } from '@constants/map';
 import { initTmap } from '@utils/map';
@@ -15,6 +17,8 @@ export const useMapInfo = () => {
     markerList: [],
     tagList: TAG_INITIAL_VALUE
   });
+
+  const { mapRef } = useCreateTMap();
 
   const handleClickTag = (tagId: number) => {
     const tag = mapInfo.tagList.filter((tag) => tag.id === tagId)[0];
@@ -40,12 +44,20 @@ export const useMapInfo = () => {
   }, []);
 
   useEffect(() => {
-    getFacilityCoordList().then((data) => {
-      initTmap(data, handleResetClickedTag).then((markers: any[]) => {
-        setMapInfo((mapInfo) => ({ ...mapInfo, markerList: markers }));
+    const initMap = async (currentMap: Tmapv2.Map) => {
+      const facilityList = await getFacilityCoordList();
+      const markerList = initTmap({
+        facilityList,
+        handleResetClickedTag,
+        currentMap
       });
-    });
-  }, [handleResetClickedTag, setMapInfo]);
+      setMapInfo((mapInfo) => ({ ...mapInfo, markerList }));
+    };
+
+    if (mapRef.current) {
+      initMap(mapRef.current);
+    }
+  }, [handleResetClickedTag, setMapInfo, mapRef]);
 
   return { mapInfo, handleClickTag };
 };

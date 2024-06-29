@@ -3,8 +3,8 @@ import axios from 'axios';
 import { getItemWithExpireTime } from '@utils/storage';
 
 export const Server = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
-  timeout: 2000,
+  baseURL: process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_SERVER_URL : '',
+  timeout: 3000,
   headers: {
     'Content-Type': 'application/json'
   }

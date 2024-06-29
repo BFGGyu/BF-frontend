@@ -5,13 +5,13 @@ import styled from 'styled-components';
 
 import Button from '@common/Button';
 import COLOR from '@constants/colors';
+import { ELEMENT_ID } from '@constants/map';
 import SCREEN_SIZE from '@constants/sizes';
 import RoutingSection from '@navigation/RoutingSection';
 import { handleClickMovePage } from '@utils/map';
 import useQueryParams from 'src/hooks/useQueryParams';
 
 const NavigationPage = () => {
-  const mapRef = useRef<HTMLDivElement | null>(null);
   const router = useRouter();
   const result = useQueryParams();
 
@@ -19,7 +19,7 @@ const NavigationPage = () => {
     <div>
       <RoutingSection />
       <MapWrapper>
-        <MapDiv ref={mapRef} id='map_div'></MapDiv>
+        <MapDiv id={ELEMENT_ID}></MapDiv>
       </MapWrapper>
       <FooterWrapper>
         <MapIconWrapper>

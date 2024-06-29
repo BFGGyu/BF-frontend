@@ -1,5 +1,7 @@
 import { ITag } from 'types/map';
 
+export const ELEMENT_ID = 'map_div';
+
 export const TAG_INITIAL_VALUE: ITag[] = [
   {
     id: 0,

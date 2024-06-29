@@ -5,7 +5,7 @@ import { PropsWithChildren, useEffect, useState } from 'react';
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 const MSWProvider = ({ children }: PropsWithChildren) => {
-  const [isReady, setIsReady] = useState(false);
+  const [isReady, setIsReady] = useState(!isDevelopment);
 
   useEffect(() => {
     const init = async () => {
